@@ -19,7 +19,7 @@ const TrendingMovies = () => {
   }, []);
   return (
     <>
-      <div className="trending_page_main">
+      <div className="container-fluid">
         <div className="row justify-content-around">
           <h1 className="text-center fw-lighter page_heading mb-5">
             Trending Movies

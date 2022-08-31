@@ -19,10 +19,10 @@ const YoutubeVideos = () => {
   }, []);
   return (
     <>
-      <div className="trending_page_main">
+      <div className="container-fluid">
         <div className="row justify-content-around">
           <h1 className="text-center fw-lighter page_heading mb-5">
-            Youtube Vidos
+            Youtube Videos
           </h1>
           {movies.map((movie) => {
             return <MovieBox key={movie.id} movie={movie} />;
