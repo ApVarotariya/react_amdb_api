@@ -13,7 +13,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/react_amdb_api" element={<Main />} />
         <Route path="trending-movies" element={<TrendingMovies />} />
         <Route path="tv-series" element={<TvSeries />} />
         <Route path="search" element={<Search />} />
