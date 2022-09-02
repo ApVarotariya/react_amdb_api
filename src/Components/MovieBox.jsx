@@ -12,7 +12,7 @@ const MovieBox = ({ movie }) => {
 
   return (
     <>
-      <div className="col-lg-2 col-md-2 col-sm-4 col-xs-6 moviecard">
+      <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
         <Card>
           <Card.Img
             variant="top"

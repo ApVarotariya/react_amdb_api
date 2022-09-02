@@ -14,19 +14,13 @@ body {
 .moviecard {
   display: flex;
   flex-direction: column;
-  width: 300px !important;
+  /* width: 300px !important; */
   padding: 5px;
   margin: 5px 0;
   margin-bottom: 30px;
-  background-color: #282c34;
   border-radius: 10px;
   position: relative;
   font-family: "Montserrat", sans-serif;
-}
-.moviecard:hover {
-  background-color: #051129;
-  transition: transform ease 0.2s;
-  transform: scale(1.009);
 }
 .moviecard img {
   width: auto;
@@ -37,8 +31,13 @@ body {
   padding: 5px;
   height: 100%;
   position: relative;
-  background: transparent;
+  background: #282c34;
   border: none;
+}
+.moviecard .card:hover {
+  background-color: #051129;
+  transition: transform ease 0.2s;
+  transform: scale(1.009);
 }
 .moviecard .card .card-body {
   padding: 5px;
@@ -256,7 +255,7 @@ body {
   }
   .header-main div .navbar-main {
     justify-content: center;
-    margin: 10px 0;
+    margin: 0;
   }
   .page_heading {
     font-size: 40px;
@@ -273,8 +272,31 @@ body {
     margin: 0 auto;
     height: 60px;
   }
+  .moviecard {
+    width: 33.33% !important;
+  }
+  body {
+    padding-top: 80px;
+  }
 }
 @media (max-width: 575px) {
+  .moviecard {
+    width: 50% !important;
+  }
+  .moviecard .card .card-title h3 {
+    font-size: 18px;
+  }
+  .moviecard .card .card-title p {
+    font-size: 14px;
+  }
+  .moviecard button {
+    margin: 5px auto;
+    width: 100%;
+    padding: 8px 2px;
+  }
+  .moviecard {
+    margin-bottom: 10px;
+  }
   .model-main .card-body {
     padding: 10px 0;
   }
@@ -287,7 +309,54 @@ body {
   .navbar-mobile .navbar-nav a {
     font-size: 17px;
   }
-  .page_heading {
+  .header-main .page_heading {
     font-size: 34px;
+  }
+  .header-main .page_heading {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .moviecard_main {
+    padding: 0 4px 20px 4px;
+  }
+  .model-main .modal-body .card img {
+    height: 200px;
+  }
+  .model-main .modal-title h1 {
+    font-size: 22px;
+    margin-bottom: 0;
+    padding: 0 8px;
+  }
+  .model-main .card p {
+    font-size: 16px;
+    margin-bottom: 0px;
+  }
+  .model-main .modal-header {
+    padding: 10px;
+    align-items: baseline;
+  }
+  .model-main .modal-body .card {
+    padding: 5px 10px 5px 10px;
+  }
+  .model-main .card-movie-overview {
+    height: 180px;
+    overflow: scroll;
+    padding: 5px 5px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+  }
+  .moviecard .card h3 span:nth-child(2) {
+    right: -12px;
+  }
+  .model-main .modal-content,
+  .model-main .modal-body .card {
+    background: #eee;
+  }
+  .model-main .modal-dialog .btn-close {
+    opacity: 1;
+  }
+  .page_heading {
+    margin: 1rem 0 !important;
+    margin-bottom: 1rem !important;
   }
 }
