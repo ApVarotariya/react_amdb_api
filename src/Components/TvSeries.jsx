@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MovieBox from "./MovieBox";
+import CustomPagination from "./CustomPagination";
 
 const API_TV_SERIES =
   "https://api.themoviedb.org/3/discover/tv?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}";
 
 const TvSeries = () => {
+  const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
 
   const fetchData = async () => {
@@ -16,11 +18,11 @@ const TvSeries = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [page]);
   return (
     <>
       <div className="container-fluid">
-        <div className="row justify-content-around">
+        <div className="row">
           <h1 className="text-center fw-lighter page_heading mb-5">
             TV Series
           </h1>
@@ -28,6 +30,7 @@ const TvSeries = () => {
             return <MovieBox key={movie.id} movie={movie} />;
           })}
         </div>
+        <CustomPagination setPage={setPage} />
       </div>
     </>
   );

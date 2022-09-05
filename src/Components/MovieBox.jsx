@@ -28,16 +28,21 @@ const MovieBox = ({ movie }) => {
                 </strong>
                 <span>{movie.vote_average}</span>
               </h3>
-              <p>
-                <span>
-                  {dateFormat(
-                    movie.release_date
-                      ? movie.release_date
-                      : movie.first_air_date,
-                    "mmmm dS, yyyy"
-                  )}
-                </span>
-              </p>
+              <div className="d-flex justify-content-between align-items-center">
+                <p style={{ fontSize: "12px" }}>
+                  <span>
+                    {dateFormat(
+                      movie.release_date
+                        ? movie.release_date
+                        : movie.first_air_date,
+                      "mmmm dS, yyyy"
+                    )}
+                  </span>
+                </p>
+                <p style={{ fontSize: "12px" }}>
+                  {movie.media_type === "tv" ? "TV Series" : "Movie"}
+                </p>
+              </div>
             </Card.Title>
             <Button variant="success" onClick={() => setShow(true)}>
               More Details
