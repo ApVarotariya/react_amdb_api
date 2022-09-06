@@ -7,6 +7,7 @@ import YoutubeVideos from "./Components/YoutubeVideos";
 import Search from "./Components/Search";
 import Header from "./Components/Header";
 import { Routes, Route } from "react-router-dom";
+import Movies from "./Components/Movies";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/react_amdb_api" element={<Main />} />
         <Route path="trending-movies" element={<TrendingMovies />} />
+        <Route path="movies" element={<Movies />} />
         <Route path="tv-series" element={<TvSeries />} />
         <Route path="search" element={<Search />} />
         <Route path="youtube-videos" element={<YoutubeVideos />} />

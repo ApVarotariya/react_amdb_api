@@ -188,6 +188,12 @@ body {
   font-size: 20px;
   padding: 0;
 }
+.custompagination .MuiPagination-ul {
+  justify-content: center;
+}
+.custompagination .MuiPagination-ul li button {
+  color: #fff;
+}
 
 @media (max-width: 1100px) {
   .model-main .modal-body .card img {
