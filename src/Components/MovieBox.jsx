@@ -28,7 +28,7 @@ const MovieBox = ({ movie }) => {
                 </strong>
                 <span>{movie.vote_average}</span>
               </h3>
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-start">
                 <p style={{ fontSize: "12px" }}>
                   <span>
                     {dateFormat(

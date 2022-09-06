@@ -64,6 +64,10 @@ const Header = () => {
                       <span>Home</span>
                       <AiFillHome />
                     </NavLink>
+                    <NavLink activeclassname="active" to="movies">
+                      <span>Discover</span>
+                      <CgTrending />
+                    </NavLink>
                     <NavLink activeclassname="active" to="trending-movies">
                       <span>Trending</span>
                       <CgTrending />
