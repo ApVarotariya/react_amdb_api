@@ -21,7 +21,9 @@ const Search = () => {
     try {
       const url = `https://api.themoviedb.org/3/search/${
         type ? "tv" : "movie"
-      }?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&query=${query}&page=${page}`;
+      }?api_key=${
+        process.env.REACT_APP_ACCESS_KEY
+      }&query=${query}&page=${page}`;
 
       const res = await fetch(url);
       const data = await res.json();
@@ -108,10 +110,20 @@ const Search = () => {
           </div>
           <div className="row">
             {movies.map((c) => {
-              return  <MovieBox key={c.id} id={c.id} title={c.title || c.original_name} 
-              poster={c.poster_path || c.backdrop_path} date={c.first_air_date || c.release_date} 
-              vote_average={c.vote_average} media_type={type ? "tv" : "movie"}
-               overview={c.overview} vote_count={c.vote_count} popularity={c.popularity}/>;
+              return (
+                <MovieBox
+                  key={c.id}
+                  id={c.id}
+                  title={c.title || c.original_name}
+                  poster={c.poster_path || c.backdrop_path}
+                  date={c.first_air_date || c.release_date}
+                  vote_average={c.vote_average}
+                  media_type={type ? "tv" : "movie"}
+                  overview={c.overview}
+                  vote_count={c.vote_count}
+                  popularity={c.popularity}
+                />
+              );
             })}
           </div>
           <CustomPagination setPage={setPage} />

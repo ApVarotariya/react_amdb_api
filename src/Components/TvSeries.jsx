@@ -9,7 +9,7 @@ const TvSeries = () => {
 
   const fetchData = async () => {
     const movies = await axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&page=${page}`
+      `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     console.log(process.env);
     setMovies(movies.data.results);
@@ -27,10 +27,20 @@ const TvSeries = () => {
             TV Series
           </h1>
           {movies.map((c) => {
-            return  <MovieBox key={c.id} id={c.id} title={c.title || c.original_name} 
-              poster={c.poster_path || c.backdrop_path} date={c.first_air_date || c.release_date} 
-              vote_average={c.vote_average} media_type={"tv"}
-               overview={c.overview} vote_count={c.vote_count} popularity={c.popularity}/>;
+            return (
+              <MovieBox
+                key={c.id}
+                id={c.id}
+                title={c.title || c.original_name}
+                poster={c.poster_path || c.backdrop_path}
+                date={c.first_air_date || c.release_date}
+                vote_average={c.vote_average}
+                media_type={"tv"}
+                overview={c.overview}
+                vote_count={c.vote_count}
+                popularity={c.popularity}
+              />
+            );
           })}
         </div>
         <CustomPagination setPage={setPage} />

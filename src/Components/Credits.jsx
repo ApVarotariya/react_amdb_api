@@ -11,7 +11,7 @@ const handleDragStart = (e) => e.preventDefault();
 const Credits = ({ id, media_type }) => {
   const [credits, setCredits] = useState([]);
 
-  const items = credits?.map((c) => ( 
+  const items = credits?.map((c) => (
     <div className="carouselItem">
       <img
         src={c.profile_path ? API_IMG + c.profile_path : unavailable}
@@ -31,7 +31,7 @@ const Credits = ({ id, media_type }) => {
 
   const fetchCredits = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&language=en-US`
+      `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
     );
     setCredits(data.cast);
     // console.log(data.cast);
@@ -44,15 +44,15 @@ const Credits = ({ id, media_type }) => {
 
   return (
     <>
-    <AliceCarousel
-      mouseTracking
-      infinite
-      disableDotsControls
-      disableButtonsControls
-      responsive={responsive}
-      items={items}
-      autoPlay
-    />
+      <AliceCarousel
+        mouseTracking
+        infinite
+        disableDotsControls
+        disableButtonsControls
+        responsive={responsive}
+        items={items}
+        autoPlay
+      />
     </>
   );
 };

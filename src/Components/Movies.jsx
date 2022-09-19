@@ -10,7 +10,7 @@ const Movies = () => {
 
   const fetchData = async () => {
     const movies = await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&page=${page}`
+      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     setMovies(movies.data.results);
     setNumOfPages(movies.data.total_pages);
@@ -29,10 +29,20 @@ const Movies = () => {
             Discover Movies
           </h1>
           {movies.map((c) => {
-            return  <MovieBox key={c.id} id={c.id} title={c.title || c.original_name} 
-              poster={c.poster_path || c.backdrop_path} date={c.first_air_date || c.release_date} 
-              vote_average={c.vote_average} media_type={"movie"}
-               overview={c.overview} vote_count={c.vote_count} popularity={c.popularity}/>;
+            return (
+              <MovieBox
+                key={c.id}
+                id={c.id}
+                title={c.title || c.original_name}
+                poster={c.poster_path || c.backdrop_path}
+                date={c.first_air_date || c.release_date}
+                vote_average={c.vote_average}
+                media_type={"movie"}
+                overview={c.overview}
+                vote_count={c.vote_count}
+                popularity={c.popularity}
+              />
+            );
           })}
         </div>
         {numOfPages > 1 && (
