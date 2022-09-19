@@ -3,18 +3,18 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 
-const API_TV_SERIES =
-  "https://api.themoviedb.org/3/discover/tv?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genreforURL}";
-
 const TvSeries = () => {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
 
   const fetchData = async () => {
-    const movies = await axios.get(API_TV_SERIES);
+    const movies = await axios.get(
+      `https://api.themoviedb.org/3/discover/tv?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&page=${page}`
+    );
+    console.log(process.env);
     setMovies(movies.data.results);
-    // console.log(movies.data.results);
-    // console.log(movies);
+    console.log(movies.data.results);
+    console.log(movies);
   };
   useEffect(() => {
     fetchData();
@@ -26,8 +26,11 @@ const TvSeries = () => {
           <h1 className="text-center fw-lighter page_heading mb-5">
             TV Series
           </h1>
-          {movies.map((movie) => {
-            return <MovieBox key={movie.id} movie={movie} />;
+          {movies.map((c) => {
+            return  <MovieBox key={c.id} id={c.id} title={c.title || c.original_name} 
+              poster={c.poster_path || c.backdrop_path} date={c.first_air_date || c.release_date} 
+              vote_average={c.vote_average} media_type={"tv"}
+               overview={c.overview} vote_count={c.vote_count} popularity={c.popularity}/>;
           })}
         </div>
         <CustomPagination setPage={setPage} />

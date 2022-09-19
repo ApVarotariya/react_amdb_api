@@ -3,8 +3,6 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 
-const MOVIES_API =
-  "https://api.themoviedb.org/3/discover/movie?api_key=c94bf057fba6ebfedf3bab9d4ae67b1f&page=${page}";
 const Movies = () => {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
@@ -30,12 +28,15 @@ const Movies = () => {
           <h1 className="text-center fw-lighter page_heading mb-5">
             Discover Movies
           </h1>
-          {movies.map((movie) => {
-            return <MovieBox key={movie.id} movie={movie} />;
+          {movies.map((c) => {
+            return  <MovieBox key={c.id} id={c.id} title={c.title || c.original_name} 
+              poster={c.poster_path || c.backdrop_path} date={c.first_air_date || c.release_date} 
+              vote_average={c.vote_average} media_type={"movie"}
+               overview={c.overview} vote_count={c.vote_count} popularity={c.popularity}/>;
           })}
         </div>
         {numOfPages > 1 && (
-          <CustomPagination setPage={setPage} numOfPages={numOfPages} />
+          <CustomPagination setPage={setPage} numOfPages={500} />
         )}
       </div>
     </>

@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 import dateFormat from "dateformat";
 import { unavailable } from "./README";
+import Credits from "./Credits";
+import TrailerVideo from "./TrailerVideo";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
-const MovieBox = ({ movie }) => {
+const MovieBox = ({ id,title,date,media_type,vote_average,poster,popularity,vote_count,overview }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -16,31 +18,29 @@ const MovieBox = ({ movie }) => {
         <Card>
           <Card.Img
             variant="top"
-            src={movie.poster_path ? API_IMG + movie.poster_path : unavailable}
-            alt="There is Supposed to be an Image of Movie Poster"
+            src={poster ? API_IMG + poster : unavailable}
+            alt={title}
             className="movie-backdrop-poster"
           />
           <Card.Body>
             <Card.Title>
               <h3>
                 <strong>
-                  <span>{movie.title ? movie.title : movie.original_name}</span>
+                  <span>{title}</span>
                 </strong>
-                <span>{movie.vote_average}</span>
+                <span>{vote_average}</span>
               </h3>
               <div className="d-flex justify-content-between align-items-start">
                 <p style={{ fontSize: "12px" }}>
                   <span>
                     {dateFormat(
-                      movie.release_date
-                        ? movie.release_date
-                        : movie.first_air_date,
+                     date,
                       "mmmm dS, yyyy"
                     )}
                   </span>
                 </p>
                 <p style={{ fontSize: "12px" }}>
-                  {movie.media_type === "tv" ? "TV Series" : "Movie"}
+                  {media_type === "tv" ? "TV Series" : "Movie"}
                 </p>
               </div>
             </Card.Title>
@@ -50,15 +50,14 @@ const MovieBox = ({ movie }) => {
           </Card.Body>
         </Card>
         <Modal
-          show={show}
+        show={show}
           onHide={() => setShow(false)}
           dialogClassName="modal-90w"
           className="model-main"
-          aria-labelledby="example-custom-modal-styling-title"
-        >
+          aria-labelledby="example-custom-modal-styling-title">
           <Modal.Header closeButton>
             <Modal.Title id="example-custom-modal-styling-title">
-              <h1> {movie.title ? movie.title : movie.original_name}</h1>
+              <h1> {title}</h1>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -66,7 +65,7 @@ const MovieBox = ({ movie }) => {
               <Card.Img
                 variant="top"
                 src={
-                  movie.poster_path ? API_IMG + movie.poster_path : unavailable
+                  poster ? API_IMG + poster : unavailable
                 }
                 alt=""
                 className="movie-backdrop-poster"
@@ -74,42 +73,38 @@ const MovieBox = ({ movie }) => {
               <Card.Body>
                 <Card.Text>
                   <span>
-                    <strong>Realese Date :</strong>{" "}
+                    <strong>Realese Date :</strong>
                     {dateFormat(
-                      movie.release_date
-                        ? movie.release_date
-                        : movie.first_air_date,
+                      date,
                       "mmmm dS, yyyy"
                     )}
                   </span>
                 </Card.Text>
                 <Card.Text>
                   <span>
-                    <strong>Imdb Rating :</strong> {movie.vote_average}
+                    <strong>Imdb Rating :</strong> {vote_average}
                   </span>
                 </Card.Text>
                 <Card.Text>
                   <p className="card-movie-overview">
                     <strong>Overview :</strong>
-                    {movie.overview}
+                    {overview}
                   </p>
                 </Card.Text>
                 <Card.Text>
                   <p>
-                    <strong>popularity :</strong> {movie.popularity}
+                    <strong>popularity :</strong> {popularity}
                   </p>
                 </Card.Text>
                 <Card.Text>
                   <p>
-                    <strong>Avg. Vote :</strong>
-                    {movie.vote_average}
+                    <strong>Total No. of Votes :</strong> {vote_count}
                   </p>
                 </Card.Text>
-                <Card.Text>
-                  <p>
-                    <strong>Total No. of Votes :</strong> {movie.vote_count}
-                  </p>
-                </Card.Text>
+                <div>
+        <Credits  media_type={ media_type} id={ id} poster={poster}/>
+        </div>
+                <TrailerVideo  media_type={ media_type} id={ id}/>
               </Card.Body>
             </Card>
           </Modal.Body>

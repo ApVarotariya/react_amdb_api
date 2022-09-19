@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap");
+  
 
 body {
   margin: 0;
@@ -55,9 +56,12 @@ body {
   font-size: 14px;
   border: 1px solid #eac56b;
 }
-.moviecard button:hover {
+.moviecard button:hover,
+.moviecard button:focus,
+.moviecard button:active:focus {
   background-color: #eac56b;
   color: #000;
+  box-shadow: none;
   border: 1px solid transparent;
 }
 .model-main {
@@ -106,7 +110,7 @@ body {
 .model-main .modal-dialog {
   top: 50%;
   transform: translate(0%, -50%) !important;
-  max-width: 70% !important;
+  max-width: 90% !important;
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -208,7 +212,37 @@ body {
 .custompagination .MuiPagination-ul li .Mui-selected {
   background-color: #eac56b;
 }
-
+.search_by_tabs .MuiTabs-flexContainer {
+  width: 100%;
+}
+.search_by_tabs .MuiTabs-flexContainer button {
+  max-width: 50%;
+}
+.carouselItem {
+  display: flex;
+  flex-direction: column;
+  object-fit: cover;
+  padding: 10px;
+}
+.carouselItem__img {
+  border-radius: 10px;
+  margin-bottom: 5px;
+  object-fit: cover;
+  box-shadow: 0px 0px 5px black;
+}
+.alice-carousel li .carouselItem img{
+  height: auto !important;
+}
+.card-body{
+  width: 100%;
+  float: left;
+  overflow: hidden;
+}
+.carouselItem b{
+  font-weight: 400 !important;
+  font-size: 12px;
+  line-height: 14px;
+}
 @media (max-width: 1100px) {
   .model-main .modal-body .card img {
     height: 400px;
@@ -303,6 +337,9 @@ body {
   .moviecard {
     width: 50% !important;
   }
+  .search_by_tabs .MuiTabs-flexContainer button {
+    font-size: 12px;
+}
   .moviecard .card .card-title h3 {
     font-size: 18px;
   }
@@ -312,6 +349,7 @@ body {
   .moviecard button {
     margin: 5px auto;
     width: 100%;
+    font-size: 12px;
     padding: 8px 2px;
   }
   .moviecard {

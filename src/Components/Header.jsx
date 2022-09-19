@@ -32,17 +32,14 @@ const Header = () => {
                 />
                 <Navbar.Collapse id="basic-navbar-nav">
                   <Nav className="me-auto">
-                    <NavLink activeclassname="active" to="trending-movies">
+                    {/* <NavLink activeclassname="active" to="trending-movies">
                       Trending
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink activeclassname="active" to="movies">
                       Discover
                     </NavLink>
                     <NavLink activeclassname="active" to="tv-series">
                       TV Series
-                    </NavLink>
-                    <NavLink activeclassname="active" to="youtube-videos">
-                      YoutubeVideos
                     </NavLink>
                     <NavLink activeclassname="active" to="search">
                       Search
@@ -60,7 +57,7 @@ const Header = () => {
               >
                 <Container fluid>
                   <Nav className="me-auto">
-                    <NavLink activeclassname="active" to="/">
+                    <NavLink activeclassname="active" to="react_amdb_api">
                       <span>Home</span>
                       <AiFillHome />
                     </NavLink>
@@ -68,10 +65,10 @@ const Header = () => {
                       <span>Discover</span>
                       <CgTrending />
                     </NavLink>
-                    <NavLink activeclassname="active" to="trending-movies">
+                    {/* <NavLink activeclassname="active" to="trending-movies">
                       <span>Trending</span>
                       <CgTrending />
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink activeclassname="active" to="tv-series">
                       <span>Tv Series</span>
                       <RiMovie2Fill />
