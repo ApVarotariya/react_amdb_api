@@ -1,21 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap");
-  
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #39445a !important;
+  background-color: #fff !important;
+  font-family: "Raleway", sans-serif !important;
   color: white !important;
-  padding-top: 30px;
+  padding-top: 0;
   padding-bottom: 50px;
 }
 .moviecard_main {
   padding: 0 20px 20px 20px;
 }
+.header-main {
+  z-index: 9;
+  width: 100%;
+  background: #37413b;
+}
 .moviecard {
   display: flex;
   flex-direction: column;
-  /* width: 300px !important; */
   padding: 5px;
   margin: 5px 0;
   margin-bottom: 30px;
@@ -131,7 +135,7 @@ body {
 .search-form-main input {
   justify-content: flex-end;
   color: #fff !important;
-  background: rgba(80, 227, 194, 0.25);
+  background: rgba(80, 227, 194, 1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -146,7 +150,7 @@ body {
   color: #fff;
 }
 .search-form-main button {
-  background: rgba(80, 227, 194, 0.25);
+  background: rgba(80, 227, 194, 1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -178,7 +182,7 @@ body {
   color: #fff;
 }
 .navbar-nav a:hover {
-  color: rgba(80, 227, 194, 0.25);
+  color: #cfbb89;
 }
 .page_heading {
   font-size: 50px;
@@ -207,10 +211,13 @@ body {
   justify-content: center;
 }
 .custompagination .MuiPagination-ul li button {
-  color: #fff;
+  color: #000;
 }
 .custompagination .MuiPagination-ul li .Mui-selected {
   background-color: #eac56b;
+}
+.search_by_tabs .css-1aquho2-MuiTabs-indicator {
+  background-color: #eed087;
 }
 .search_by_tabs .MuiTabs-flexContainer {
   width: 100%;
@@ -223,6 +230,8 @@ body {
   flex-direction: column;
   object-fit: cover;
   padding: 10px;
+  border: 1px solid #eee;
+  margin: 5px;
 }
 .carouselItem__img {
   border-radius: 10px;
@@ -230,18 +239,120 @@ body {
   object-fit: cover;
   box-shadow: 0px 0px 5px black;
 }
-.alice-carousel li .carouselItem img{
+.alice-carousel li .carouselItem img {
   height: auto !important;
 }
-.card-body{
+.card-body {
   width: 100%;
   float: left;
   overflow: hidden;
 }
-.carouselItem b{
+.carouselItem b {
   font-weight: 400 !important;
   font-size: 12px;
   line-height: 14px;
+}
+.single_content_details {
+  display: flex;
+  align-items: center;
+}
+.single_content_details img {
+  width: 320px;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: block;
+  max-width: 100%;
+}
+.single_content_slider {
+  width: 70%;
+  float: left;
+  padding: 50px 20px 50px 10px;
+}
+.details_page_sidebar {
+  width: 30%;
+  float: left;
+  padding: 50px 20px 50px 10px;
+}
+.trailer_btn {
+  background: transparent !important;
+  border: 1px solid #eee !important;
+  border-radius: 0 !important;
+  position: absolute;
+  top: -80px;
+  right: 50px;
+}
+.alice-carousel__prev-btn {
+  position: absolute;
+  top: 25%;
+  text-align: left !important;
+  left: -40px;
+}
+.alice-carousel__next-btn {
+  position: absolute;
+  top: 25%;
+  text-align: right;
+  right: -40px;
+}
+.alice-carousel__prev-btn [data-area]::after,
+.alice-carousel__next-btn [data-area]::after {
+  font-size: 40px;
+}
+.trailer_btn:hover {
+  background: #fff !important;
+  color: #000 !important;
+}
+.details_runtime {
+  padding-left: 50px;
+  position: relative;
+}
+.details_runtime::before {
+  font-size: 1.1em;
+  line-height: 1;
+  content: "\2022";
+  position: absolute;
+  top: 3px;
+  left: 35px;
+  display: inline-flex;
+  align-content: center;
+  align-items: center;
+}
+.details_userscore .CircularProgressbar .CircularProgressbar-text {
+  fill: #fff;
+  font-size: 34px;
+}
+.details_userscore .CircularProgressbar .CircularProgressbar-path {
+  stroke: #21d07a;
+}
+.details_tagline {
+  font-style: italic;
+  font-size: 18px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+.details_title {
+  font-size: 40px;
+  font-weight: 700;
+}
+.details_air_date {
+  font-size: 34px;
+  padding-left: 6px;
+}
+.search_page_main {
+  padding-top: 80px;
+}
+.details_hero_left {
+  width: 30%;
+  float: left;
+}
+.details_hero_right {
+  width: 70%;
+  float: left;
+  padding-left: 20px;
+}
+@media (max-width: 1200px) {
+  .details_title {
+    font-size: 34px;
+  }
 }
 @media (max-width: 1100px) {
   .model-main .modal-body .card img {
@@ -251,6 +362,11 @@ body {
     max-width: 90% !important;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+@media (max-width: 1024px) {
+  .single_content_details {
+    height: 100% !important;
   }
 }
 @media (max-width: 991px) {
@@ -265,7 +381,7 @@ body {
     align-items: center;
   }
   body {
-    padding-top: 120px;
+    padding-top: 85px;
   }
   .navbar .navbar-toggler {
     border: none;
@@ -284,6 +400,13 @@ body {
   }
   .header-main div.mb-5 {
     margin: 1rem 0 !important;
+  }
+  .single_content_details {
+    padding: 120px 20px 50px;
+  }
+  .trailer_btn {
+    top: -50px;
+    right: 0px;
   }
 }
 @media (max-width: 767px) {
@@ -332,6 +455,31 @@ body {
   body {
     padding-top: 80px;
   }
+  .details_hero_left {
+    width: 100%;
+  }
+  .details_hero_right {
+    width: 100%;
+    padding-left: 0;
+  }
+  .single_content_details {
+    flex-direction: column;
+  }
+  .single_content_details {
+    padding: 60px 20px 50px !important;
+  }
+  .single_content_details img {
+    width: 40%;
+    margin: 20px auto;
+  }
+  .single_content_slider {
+    width: 100%;
+    padding: 0px 20px 0px 10px;
+  }
+  .details_page_sidebar {
+    width: 100%;
+    padding: 20px 20px 70px 20px;
+  }
 }
 @media (max-width: 575px) {
   .moviecard {
@@ -339,7 +487,7 @@ body {
   }
   .search_by_tabs .MuiTabs-flexContainer button {
     font-size: 12px;
-}
+  }
   .moviecard .card .card-title h3 {
     font-size: 18px;
   }
@@ -416,6 +564,26 @@ body {
   .page_heading {
     margin: 1rem 0 !important;
     margin-bottom: 1rem !important;
+  }
+  .single_content_details img {
+    margin: 20px 0;
+  }
+  .single_content_details img {
+    width: 250px;
+  }
+  .details_title {
+    font-size: 28px;
+  }
+  .details_air_date {
+    font-size: 26px;
+  }
+}
+@media (max-width: 460px) {
+  .trailer_btn {
+    position: static;
+  }
+  .single_content_details img {
+    margin: 20px auto;
   }
 }
 @media (max-width: 400px) {

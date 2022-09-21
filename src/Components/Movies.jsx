@@ -15,8 +15,8 @@ const Movies = () => {
     setMovies(movies.data.results);
     setNumOfPages(movies.data.total_pages);
     console.log(movies.data.total_pages);
-    // console.log(movies.data.results);
-    // console.log(movies);
+    console.log(movies.data.results);
+    console.log(movies);
   };
   useEffect(() => {
     fetchData();
@@ -25,7 +25,7 @@ const Movies = () => {
     <>
       <div className="container-fluid">
         <div className="row">
-          <h1 className="text-center fw-lighter page_heading mb-5">
+          <h1 className="text-center fw-lighter page_heading my-3 text-black">
             Discover Movies
           </h1>
           {movies.map((c) => {
@@ -34,7 +34,8 @@ const Movies = () => {
                 key={c.id}
                 id={c.id}
                 title={c.title || c.original_name}
-                poster={c.poster_path || c.backdrop_path}
+                poster={c.poster_path}
+                backdrop_path={c.backdrop_path}
                 date={c.first_air_date || c.release_date}
                 vote_average={c.vote_average}
                 media_type={"movie"}

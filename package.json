@@ -19,6 +19,7 @@
     "react-alice-carousel": "^2.6.4",
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-icons": "^1.8.4",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
     "react-loader-spinner": "^5.3.3",

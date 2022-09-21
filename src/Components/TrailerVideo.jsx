@@ -11,8 +11,6 @@ const TrailerVideo = ({ media_type, id }) => {
     );
 
     setVideos(data.results[0]?.key);
-    console.log(data.results);
-    console.log(videos);
   };
   useEffect(() => {
     fetchVideo();
@@ -20,7 +18,7 @@ const TrailerVideo = ({ media_type, id }) => {
   return (
     <>
       <Button
-        color="secondary"
+        className="trailer_btn"
         target="__blank"
         href={`https://www.youtube.com/watch?v=${videos}`}
       >

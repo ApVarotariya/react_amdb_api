@@ -7,6 +7,8 @@ import Search from "./Components/Search";
 import Header from "./Components/Header";
 import { Routes, Route } from "react-router-dom";
 import Movies from "./Components/Movies";
+import SingleMovie from "./Components/SingleMovie";
+import SingleTv from "./Components/SingleTv";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/react_amdb_api" element={<Main />} />
+        <Route path="/movie/:id" element={<SingleMovie />} />
+        <Route path="/tv/:id" element={<SingleTv />} />
         <Route path="trending-movies" element={<TrendingMovies />} />
         <Route path="movies" element={<Movies />} />
         <Route path="tv-series" element={<TvSeries />} />

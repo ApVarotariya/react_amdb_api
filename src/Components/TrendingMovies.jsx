@@ -21,7 +21,7 @@ const TrendingMovies = () => {
     <>
       <div className="container-fluid">
         <div className="row justify-content-around">
-          <h1 className="text-center fw-lighter page_heading mb-5">
+          <h1 className="text-center fw-lighter page_heading my-3 text-black">
             Popular Movies
           </h1>
           {trendingMovies.map((c) => {

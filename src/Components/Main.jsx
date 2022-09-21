@@ -26,7 +26,7 @@ const Main = () => {
       <div className="moviecard_main">
         <div className="container-fluid">
           <div className="row">
-            <h1 className="text-center fw-lighter page_heading mb-5">
+            <h1 className="text-center fw-lighter page_heading my-3 text-black">
               Trending Movies
             </h1>
             {movies.map((c) => {

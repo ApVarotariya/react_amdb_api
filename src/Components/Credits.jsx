@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { unavailable } from "./README";
 import "react-alice-carousel/lib/alice-carousel.css";
+import { Slide } from "@mui/material";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
@@ -19,13 +20,16 @@ const Credits = ({ id, media_type }) => {
         onDragStart={handleDragStart}
         className="carouselItem__img"
       />
-      <b className="carouselItem__txt">{c?.name}</b>
+      <p className="carouselItem__txt text-black my-1">
+        <strong>{c?.name}</strong>
+      </p>
+      <b className="carouselItem__txt text-black">{c?.character}</b>
     </div>
   ));
 
   const responsive = {
     0: { items: 1 },
-    568: { items: 3 },
+    568: { items: 5 },
     1024: { items: 5 },
   };
 
@@ -34,7 +38,7 @@ const Credits = ({ id, media_type }) => {
       `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
     );
     setCredits(data.cast);
-    // console.log(data.cast);
+    console.log(data.cast);
   };
 
   useEffect(() => {
@@ -52,6 +56,7 @@ const Credits = ({ id, media_type }) => {
         responsive={responsive}
         items={items}
         autoPlay
+        autoPlayInterval={600}
       />
     </>
   );
