@@ -110,10 +110,10 @@ const SingleMovie = () => {
         </div>
         <div style={{ color: "#000" }} className="details_page_sidebar">
           <h2 className="my-4 text-center text-black">Fact </h2>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between details_page_fact_main">
             <p className="details_website">
-              <strong>Official Website :</strong> <br />{" "}
-              {movies?.data?.homepage}
+              <strong>Official Website :</strong> <br />
+              <a href={movies?.data?.homepage}>Click here</a>
             </p>
             <p className="details_pdocuction_com">
               <strong>Production Companies:</strong>

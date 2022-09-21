@@ -9,6 +9,10 @@ body {
   padding-top: 0;
   padding-bottom: 50px;
 }
+a,
+a:hover {
+  text-decoration: none !important;
+}
 .moviecard_main {
   padding: 0 20px 20px 20px;
 }
@@ -349,6 +353,32 @@ body {
   float: left;
   padding-left: 20px;
 }
+.search-form-main input:focus {
+  color: #000 !important;
+}
+.person_details_movie_air_date {
+  position: absolute;
+  bottom: 24%;
+  background: #000;
+  border-radius: 4px;
+  padding: 5px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.person_details_movie_btn {
+  margin-top: auto;
+}
+.person_details_hero_left {
+  padding-top: 50px;
+}
+.person_details_hero_left p {
+  margin-bottom: 0;
+}
+@media (min-width: 767px) {
+  .details_page_fact_main {
+    flex-direction: column;
+  }
+}
 @media (max-width: 1200px) {
   .details_title {
     font-size: 34px;
@@ -375,7 +405,7 @@ body {
     position: absolute;
     top: 70px;
     flex-grow: 1;
-    background: #39445a;
+    background: #37413b;
     width: 100%;
     z-index: 9;
     align-items: center;
@@ -395,8 +425,10 @@ body {
     top: 0;
     width: 100%;
     z-index: 9;
-    background: #39445a;
-    border-bottom: 1px solid #282c34;
+    background: #37413b;
+  }
+  .navbar-mobile {
+    background: #37413b;
   }
   .header-main div.mb-5 {
     margin: 1rem 0 !important;
@@ -479,6 +511,9 @@ body {
   .details_page_sidebar {
     width: 100%;
     padding: 20px 20px 70px 20px;
+  }
+  .details_pdocuction_com span {
+    display: block;
   }
 }
 @media (max-width: 575px) {

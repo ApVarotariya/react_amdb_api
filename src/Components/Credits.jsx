@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { unavailable } from "./README";
 import "react-alice-carousel/lib/alice-carousel.css";
-import { Slide } from "@mui/material";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
@@ -15,13 +14,19 @@ const Credits = ({ id, media_type }) => {
   const items = credits?.map((c) => (
     <div className="carouselItem">
       <img
-        src={c.profile_path ? API_IMG + c.profile_path : unavailable}
+        src={
+          c.profile_path
+            ? API_IMG + c.profile_path
+            : unavailable || c.profile_path
+            ? API_IMG + c.poster_path
+            : unavailable
+        }
         alt={c?.name}
         onDragStart={handleDragStart}
         className="carouselItem__img"
       />
       <p className="carouselItem__txt text-black my-1">
-        <strong>{c?.name}</strong>
+        <strong>{c?.name || c?.original_title}</strong>
       </p>
       <b className="carouselItem__txt text-black">{c?.character}</b>
     </div>

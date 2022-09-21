@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, FormControl, Button } from "react-bootstrap";
-import MovieBox from "./MovieBox";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import { Triangle } from "react-loader-spinner";
 import CustomPagination from "./CustomPagination";
+import SearchDetails from "./SearchDetails";
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -19,24 +17,16 @@ const Search = () => {
     e.preventDefault();
     console.log("searching");
     try {
-      const url = `https://api.themoviedb.org/3/search/${
-        type ? "tv" : "movie"
-      }?api_key=${
-        process.env.REACT_APP_ACCESS_KEY
-      }&query=${query}&page=${page}`;
-
+      const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`;
       const res = await fetch(url);
       const data = await res.json();
       setMovies(data.results);
-      // setNumOfpages(data.total_pages);
+      console.log(data.results);
       setIsLoading(false);
     } catch (e) {
       // console.log(e);
     }
   };
-  // useEffect(() => {
-  //   searchMovie();
-  // }, [page,query]);
 
   const changeHandler = (e) => {
     setQuery(e.target.value);
@@ -86,7 +76,7 @@ const Search = () => {
                     </Button>
                   </Form>
                   <div className="search_by_tabs">
-                    <Tabs
+                    {/* <Tabs
                       value={type}
                       onChange={(event, newValue) => {
                         setType(newValue);
@@ -102,7 +92,7 @@ const Search = () => {
                         style={{ width: "50%", color: "#000" }}
                         label="Search TV Series"
                       ></Tab>
-                    </Tabs>
+                    </Tabs> */}
                   </div>
                 </>
               )}
@@ -111,14 +101,14 @@ const Search = () => {
           <div className="row">
             {movies.map((c) => {
               return (
-                <MovieBox
+                <SearchDetails
                   key={c.id}
                   id={c.id}
-                  title={c.title || c.original_name}
-                  poster={c.poster_path || c.backdrop_path}
+                  title={c.title || c.original_name || c.name}
+                  poster={c.poster_path || c.backdrop_path || c.profile_path}
                   date={c.first_air_date || c.release_date}
                   vote_average={c.vote_average}
-                  media_type={type ? "tv" : "movie"}
+                  media_type={c.media_type}
                   overview={c.overview}
                   vote_count={c.vote_count}
                   popularity={c.popularity}

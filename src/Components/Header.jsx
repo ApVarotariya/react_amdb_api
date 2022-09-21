@@ -49,12 +49,7 @@ const Header = () => {
               </Navbar>
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-md-none">
-              <Navbar
-                bg="dark"
-                expand="lg"
-                fixed="bottom"
-                className="navbar-mobile"
-              >
+              <Navbar expand="lg" fixed="bottom" className="navbar-mobile">
                 <Container fluid>
                   <Nav className="me-auto">
                     <NavLink activeclassname="active" to="react_amdb_api">

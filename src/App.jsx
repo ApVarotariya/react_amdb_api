@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import Movies from "./Components/Movies";
 import SingleMovie from "./Components/SingleMovie";
 import SingleTv from "./Components/SingleTv";
+import SinglePerson from "./Components/SinglePerson";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/react_amdb_api" element={<Main />} />
         <Route path="/movie/:id" element={<SingleMovie />} />
         <Route path="/tv/:id" element={<SingleTv />} />
+        <Route path="/person/:id" element={<SinglePerson />}></Route>
         <Route path="trending-movies" element={<TrendingMovies />} />
         <Route path="movies" element={<Movies />} />
         <Route path="tv-series" element={<TvSeries />} />
