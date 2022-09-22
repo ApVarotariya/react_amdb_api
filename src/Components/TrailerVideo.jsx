@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import ReactPlayer from "react-player/lazy";
+import ReactPlayer from "react-player";
 
 const TrailerVideo = ({ media_type, id }) => {
   const [videos, setVideos] = useState();
@@ -26,16 +26,16 @@ const TrailerVideo = ({ media_type, id }) => {
       >
         Watch the Trailer
       </Button> */}
-      <div className="d-flex w-100">
+      <div className="d-flex w-100 justify-content-between">
         {videos?.slice(0, 3).map((v) => {
           return (
             <>
               <ReactPlayer
+                key={v?.id}
                 url={`https://www.youtube.com/watch?v=${v.key}`}
                 width={400}
                 style={{ padding: "20px" }}
               />
-              {/* <p>{v.key}</p> */}
             </>
           );
         })}

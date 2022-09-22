@@ -379,11 +379,11 @@ a:hover {
   margin-bottom: 0;
 }
 .load_more_btn {
-  background: #eac56b;
-  color: #fff;
+  background: #eac56b !important;
+  color: #fff !important;
   text-transform: capitalize;
   font-weight: 600;
-  border: 1px solid transparent;
+  border: 1px solid transparent !important;
 }
 .load_more_btn:hover {
   background: #fff !important;

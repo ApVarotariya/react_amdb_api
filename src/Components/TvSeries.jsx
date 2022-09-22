@@ -11,10 +11,8 @@ const TvSeries = () => {
     const movies = await axios.get(
       `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
-    console.log(process.env);
     setMovies(movies.data.results);
     console.log(movies.data.results);
-    console.log(movies);
   };
   useEffect(() => {
     fetchData();
