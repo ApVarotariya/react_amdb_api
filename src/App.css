@@ -534,6 +534,13 @@ a:hover {
   .details_pdocuction_com span {
     display: block;
   }
+  .trailer_video_main > div {
+    width: 50% !important;
+    height: 400px !important;
+  }
+  .trailer_video_main {
+    flex-wrap: wrap;
+  }
 }
 @media (max-width: 575px) {
   .moviecard {
@@ -630,6 +637,9 @@ a:hover {
   }
   .details_air_date {
     font-size: 26px;
+  }
+  .trailer_video_main > div {
+    width: 100% !important;
   }
 }
 @media (max-width: 460px) {

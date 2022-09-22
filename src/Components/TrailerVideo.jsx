@@ -26,7 +26,7 @@ const TrailerVideo = ({ media_type, id }) => {
       >
         Watch the Trailer
       </Button> */}
-      <div className="d-flex w-100 justify-content-between">
+      <div className="d-flex w-100 justify-content-between trailer_video_main">
         {videos?.slice(0, 3).map((v) => {
           return (
             <>
