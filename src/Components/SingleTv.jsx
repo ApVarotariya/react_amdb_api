@@ -106,7 +106,6 @@ const SingleTv = () => {
             <p className="details_revenue">
               Total Revenue : ${movies?.data?.revenue}
             </p>
-            <TrailerVideo media_type={"tv"} id={id} />
           </div>
         </div>
         <div className="single_content_slider">
@@ -136,6 +135,7 @@ const SingleTv = () => {
             </p>
           </div>
         </div>
+        <TrailerVideo media_type={"tv"} id={id} />
       </div>
     </>
   );

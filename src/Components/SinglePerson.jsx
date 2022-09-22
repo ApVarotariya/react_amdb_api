@@ -12,6 +12,11 @@ const SinglePerson = () => {
   const media_type = "person";
   const [movies, setMovies] = useState([]);
   const [credits, setCredits] = useState([]);
+  const perPage = 8;
+  const [next, setNext] = useState(perPage);
+  const handleClick = () => {
+    setNext(next + perPage);
+  };
 
   const fetchData = async () => {
     const res = await axios.get(
@@ -87,7 +92,7 @@ const SinglePerson = () => {
         <div className="container-fluid">
           <h2 className="my-4 text-black">Related Movie : </h2>
           <div className="row">
-            {credits.map((c) => {
+            {credits.slice(0, next).map((c) => {
               return (
                 <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
                   <Card>
@@ -106,7 +111,7 @@ const SinglePerson = () => {
                       {c.release_date.substring(0, 4) || "----"}
                     </p>
                     <Link
-                      to={`/${media_type}/${id}`}
+                      to={`/movie/${id}`}
                       className="person_details_movie_btn"
                     >
                       <Button variant="success">More Details</Button>
@@ -115,6 +120,16 @@ const SinglePerson = () => {
                 </div>
               );
             })}
+            <div className="text-center">
+              {next < credits.length && (
+                <Button
+                  className="btn btn-lg mb-4 load_more_btn"
+                  onClick={handleClick}
+                >
+                  Load more
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

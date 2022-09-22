@@ -282,7 +282,7 @@ a:hover {
   border: 1px solid #eee !important;
   border-radius: 0 !important;
   position: absolute;
-  top: -80px;
+  top: 120px;
   right: 50px;
 }
 .alice-carousel__prev-btn {
@@ -369,10 +369,29 @@ a:hover {
   margin-top: auto;
 }
 .person_details_hero_left {
+  width: 30%;
   padding-top: 50px;
+}
+.person_details_hero_left img {
+  margin: 0;
 }
 .person_details_hero_left p {
   margin-bottom: 0;
+}
+.load_more_btn {
+  background: #eac56b;
+  color: #fff;
+  text-transform: capitalize;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.load_more_btn:hover {
+  background: #fff !important;
+  color: #eac56b !important;
+  border: 1px solid #eac56b !important;
+}
+.load_more_btn:focus {
+  box-shadow: none !important;
 }
 @media (min-width: 767px) {
   .details_page_fact_main {

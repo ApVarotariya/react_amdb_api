@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, FormControl, Button } from "react-bootstrap";
 import { Triangle } from "react-loader-spinner";
-import CustomPagination from "./CustomPagination";
+// import CustomPagination from "./CustomPagination";
 import SearchDetails from "./SearchDetails";
 
 const Search = () => {
@@ -116,7 +116,7 @@ const Search = () => {
               );
             })}
           </div>
-          <CustomPagination setPage={setPage} />
+          {/* <CustomPagination setPage={setPage} /> */}
         </div>
       </div>
     </>

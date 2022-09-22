@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { unavailable } from "./README";
 import TrailerVideo from "./TrailerVideo";
 import Credits from "./Credits";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import grad from "gradient-from-image";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
+
+let url = "https://picsum.photos/600/600?image=199";
 
 const SingleMovie = () => {
   const { id } = useParams();
@@ -33,75 +36,88 @@ const SingleMovie = () => {
     var rminutes = Math.round(minutes);
     return rhours + "h " + rminutes + "m";
   }
-  const value = 0.66;
+  grad.gr(`${API_IMG + movies?.data?.backdrop_path}`).then((gr, mode) => {
+    console.log(gr);
+    mode = "no-cors";
+    let bg = "linear-gradient(" + gr.vibrant + ")";
+    let el = document.querySelector(".single_content_details");
+    el.style.background = bg;
+  });
   return (
     <>
       <div className="single_content_details_main">
         <div
-          className="single_content_details"
+          className="xyz"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)),url(${
-              API_IMG + movies?.data?.backdrop_path
-            })`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            position: "relative",
-            padding: "0 20px 50px 20px",
-            width: "100%",
-            height: "100vh",
+            backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
           }}
         >
-          <div className="details_hero_left">
-            <img
-              className="details_postar"
-              src={
-                movies?.data?.poster_path
-                  ? API_IMG + movies?.data?.poster_path
-                  : unavailable
-              }
-              alt={movies?.data?.title || movies?.data?.name}
-            />
-          </div>
-          <div className="details_hero_right position-relative">
-            <h1 className="d-inline-block details_title">
-              {movies?.data?.name || movies?.data?.title}
-            </h1>
-            <span className="details_air_date">
-              ({movies?.data?.release_date.substring(0, 4)})
-            </span>
-            <div>
-              <span className="details_genre">
-                ~&nbsp;
-                {movies?.data?.genres.map((c, index) => {
-                  return <span key={c.id}>{(index ? ", " : "") + c.name}</span>;
-                })}
-              </span>
-              <span className="details_runtime">
-                {timeConvert(movies?.data?.runtime)}
-              </span>
-            </div>
-            <div
-              className="details_userscore"
-              style={{
-                width: 70,
-                height: 70,
-                background: "#000",
-                borderRadius: "50%",
-                padding: "5px",
-                margin: "20px 0",
-              }}
-            >
-              <CircularProgressbar
-                value={movies?.data?.vote_average * 10}
-                text={movies?.data?.vote_average.toFixed(1) * 10 + "%"}
+          <div
+            className="single_content_details"
+            style={{
+              backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              position: "relative",
+              padding: "0 20px 50px 20px",
+              width: "100%",
+              height: "100vh",
+            }}
+          >
+            <div className="details_hero_left">
+              <img
+                className="details_postar"
+                src={
+                  movies?.data?.poster_path
+                    ? API_IMG + movies?.data?.poster_path
+                    : unavailable
+                }
+                cross-origin="anonymous"
+                alt={movies?.data?.title || movies?.data?.name}
               />
             </div>
-            <p className="details_tagline">{movies?.data?.tagline}</p>
-            <p className="details_overview">{movies?.data?.overview}</p>
-            <p className="details_revenue">
-              Total Revenue : ${movies?.data?.revenue}
-            </p>
-            <TrailerVideo media_type={"movie"} id={id} />
+            <div className="details_hero_right position-relative">
+              <h1 className="d-inline-block details_title">
+                {movies?.data?.name || movies?.data?.title}
+              </h1>
+              <span className="details_air_date">
+                ({movies?.data?.release_date.substring(0, 4)})
+              </span>
+              <div>
+                <span className="details_genre">
+                  ~&nbsp;
+                  {movies?.data?.genres.map((c, index) => {
+                    return (
+                      <span key={c.id}>{(index ? ", " : "") + c.name}</span>
+                    );
+                  })}
+                </span>
+                <span className="details_runtime">
+                  {timeConvert(movies?.data?.runtime)}
+                </span>
+              </div>
+              <div
+                className="details_userscore"
+                style={{
+                  width: 70,
+                  height: 70,
+                  background: "#000",
+                  borderRadius: "50%",
+                  padding: "5px",
+                  margin: "20px 0",
+                }}
+              >
+                <CircularProgressbar
+                  value={movies?.data?.vote_average * 10}
+                  text={movies?.data?.vote_average.toFixed(1) * 10 + "%"}
+                />
+              </div>
+              <p className="details_tagline">{movies?.data?.tagline}</p>
+              <p className="details_overview">{movies?.data?.overview}</p>
+              <p className="details_revenue">
+                Total Revenue : ${movies?.data?.revenue}
+              </p>
+            </div>
           </div>
         </div>
         <div className="single_content_slider">
@@ -131,6 +147,7 @@ const SingleMovie = () => {
             </p>
           </div>
         </div>
+        <TrailerVideo media_type={"movie"} id={id} />
       </div>
     </>
   );
