@@ -33,7 +33,7 @@ const BollyWoodMovies = () => {
                 poster={c.poster_path || c.backdrop_path}
                 date={c.first_air_date || c.release_date}
                 vote_average={c.vote_average}
-                media_type={c.media_type}
+                media_type="movie"
                 overview={c.overview}
                 vote_count={c.vote_count}
                 popularity={c.popularity}
