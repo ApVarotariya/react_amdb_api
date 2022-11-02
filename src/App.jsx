@@ -10,6 +10,7 @@ import Movies from "./Components/Movies";
 import SingleMovie from "./Components/SingleMovie";
 import SingleTv from "./Components/SingleTv";
 import SinglePerson from "./Components/SinglePerson";
+import BollyWoodMovies from "./Components/BollyWoodMovies";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/react_amdb_api" element={<Main />} />
+        <Route path="/bollywoodmovies" element={<BollyWoodMovies />} />
         <Route path="/movie/:id" element={<SingleMovie />} />
         <Route path="/tv/:id" element={<SingleTv />} />
         <Route path="/person/:id" element={<SinglePerson />}></Route>

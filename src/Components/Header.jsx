@@ -38,6 +38,9 @@ const Header = () => {
                     <NavLink activeclassname="active" to="movies">
                       Discover
                     </NavLink>
+                    <NavLink activeclassname="active" to="bollywoodmovies">
+                      BollyWood Movies
+                    </NavLink>
                     <NavLink activeclassname="active" to="tv-series">
                       TV Series
                     </NavLink>
@@ -58,6 +61,10 @@ const Header = () => {
                     </NavLink>
                     <NavLink activeclassname="active" to="movies">
                       <span>Discover</span>
+                      <CgTrending />
+                    </NavLink>
+                    <NavLink activeclassname="active" to="bollywoodmovies">
+                      <span>BollyWood</span>
                       <CgTrending />
                     </NavLink>
                     {/* <NavLink activeclassname="active" to="trending-movies">
