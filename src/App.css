@@ -398,6 +398,9 @@ a:hover {
 .load_more_btn:focus {
   box-shadow: none !important;
 }
+.carouselItem a {
+  display: contents;
+}
 @media (min-width: 767px) {
   .details_page_fact_main {
     flex-direction: column;
