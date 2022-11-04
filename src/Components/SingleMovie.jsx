@@ -8,6 +8,7 @@ import Credits from "./Credits";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Button, Card } from "react-bootstrap";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
@@ -65,7 +66,7 @@ const SingleMovie = () => {
           }}
         >
           <div className="details_hero_left">
-            <img
+            <LazyLoadImage
               className="details_postar"
               src={
                 movies?.data?.poster_path
@@ -154,7 +155,7 @@ const SingleMovie = () => {
               return (
                 <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
                   <Card>
-                    <Card.Img
+                    <LazyLoadImage
                       variant="top"
                       src={
                         s.poster_path ? API_IMG + s.poster_path : unavailable

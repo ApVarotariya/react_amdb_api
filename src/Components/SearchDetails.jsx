@@ -4,6 +4,7 @@ import Card from "react-bootstrap/Card";
 import dateFormat from "dateformat";
 import { unavailable } from "./README";
 import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
@@ -19,7 +20,7 @@ const SearchDetails = ({
     <>
       <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
         <Card>
-          <Card.Img
+          <LazyLoadImage
             variant="top"
             src={poster ? API_IMG + poster : unavailable}
             alt={title}

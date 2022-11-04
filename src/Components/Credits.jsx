@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { unavailable } from "./README";
 import "react-alice-carousel/lib/alice-carousel.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
@@ -13,13 +14,11 @@ const Credits = ({ id, media_type }) => {
 
   const items = credits?.map((c) => (
     <div className="carouselItem">
-      <img
+      <LazyLoadImage
         src={
           c.profile_path
             ? API_IMG + c.profile_path
             : unavailable || c.profile_path
-            ? API_IMG + c.poster_path
-            : unavailable
         }
         alt={c?.name}
         onDragStart={handleDragStart}

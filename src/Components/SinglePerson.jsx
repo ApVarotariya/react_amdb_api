@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { unavailable } from "./README";
 import dateFormat from "dateformat";
 import { Button, Card } from "react-bootstrap";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/w500";
 
@@ -64,7 +65,7 @@ const SinglePerson = () => {
           }}
         >
           <div className="person_details_hero_left">
-            <img
+            <LazyLoadImage
               className="details_postar"
               src={
                 movies?.data?.profile_path
@@ -96,7 +97,7 @@ const SinglePerson = () => {
               return (
                 <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
                   <Card>
-                    <Card.Img
+                    <LazyLoadImage
                       variant="top"
                       src={
                         c.poster_path ? API_IMG + c.poster_path : unavailable

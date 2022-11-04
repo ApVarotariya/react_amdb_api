@@ -6,6 +6,7 @@ import TrailerVideo from "./TrailerVideo";
 import Credits from "./Credits";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
@@ -51,7 +52,7 @@ const SingleTv = () => {
           }}
         >
           <div className="details_hero_left">
-            <img
+            <LazyLoadImage
               className="details_postar"
               src={
                 movies?.data?.poster_path
