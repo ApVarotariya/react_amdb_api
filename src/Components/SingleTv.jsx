@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { unavailable } from "./README";
 import TrailerVideo from "./TrailerVideo";
 import Credits from "./Credits";
@@ -20,7 +20,7 @@ const SingleTv = () => {
       `https://api.themoviedb.org/3/${media_type}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res);
-    console.log(res);
+    // console.log(res);
   };
   useEffect(() => {
     fetchData();
@@ -34,79 +34,124 @@ const SingleTv = () => {
     var rminutes = Math.round(minutes);
     return rhours + "h " + rminutes + "m";
   }
+
+useEffect(() => {
+  if (movies) {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src =
+      "https://cors-anywhere.herokuapp.com/" +
+      API_IMG +
+      movies?.data?.poster_path;
+    img.onload = function () {
+      const canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const colors = { r: 0, g: 0, b: 0 };
+      const pixelCount = imageData.data.length / 4;
+      for (let i = 0; i < imageData.data.length; i += 4) {
+        colors.r += imageData.data[i];
+        colors.g += imageData.data[i + 1];
+        colors.b += imageData.data[i + 2];
+      }
+      colors.r = Math.round(colors.r / pixelCount);
+      colors.g = Math.round(colors.g / pixelCount);
+      colors.b = Math.round(colors.b / pixelCount);
+
+      const gradient = `linear-gradient(to bottom right, rgba(${colors.r},${colors.g},${colors.b},0.8), rgba(255,255,255,0.8))`;
+      const element = document.getElementById("single_content_details");
+      element.style.background = gradient;
+    };
+  }
+}, [movies]);
+
   return (
     <>
       <div className="single_content_details_main">
         <div
-          className="single_content_details"
+          className="bg"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)),url(${
-              API_IMG + movies?.data?.backdrop_path
-            })`,
+            backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative",
-            padding: "0 20px 50px 20px",
             width: "100%",
             height: "100vh",
           }}
         >
-          <div className="details_hero_left">
-            <LazyLoadImage
-              className="details_postar"
-              src={
-                movies?.data?.poster_path
-                  ? API_IMG + movies?.data?.poster_path
-                  : unavailable
-              }
-              alt={movies?.data?.title || movies?.data?.name}
-            />
-          </div>
-          <div className="details_hero_right position-relative">
-            <h1 className="d-inline-block details_title">
-              {movies?.data?.name || movies?.data?.title}
-            </h1>
-            <span className="details_air_date">
-              ({movies?.data?.first_air_date?.substring(0, 4)})
-            </span>
-            <div>
-              <span className="details_genre">
-                ~&nbsp;
-                {movies?.data?.genres.map((c, index) => {
-                  return <span key={c.id}>{(index ? ", " : "") + c.name}</span>;
-                })}
-              </span>
-              <span className="details_runtime">
-                {timeConvert(movies?.data?.episode_run_time)}
-              </span>
-            </div>
-            <div
-              className="details_userscore"
-              style={{
-                width: 70,
-                height: 70,
-                background: "#000",
-                borderRadius: "50%",
-                padding: "5px",
-                margin: "20px 0",
-              }}
-            >
-              <CircularProgressbar
-                value={movies?.data?.vote_average * 10}
-                text={movies?.data?.vote_average.toFixed(1) * 10 + "%"}
+          <div
+            className="single_content_details"
+            id="single_content_details"
+            style={{
+              backgroundSize: "cover",
+              position: "relative",
+              width: "100%",
+              height: "100vh",
+            }}
+          >
+            <div className="details_hero_left">
+              <LazyLoadImage
+                className="details_postar"
+                id="details_postar"
+                src={
+                  movies?.data?.poster_path
+                    ? API_IMG + movies?.data?.poster_path
+                    : unavailable
+                }
+                alt={movies?.data?.title || movies?.data?.name}
               />
             </div>
-            <p className="details_tagline">{movies?.data?.tagline}</p>
-            <p className="details_overview">{movies?.data?.overview}</p>
-            <p className="details_creater">
-              Created By :<br />
-              {movies?.data?.created_by.map((c, index) => {
-                return <span>{(index ? ", " : "") + c.name}</span>;
-              })}
-            </p>
-            <p className="details_revenue">
-              Total Revenue : ${movies?.data?.revenue}
-            </p>
+            <div className="details_hero_right position-relative">
+              <h1 className="d-inline-block details_title">
+                {movies?.data?.name || movies?.data?.title}
+              </h1>
+              <span className="details_air_date">
+                ({movies?.data?.first_air_date?.substring(0, 4)})
+              </span>
+              <div>
+                <span className="details_genre">
+                  ~&nbsp;
+                  {movies?.data?.genres.map((c, index) => {
+                    return (
+                      <span key={c.id}>{(index ? ", " : "") + c.name}</span>
+                    );
+                  })}
+                </span>
+                <span className="details_runtime">
+                  {timeConvert(movies?.data?.episode_run_time)}
+                </span>
+              </div>
+              <div
+                className="details_userscore"
+                style={{
+                  width: 70,
+                  height: 70,
+                  background: "#000",
+                  borderRadius: "50%",
+                  padding: "5px",
+                  margin: "20px 0",
+                }}
+              >
+                <CircularProgressbar
+                  value={movies?.data?.vote_average * 10}
+                  text={movies?.data?.vote_average.toFixed(1) * 10 + "%"}
+                />
+              </div>
+              <p className="details_tagline">{movies?.data?.tagline}</p>
+              <p className="details_overview">{movies?.data?.overview}</p>
+              <p className="details_creater">
+                Created By :<br />
+                {movies?.data?.created_by.map((c, index) => {
+                  return <span>{(index ? ", " : "") + c.name}</span>;
+                })}
+              </p>
+              <p className="details_revenue">
+                Total Revenue : ${movies?.data?.revenue}
+              </p>
+            </div>
           </div>
         </div>
         <div className="single_content_slider">
