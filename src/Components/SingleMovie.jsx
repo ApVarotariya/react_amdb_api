@@ -18,6 +18,9 @@ const SingleMovie = () => {
   const media_type = "movie";
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
+  const [bgColor, setBgColor] = useState('');
+  const [brightness, setBrightness] = useState(0);
+  const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
 
@@ -81,6 +84,24 @@ const SingleMovie = () => {
         const element = document.getElementById("single_content_details");
         element.style.background = gradient;
       };
+
+      const section = document.getElementById('section-id');
+
+      // Get the background color of the section
+      const bgColor = window.getComputedStyle(section).getPropertyValue('background-color');
+      setBgColor(bgColor);
+  
+      // Convert the color to an RGB array
+      const rgb = bgColor.match(/\d+/g);
+  
+      // Calculate the brightness of the color using the formula (R*299 + G*587 + B*114) / 1000
+      const brightness = (rgb[0]*299 + rgb[1]*587 + rgb[2]*114) / 1000;
+      setBrightness(brightness);
+  
+      // Check if the brightness is less than 128 (darker color)
+      if (brightness < 1) {
+        setIsDarkBg(true);
+      }
     // }
   }, [movies]);
 
@@ -88,7 +109,7 @@ const SingleMovie = () => {
     <>
       <div className="single_content_details_main">
         <div
-          className="bg"
+          className={`section ${isDarkBg ? 'dark-bg' : ''}`} id="section-id"
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
