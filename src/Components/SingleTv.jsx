@@ -35,51 +35,64 @@ const SingleTv = () => {
     return rhours + "h " + rminutes + "m";
   }
 
-useEffect(() => {
-  if (movies) {
-    const img = new Image();
-    img.crossOrigin = "Anonymous";
-    img.src =
-      "https://cors-anywhere.herokuapp.com/" +
-      API_IMG +
-      movies?.data?.poster_path;
-    img.onload = function () {
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const colors = { r: 0, g: 0, b: 0 };
-      const pixelCount = imageData.data.length / 4;
-      for (let i = 0; i < imageData.data.length; i += 4) {
-        colors.r += imageData.data[i];
-        colors.g += imageData.data[i + 1];
-        colors.b += imageData.data[i + 2];
-      }
-      colors.r = Math.round(colors.r / pixelCount);
-      colors.g = Math.round(colors.g / pixelCount);
-      colors.b = Math.round(colors.b / pixelCount);
+  useEffect(() => {
+    // Dynamic pass img and generate the linear gradient color from it.
+      const img = new Image();
+      img.crossOrigin = "Anonymous";
+      img.src =
+        "https://cors-anywhere.herokuapp.com/" +
+        API_IMG +
+        movies?.data?.poster_path;
+      img.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const colors = { r: 0, g: 0, b: 0 };
+        const pixelCount = imageData.data.length / 4;
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          colors.r += imageData.data[i];
+          colors.g += imageData.data[i + 1];
+          colors.b += imageData.data[i + 2];
+        }
+        colors.r = Math.round(colors.r / pixelCount);
+        colors.g = Math.round(colors.g / pixelCount);
+        colors.b = Math.round(colors.b / pixelCount);
 
-      const gradient = `linear-gradient(to bottom right, rgba(${colors.r},${colors.g},${colors.b},0.8), rgba(255,255,255,0.8))`;
-      const element = document.getElementById("single_content_details");
-      element.style.background = gradient;
-    };
-  }
-}, [movies]);
+        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
+        const element = document.getElementById("single_content_details");
+        element.style.background = gradient;
+
+        // Check the brightness of background
+        const section = document.getElementById("dark_bg");
+        const bgColor = window
+          .getComputedStyle(section)
+          .getPropertyValue("background-color");
+        setBgColor(bgColor);
+        const rgb = bgColor.match(/\d+/g);
+        const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+        setBrightness(brightness);
+        if (brightness < 1) {
+          setIsDarkBg(true);
+        }
+      };
+  }, [movies]);
 
   return (
     <>
       <div className="single_content_details_main">
         <div
-          className="bg"
+          className={`has_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
+          id="dark_bg"
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative",
             width: "100%",
-            height: "100vh",
+            minHeight: "100vh",
           }}
         >
           <div
@@ -89,7 +102,7 @@ useEffect(() => {
               backgroundSize: "cover",
               position: "relative",
               width: "100%",
-              height: "100vh",
+              minHeight: "100vh",
             }}
           >
             <div className="details_hero_left">

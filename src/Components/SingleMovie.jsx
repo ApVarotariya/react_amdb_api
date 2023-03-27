@@ -18,6 +18,9 @@ const SingleMovie = () => {
   const media_type = "movie";
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
+   const [bgColor, setBgColor] = useState("");
+   const [brightness, setBrightness] = useState(0);
+   const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
 
@@ -52,7 +55,7 @@ const SingleMovie = () => {
   }
 
   useEffect(() => {
-    // if (movies) {
+    // Dynamic pass img and generate the linear gradient color from it.
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src =
@@ -77,25 +80,38 @@ const SingleMovie = () => {
         colors.g = Math.round(colors.g / pixelCount);
         colors.b = Math.round(colors.b / pixelCount);
 
-        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},0.8), rgba(255,255,255,0.8))`;
+        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
         const element = document.getElementById("single_content_details");
         element.style.background = gradient;
+
+// Check the brightness of background
+ const section = document.getElementById("dark_bg");
+ const bgColor = window
+   .getComputedStyle(section)
+   .getPropertyValue("background-color");
+ setBgColor(bgColor);
+ const rgb = bgColor.match(/\d+/g);
+ const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+ setBrightness(brightness);
+ if (brightness < 1) {
+   setIsDarkBg(true);
+ }
       };
-    // }
   }, [movies]);
 
   return (
     <>
       <div className="single_content_details_main">
         <div
-          className="bg"
+          className={`has_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
+          id="dark_bg"
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative",
             width: "100%",
-            height: "100vh",
+            minHeight: "100vh",
           }}
         >
           <div
@@ -105,7 +121,7 @@ const SingleMovie = () => {
               backgroundSize: "cover",
               position: "relative",
               width: "100%",
-              height: "100vh",
+              minHeight: "100vh",
             }}
           >
             <canvas ref={canvasRef} style={{ display: "none" }} />;
