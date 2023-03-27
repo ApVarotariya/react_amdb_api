@@ -103,7 +103,7 @@ const SingleMovie = () => {
     <>
       <div className="single_content_details_main">
         <div
-          className={`has_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
+          className={`has_dark_bg ${isDarkBg ? "dark_bg" : ""}`}
           id="dark_bg"
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
