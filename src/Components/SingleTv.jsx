@@ -14,6 +14,9 @@ const SingleTv = () => {
   const { id } = useParams();
   const media_type = "tv";
   const [movies, setMovies] = useState([]);
+     const [bgColor, setBgColor] = useState("");
+     const [brightness, setBrightness] = useState(0);
+     const [isDarkBg, setIsDarkBg] = useState(false);
 
   const fetchData = async () => {
     const res = await axios.get(
