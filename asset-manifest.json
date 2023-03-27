@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/react_amdb_api/static/css/main.c695d594.css",
-    "main.js": "/react_amdb_api/static/js/main.8662a6e8.js",
+    "main.css": "/react_amdb_api/static/css/main.27ff8de4.css",
+    "main.js": "/react_amdb_api/static/js/main.a0303130.js",
     "static/media/Logo.png": "/react_amdb_api/static/media/Logo.193d9f69fe14381674dd.png",
     "index.html": "/react_amdb_api/index.html",
-    "main.c695d594.css.map": "/react_amdb_api/static/css/main.c695d594.css.map",
-    "main.8662a6e8.js.map": "/react_amdb_api/static/js/main.8662a6e8.js.map"
+    "main.27ff8de4.css.map": "/react_amdb_api/static/css/main.27ff8de4.css.map",
+    "main.a0303130.js.map": "/react_amdb_api/static/js/main.a0303130.js.map"
   },
   "entrypoints": [
-    "static/css/main.c695d594.css",
-    "static/js/main.8662a6e8.js"
+    "static/css/main.27ff8de4.css",
+    "static/js/main.a0303130.js"
   ]
 }
