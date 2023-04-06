@@ -59,7 +59,7 @@ const SingleMovie = () => {
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src =
-        "https://cors-anywhere.herokuapp.com/" +
+        // "https://cors-anywhere.herokuapp.com/" +
         API_IMG +
         movies?.data?.poster_path;
       img.onload = function () {
