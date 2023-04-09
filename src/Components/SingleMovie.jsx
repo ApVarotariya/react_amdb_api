@@ -57,11 +57,11 @@ const SingleMovie = () => {
   useEffect(() => {
     // Dynamic pass img and generate the linear gradient color from it.
       const img = new Image();
+      const dynamicimage = API_IMG + movies?.data?.poster_path;
       img.crossOrigin = "Anonymous";
       img.src =
         // "https://cors-anywhere.herokuapp.com/" +
-        API_IMG +
-        movies?.data?.poster_path;
+        dynamicimage;
       img.onload = function () {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
@@ -111,7 +111,7 @@ const SingleMovie = () => {
 
   return (
     <>
-      <div className="single_content_details_main test">
+      <div className="single_content_details_main">
         <div
           className={`either_dark_bg ${isDarkBg ? 'dark-bg' : ''}`} id="either_dark_bg"
 
