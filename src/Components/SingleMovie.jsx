@@ -97,21 +97,12 @@ const SingleMovie = () => {
    setIsDarkBg(true);
  }
       };
-
       const section = document.getElementById('either_dark_bg');
-
-      // Get the background color of the section
       const bgColor = window.getComputedStyle(section).getPropertyValue('background-color');
       setBgColor(bgColor);
-  
-      // Convert the color to an RGB array
       const rgb = bgColor.match(/\d+/g);
-  
-      // Calculate the brightness of the color using the formula (R*299 + G*587 + B*114) / 1000
       const brightness = (rgb[0]*299 + rgb[1]*587 + rgb[2]*114) / 1000;
       setBrightness(brightness);
-  
-      // Check if the brightness is less than 128 (darker color)
       if (brightness < 1) {
         setIsDarkBg(true);
       }
@@ -120,7 +111,7 @@ const SingleMovie = () => {
 
   return (
     <>
-      <div className="single_content_details_main">
+      <div className="single_content_details_main test">
         <div
           className={`either_dark_bg ${isDarkBg ? 'dark-bg' : ''}`} id="either_dark_bg"
 
