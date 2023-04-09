@@ -134,7 +134,7 @@ const SingleMovie = () => {
               minHeight: "100vh",
             }}
           >
-            <canvas ref={canvasRef} style={{ display: "none" }} />;
+            <canvas ref={canvasRef} style={{ display: "none" }} />
             <div className="details_hero_left">
               <LazyLoadImage
                 className="details_postar"
@@ -217,7 +217,7 @@ const SingleMovie = () => {
         </div>
         <TrailerVideo media_type={"movie"} id={id} />
         <div className="row">
-          <h2 className="my-4 text-black">Similar Movies</h2>
+          <h2 className="similar_title my-4 text-black">Similar Movies :</h2>
           {similar &&
             similar.map((s) => {
               return (
