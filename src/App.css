@@ -411,6 +411,9 @@ a:hover {
   top:0 ;
   right: 0;
 }
+.dark_bg *{
+  color: #fff !important;
+}
 
 /* Responsive Css */
 @media (min-width: 767px) {

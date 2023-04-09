@@ -10,6 +10,7 @@ const Movies = () => {
 
   const fetchData = async () => {
     const movies = await axios.get(
+
       `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     setMovies(movies.data.results);

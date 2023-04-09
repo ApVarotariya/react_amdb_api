@@ -55,11 +55,11 @@ const SingleMovie = () => {
   }
 
   useEffect(() => {
-    // if (movies) {
+    // Dynamic pass img and generate the linear gradient color from it.
       const img = new Image();
       img.crossOrigin = "Anonymous";
       img.src =
-        "https://cors-anywhere.herokuapp.com/" +
+        // "https://cors-anywhere.herokuapp.com/" +
         API_IMG +
         movies?.data?.poster_path;
       img.onload = function () {
@@ -80,9 +80,22 @@ const SingleMovie = () => {
         colors.g = Math.round(colors.g / pixelCount);
         colors.b = Math.round(colors.b / pixelCount);
 
-        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},0.8), rgba(255,255,255,0.8))`;
+        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
         const element = document.getElementById("single_content_details");
         element.style.background = gradient;
+
+// Check the brightness of background
+ const section = document.getElementById("dark_bg");
+ const bgColor = window
+   .getComputedStyle(section)
+   .getPropertyValue("background-color");
+ setBgColor(bgColor);
+ const rgb = bgColor.match(/\d+/g);
+ const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+ setBrightness(brightness);
+ if (brightness < 1) {
+   setIsDarkBg(true);
+ }
       };
 
       const section = document.getElementById('either_dark_bg');
@@ -110,13 +123,14 @@ const SingleMovie = () => {
       <div className="single_content_details_main">
         <div
           className={`either_dark_bg ${isDarkBg ? 'dark-bg' : ''}`} id="either_dark_bg"
+
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             position: "relative",
             width: "100%",
-            height: "100vh",
+            minHeight: "100vh",
           }}
         >
           <div
@@ -126,7 +140,7 @@ const SingleMovie = () => {
               backgroundSize: "cover",
               position: "relative",
               width: "100%",
-              height: "100vh",
+              minHeight: "100vh",
             }}
           >
             <canvas ref={canvasRef} style={{ display: "none" }} />;
