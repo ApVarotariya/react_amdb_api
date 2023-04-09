@@ -85,7 +85,7 @@ const SingleMovie = () => {
         element.style.background = gradient;
       };
 
-      const section = document.getElementById('section-id');
+      const section = document.getElementById('either_dark_bg');
 
       // Get the background color of the section
       const bgColor = window.getComputedStyle(section).getPropertyValue('background-color');
@@ -109,7 +109,7 @@ const SingleMovie = () => {
     <>
       <div className="single_content_details_main">
         <div
-          className={`section ${isDarkBg ? 'dark-bg' : ''}`} id="section-id"
+          className={`either_dark_bg ${isDarkBg ? 'dark-bg' : ''}`} id="either_dark_bg"
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
