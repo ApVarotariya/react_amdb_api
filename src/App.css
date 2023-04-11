@@ -32,8 +32,11 @@ a:hover {
   position: relative;
   font-family: "Montserrat", sans-serif;
 }
+.moviecard .card .card-title h3{
+  color: #000 !important;
+}
 .moviecard img {
-  width: auto;
+  width: 100%;
   border-radius: 10px;
   display: block;
 }
