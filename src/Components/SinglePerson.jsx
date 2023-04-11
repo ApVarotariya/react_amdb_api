@@ -135,6 +135,9 @@ const SinglePerson = () => {
                       src={
                         c.poster_path ? API_IMG + c.poster_path : unavailable
                       }
+                      onClick={() => {
+          window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        }}
                       alt={c.title}
                       className="movie-backdrop-poster"
                     />
@@ -145,7 +148,7 @@ const SinglePerson = () => {
                       {c.release_date.substring(0, 4) || "----"}
                     </p>
                     <Link
-                      to={`/movie/${id}`}
+                      to={`/movie/${c.id}`}
                       className="person_details_movie_btn"
                     >
                       <Button variant="success">More Details</Button>

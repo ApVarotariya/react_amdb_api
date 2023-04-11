@@ -39,6 +39,7 @@ const SingleMovie = () => {
       `https://api.themoviedb.org/3/${media_type}/${id}/similar?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSimilar(res.data.results);
+    // console.log(res.data.results[0].id)
   };
   useEffect(() => {
     if(id){
@@ -111,7 +112,7 @@ const SingleMovie = () => {
 
   return (
     <>
-      <div className="single_content_details_main">
+      <div className="single_content_details_main" style={{overflowX:"hidden"}}>
         <div
           className={`either_dark_bg ${isDarkBg ? 'dark-bg' : ''}`} id="either_dark_bg"
 
@@ -216,7 +217,7 @@ const SingleMovie = () => {
           </div>
         </div>
         <TrailerVideo media_type={"movie"} id={id} />
-        <div className="row">
+        <div className="row" style={{margin:"0"}}>
           <h2 className="similar_title my-4 text-black">Similar Movies :</h2>
           {similar &&
             similar.map((s) => {
@@ -236,6 +237,7 @@ const SingleMovie = () => {
                         <h3>
                           <strong>
                             <span>{s.title}</span>
+                            
                           </strong>
                           <span>{s.vote_average}</span>
                         </h3>
@@ -250,7 +252,10 @@ const SingleMovie = () => {
                           </p>
                         </div>
                       </Card.Title>
-                      <Link to={`/movie/${id}`}>
+                      <Link to={`/movie/${s.id}`}
+                      onClick={() => {
+          window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        }}>
                         <Button variant="success">More Details</Button>
                       </Link>
                     </Card.Body>
