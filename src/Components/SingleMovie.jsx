@@ -18,9 +18,9 @@ const SingleMovie = () => {
   const media_type = "movie";
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
-   const [bgColor, setBgColor] = useState("");
-   const [brightness, setBrightness] = useState(0);
-   const [isDarkBg, setIsDarkBg] = useState(false);
+  const [bgColor, setBgColor] = useState('');
+  const [brightness, setBrightness] = useState(0);
+  const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
 
@@ -57,11 +57,11 @@ const SingleMovie = () => {
   useEffect(() => {
     // Dynamic pass img and generate the linear gradient color from it.
       const img = new Image();
+      const dynamicimage = API_IMG + movies?.data?.poster_path;
       img.crossOrigin = "Anonymous";
       img.src =
         // "https://cors-anywhere.herokuapp.com/" +
-        API_IMG +
-        movies?.data?.poster_path;
+        dynamicimage;
       img.onload = function () {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
@@ -97,14 +97,24 @@ const SingleMovie = () => {
    setIsDarkBg(true);
  }
       };
+      const section = document.getElementById('either_dark_bg');
+      const bgColor = window.getComputedStyle(section).getPropertyValue('background-color');
+      setBgColor(bgColor);
+      const rgb = bgColor.match(/\d+/g);
+      const brightness = (rgb[0]*299 + rgb[1]*587 + rgb[2]*114) / 1000;
+      setBrightness(brightness);
+      if (brightness < 1) {
+        setIsDarkBg(true);
+      }
+    // }
   }, [movies]);
 
   return (
     <>
       <div className="single_content_details_main">
         <div
-          className={`has_dark_bg ${isDarkBg ? "dark_bg" : ""}`}
-          id="dark_bg"
+          className={`either_dark_bg ${isDarkBg ? 'dark-bg' : ''}`} id="either_dark_bg"
+
           style={{
             backgroundImage: `url(${API_IMG + movies?.data?.backdrop_path})`,
             backgroundRepeat: "no-repeat",
@@ -124,7 +134,7 @@ const SingleMovie = () => {
               minHeight: "100vh",
             }}
           >
-            <canvas ref={canvasRef} style={{ display: "none" }} />;
+            <canvas ref={canvasRef} style={{ display: "none" }} />
             <div className="details_hero_left">
               <LazyLoadImage
                 className="details_postar"
@@ -207,7 +217,7 @@ const SingleMovie = () => {
         </div>
         <TrailerVideo media_type={"movie"} id={id} />
         <div className="row">
-          <h2 className="my-4 text-black">Similar Movies</h2>
+          <h2 className="similar_title my-4 text-black">Similar Movies :</h2>
           {similar &&
             similar.map((s) => {
               return (
