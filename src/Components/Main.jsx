@@ -13,8 +13,6 @@ const Main = () => {
       `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     setMovies(movies.data.results);
-    // console.log(movies.data.results);
-    // console.log(movies);
     setIsLoading(false);
   };
   useEffect(() => {

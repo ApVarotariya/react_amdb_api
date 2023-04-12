@@ -115,7 +115,6 @@ const SinglePerson = () => {
               </span>
             </div>
             <div className="details_hero_right position-relative">
-              <div></div>
               <p className="details_overview">
                 Overview : <br />
                 {movies.data?.biography || "Sorry Details not available!"}

@@ -14,17 +14,9 @@ const TrailerVideo = ({ media_type, id }) => {
   };
   useEffect(() => {
     fetchVideo();
-  }, []);
+  }, [id]);
   return (
     <>
-      {/* <Button
-        key={videos?.id}
-        className="trailer_btn"
-        target="__blank"
-        href={`https://www.youtube.com/watch?v=${videos[0].key}`}
-      >
-        Watch the Trailer
-      </Button> */}
       <div className="d-flex w-100 justify-content-between trailer_video_main">
         {videos?.slice(0, 3).map((v) => {
           return (
@@ -40,6 +32,6 @@ const TrailerVideo = ({ media_type, id }) => {
         })}
       </div>
     </>
-  );
-};
+  )
+}
 export default TrailerVideo;

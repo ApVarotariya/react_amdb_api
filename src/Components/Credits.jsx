@@ -4,43 +4,56 @@ import AliceCarousel from "react-alice-carousel";
 import { unavailable } from "./README";
 import "react-alice-carousel/lib/alice-carousel.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Button, Card } from "react-bootstrap";
+import dateFormat from "dateformat";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
 const handleDragStart = (e) => e.preventDefault();
 
 const Credits = ({ id, media_type }) => {
+  const { state } = useParams();
   const [credits, setCredits] = useState([]);
+   const perPage = 8;
+  const [next, setNext] = useState(perPage);
+  const [disableCarousel, setDisableCarousel] = useState(true);
 
+    const handleClick = () => {
+      setNext(next + perPage);
+  };
+  
   const fetchCredits = async () => {
     const { data } = await axios.get(
-  
       `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
     );
     setCredits(data.cast);
-    console.log(data.cast);
+    // console.log(data.cast);
   };
 
   const items = credits?.map((c) => (
-    <div className="carouselItem">
-      <Link to={`/person/${credits && c.id}`}>
-        <LazyLoadImage
-          src={
-            c.profile_path
-              ? API_IMG + c.profile_path
-              : unavailable || c.profile_path
-          }
-          alt={c?.name}
-          onDragStart={handleDragStart}
-          className="carouselItem__img"
-        />
-        <p className="carouselItem__txt text-black my-1">
-          <strong>{c?.name || c?.original_title}</strong>
-        </p>
-        <b className="carouselItem__txt text-black">{c?.character}</b>
-      </Link>
-    </div>
+    <>
+      <div className="carouselItem">
+        <Link to={`/person/${credits && c.id}`}>
+          <LazyLoadImage
+            src={
+              c?.profile_path
+                ? API_IMG + c.profile_path
+                : c?.poster_path
+                ? API_IMG + c.poster_path
+                : unavailable
+            }
+            alt={c?.name}
+            onDragStart={handleDragStart}
+            className="carouselItem__img"
+          />
+          <p className="carouselItem__txt text-black my-1">
+            <strong>{c?.name || c?.original_title}</strong>
+          </p>
+          <b className="carouselItem__txt text-black">{c?.character}</b>
+        </Link>
+      </div>
+    </>
   ));
 
   const responsive = {
@@ -51,21 +64,95 @@ const Credits = ({ id, media_type }) => {
 
   useEffect(() => {
     fetchCredits();
-    // eslint-disable-next-line
-  }, [id]);
+  }, [id, state]);
 
   return (
     <>
-      <AliceCarousel
-        mouseTracking
-        infinite
-        disableDotsControls
-        disableButtonsControls
-        responsive={responsive}
-        items={items}
-        // autoPlay
-        autoPlayInterval={600}
-      />
+      {(state === "movie" || state === "tv") && (
+        <AliceCarousel
+          mouseTracking
+          infinite
+          disableDotsControls
+          disableButtonsControls
+          responsive={responsive}
+          items={items}
+          autoPlayInterval={600}
+        />
+      )}
+      {state === "person" && disableCarousel && (
+        <div className="d-flex flex-wrap">
+          {credits.slice(0, next).map((cp) => (
+            <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
+              <Card>
+                <Link
+                  to={`/movie/${cp.id}`}
+                  onClick={() => {
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  <LazyLoadImage
+                    src={
+                      cp?.profile_path
+                        ? API_IMG + cp.profile_path
+                        : cp?.poster_path
+                        ? API_IMG + cp.poster_path
+                        : unavailable
+                    }
+                    alt={cp?.name}
+                    className="carouselItem__img"
+                  />
+                  <Card.Body>
+                    <Card.Title>
+                      <h3>
+                        <strong>
+                          <span>{cp.title}</span>
+                        </strong>
+                        <span>{cp.vote_average}</span>
+                      </h3>
+                      <div className="d-flex justify-content-between align-items-start">
+                        <p style={{ fontSize: "12px" }}>
+                          <span>
+                            {dateFormat(cp.release_date, "mmmm dS, yyyy")}
+                          </span>
+                        </p>
+                        <p style={{ fontSize: "12px" }}>
+                          {state === "tv" ? "TV Series" : "Movie"}
+                        </p>
+                      </div>
+                    </Card.Title>
+                    <Link
+                      to={`/movie/${cp.id}`}
+                      onClick={() => {
+                        window.scrollTo({
+                          top: 0,
+                          left: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                    >
+                      <Button variant="success">More Details</Button>
+                    </Link>
+                  </Card.Body>
+                </Link>
+              </Card>
+            </div>
+          ))}
+          <div className="text-center w-100">
+            {next < credits.length && (
+              <Button
+                className="btn btn-lg mb-4 load_more_btn"
+                onClick={handleClick}
+              >
+                Load more
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import dateFormat from "dateformat";
@@ -9,6 +9,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
 const MovieBox = ({ id, title, date, media_type, vote_average, poster }) => {
+
   return (
     <>
       <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
