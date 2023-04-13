@@ -40,6 +40,7 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}/similar?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSimilar(res.data.results);
+    console.log(res.data.results);
   };
   useEffect(() => {
       fetchSimilar();
@@ -126,7 +127,11 @@ const SingleDetails = () => {
             className={`either_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
             id="either_dark_bg"
             style={{
-              backgroundImage: `url(${API_IMG + movies?.backdrop_path ? API_IMG + movies?.backdrop_path : unavailableLandscape})`,
+              backgroundImage: `url(${
+                API_IMG + movies?.backdrop_path
+                  ? API_IMG + movies?.backdrop_path
+                  : unavailableLandscape
+              })`,
               backgroundRepeat: "no-repeat",
               backgroundSize: "cover",
               position: "relative",
@@ -191,25 +196,32 @@ const SingleDetails = () => {
                   </>
                 )}
                 {(state === "movie" || state === "tv") && (
-                  <>
-                    <span className="details_air_date">
-                      ({movies.release_date})
+                  
+                  <span className="details_air_date">
+                    ({movies.release_date || movies.first_air_date})
+                  </span>
+                )}
+                <div>
+                  {(state === "movie" || state === "tv") && (
+                    <span className="details_genre">
+                      ~&nbsp;
+                      {movies.genres?.map((c, index) => {
+                        return (
+                          <span key={c.id}>
+                            {(index ? ", " : "") + c.name}
+                          </span>
+                        );
+                      })}
                     </span>
-                    <div>
-                      <span className="details_genre">
-                        ~&nbsp;
-                        {movies.genres?.map((c, index) => {
-                          return (
-                            <span key={c.id}>
-                              {(index ? ", " : "") + c.name}
-                            </span>
-                          );
-                        })}
-                      </span>
-                      <span className="details_runtime">
-                        {timeConvert(movies.runtime)}
-                      </span>
-                    </div>
+                  )}
+                  {state === "movie" && (
+                    <span className="details_runtime">
+                      {timeConvert(movies.runtime)}
+                    </span>
+                  )}
+                </div>
+                {(state === "movie" || state === "tv") && (
+                  <>
                     <div
                       className="details_userscore"
                       style={{
@@ -228,10 +240,12 @@ const SingleDetails = () => {
                     </div>
                     <p className="details_tagline">{movies?.tagline}</p>
                     <p className="details_overview">{movies?.overview}</p>
-                    <p className="details_revenue">
-                      Total Revenue : ${movies.revenue}
-                    </p>
                   </>
+                )}
+                {state === "movie" && (
+                  <p className="details_revenue">
+                    Total Revenue : ${movies.revenue}
+                  </p>
                 )}
               </div>
             </div>
@@ -239,7 +253,7 @@ const SingleDetails = () => {
           {(state === "movie" || state === "tv") && (
             <>
               <div className="single_content_slider">
-                <h2 className="my-4 text-black">Characters(Actors) : </h2>
+                <h2 className="my-4 text-black">Cast : </h2>
                 <Credits media_type={state} id={id} />
               </div>
               <div style={{ color: "#000" }} className="details_page_sidebar">
@@ -315,7 +329,7 @@ const SingleDetails = () => {
                               <Card.Title>
                                 <h3>
                                   <strong>
-                                    <span>{s.title}</span>
+                                    <span>{s.title || s.name}</span>
                                   </strong>
                                   <span>{s.vote_average}</span>
                                 </h3>
@@ -352,7 +366,9 @@ const SingleDetails = () => {
                     );
                   })
                 ) : (
-                  <h2 className="text-center text-black">Sorry! Nothing to Show.</h2>
+                  <h2 className="text-center text-black">
+                    Sorry! Nothing to Show.
+                  </h2>
                 )}
                 <div className="text-center">
                   {next < similar.length && (

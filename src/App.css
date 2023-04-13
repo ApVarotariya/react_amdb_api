@@ -476,6 +476,21 @@ a:hover {
 .dark_bg .details_hero_right *{
   color: #000 !important;
 }
+.search_text-query{
+  font-family: 'Boston Black';
+}
+.search_by_tabs .bg-nav-pills{
+      background: #10162f;
+    padding: 10px;
+}
+.search_by_tabs .bg-nav-pills .nav-item a{
+  color: #eac56b;
+}
+.search_by_tabs .bg-nav-pills .nav-item .nav-link.active{
+  background-color:#eac56b;
+  color: #fff;
+  font-family: 'Boston Black';
+}
 
 /* Responsive Css */
 @media (min-width: 767px) {
