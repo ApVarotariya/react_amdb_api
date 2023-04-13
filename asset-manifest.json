@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react_amdb_api/static/css/main.435dcf89.css",
-    "main.js": "/react_amdb_api/static/js/main.30aeb67c.js",
+    "main.css": "/react_amdb_api/static/css/main.56c9a94f.css",
+    "main.js": "/react_amdb_api/static/js/main.be0e0b20.js",
     "static/media/BostonHeavy.woff": "/react_amdb_api/static/media/BostonHeavy.dd97a047ecc4e5fee6e3.woff",
     "static/media/BostonLight.woff": "/react_amdb_api/static/media/BostonLight.97115e321026a88c7192.woff",
     "static/media/BostonRegular.woff": "/react_amdb_api/static/media/BostonRegular.4b1d6c4a97cb77bc6feb.woff",
@@ -10,11 +10,11 @@
     "static/media/BostonRegularIt.woff": "/react_amdb_api/static/media/BostonRegularIt.44c78b4a07d724809528.woff",
     "static/media/Logo.png": "/react_amdb_api/static/media/Logo.193d9f69fe14381674dd.png",
     "index.html": "/react_amdb_api/index.html",
-    "main.435dcf89.css.map": "/react_amdb_api/static/css/main.435dcf89.css.map",
-    "main.30aeb67c.js.map": "/react_amdb_api/static/js/main.30aeb67c.js.map"
+    "main.56c9a94f.css.map": "/react_amdb_api/static/css/main.56c9a94f.css.map",
+    "main.be0e0b20.js.map": "/react_amdb_api/static/js/main.be0e0b20.js.map"
   },
   "entrypoints": [
-    "static/css/main.435dcf89.css",
-    "static/js/main.30aeb67c.js"
+    "static/css/main.56c9a94f.css",
+    "static/js/main.be0e0b20.js"
   ]
 }
