@@ -479,9 +479,10 @@ a:hover {
 .search_text-query{
   font-family: 'Boston Black';
 }
-.search_by_tabs .bg-nav-pills{
-      background: #10162f;
-    padding: 10px;
+.search_by_tabs .bg-nav-pills {
+  background: #10162f;
+  padding: 10px;
+  border-radius: 10px;
 }
 .search_by_tabs .bg-nav-pills .nav-item a{
   color: #eac56b;
@@ -490,6 +491,36 @@ a:hover {
   background-color:#eac56b;
   color: #fff;
   font-family: 'Boston Black';
+}
+.search_dropdown .dropdown button{
+  background: #2c2d30;
+  color: #eac56b;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  border: 1px solid #eac56b;
+}
+.search-form-main button:hover{
+  background: #10162f !important;
+  color: #fff !important;
+}
+.search-form-main input:focus{
+  border-color: #10162f;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(5px);
+    color: #10162f;
+}
+.search-form-main input:focus::placeholder{
+  color: #10162f !important;
+}
+.search_dropdown .dropdown #dropdown-split-basic{
+  background: #eac56b;
+  color: #2c2d30;
+  font-weight: 600;
+  border: 1px solid #2c2d30;
+}
+.search_dropdown .dropdown #dropdown-split-basic:focus{
+  box-shadow: none;
 }
 
 /* Responsive Css */

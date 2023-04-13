@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Form, FormControl, Button, Tab, Nav, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Form, FormControl, Button, Tab, Nav } from "react-bootstrap";
 import { Triangle } from "react-loader-spinner";
 // import CustomPagination from "./CustomPagination";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
 import SearchDetails from "./SearchDetails";
 
 const Search = () => {
@@ -11,35 +13,51 @@ const Search = () => {
   const [searchPerson, setSearchPerson] = useState([]);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const [selectedValue, setSelectedValue] = useState('All');
   // const [type, setType] = useState(0);
   // const [numOfPages, setNumOfpages] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
-const searchMovie = async (e) => {
-  setIsLoading(true);
-  e.preventDefault();
-  try {
-    const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const moviesArray = data.results.filter((result) => result.media_type === "movie");
-    const tvArray = data.results.filter((result) => result.media_type === "tv");
-    const personArray = data.results.filter((result) => result.media_type === "person");
-    setSearchMovies(moviesArray);
-    setSearchTv(tvArray);
-    setSearchPerson(personArray);
-    setMovies(data.results);
-    setIsLoading(false);
-  } catch (e) {
-    // handle error
-    setIsLoading(false);
-  }
-};
-
+  const searchMovie = async (e) => {
+    setIsLoading(true);
+    // e.preventDefault();
+    try {
+      const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      const moviesArray = data.results.filter(
+        (result) => result.media_type === "movie"
+      );
+      const tvArray = data.results.filter(
+        (result) => result.media_type === "tv"
+      );
+      const personArray = data.results.filter(
+        (result) => result.media_type === "person"
+      );
+      setSearchMovies(moviesArray);
+      setSearchTv(tvArray);
+      setSearchPerson(personArray);
+      setMovies(data.results);
+      setIsLoading(false);
+    } catch (e) {
+      // handle error
+      setIsLoading(false);
+    }
+  };
 
   const changeHandler = (e) => {
     setQuery(e.target.value);
-  }
+  };
+  const handleSelect = (value) => {
+    setSelectedValue(value);
+    // console.log(value)
+  };
+  useEffect(() => {
+    // setSearchMovies()
+    // setSearchTv()
+    // setMovies()
+    // setSearchPerson()
+  }, [query]);
 
   return (
     <>
@@ -85,30 +103,52 @@ const searchMovie = async (e) => {
                     </Button>
                   </Form>
                   <div className="search_by_tabs mt-5">
-                    <Tab.Container defaultActiveKey="allresult">
-                      {/* <Card> */}
-                        {/* <Card.Body> */}
-                          <Nav
-                            variant="pills"
-                            className="bg-nav-pills nav-justified mb-0"
-                          >
-                            <Nav.Item>
-                              <Nav.Link eventKey="allresult">All</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link eventKey="movieresult">Movies</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link eventKey="tvresult">TV Series</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                              <Nav.Link eventKey="personresult">
-                                Actor/Actress
-                              </Nav.Link>
-                            </Nav.Item>
-                          </Nav>
-                        {/* </Card.Body> */}
-                      {/* </Card> */}
+                    <Tab.Container defaultActiveKey="All">
+                      <div className="d-none d-md-block">
+                        <Nav
+                          variant="pills"
+                          className="bg-nav-pills nav-justified mb-0"
+                        >
+                          <Nav.Item>
+                            <Nav.Link eventKey="All">All</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="Movies">Movies</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="Tv Series">TV Series</Nav.Link>
+                          </Nav.Item>
+                          <Nav.Item>
+                            <Nav.Link eventKey="Actor/Actress">
+                              Actor/Actress
+                            </Nav.Link>
+                          </Nav.Item>
+                        </Nav>
+                      </div>
+                      <div className="d-md-none search_dropdown text-center">
+                        <Dropdown as={ButtonGroup} onSelect={handleSelect} SelectedValue="All">
+                          <Button variant="primary">{selectedValue}</Button>
+                          <Dropdown.Toggle
+                            split
+                            variant="primary"
+                            id="dropdown-split-basic"
+                          />
+                          <Dropdown.Menu>
+                            <Dropdown.Item eventKey="All">
+                              All
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Movies">
+                              Movies
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Tv Series">
+                              Tv Series
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="Actor/Actress">
+                              Actor/Actress
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </div>
                       <div className="mt-5">
                         <h2 className="text-black text-center">
                           Search Results for :
@@ -118,7 +158,7 @@ const searchMovie = async (e) => {
                         </h2>
                       </div>
                       <Tab.Content>
-                        <Tab.Pane eventKey="allresult">
+                        <Tab.Pane eventKey="All">
                           <div className="row mt-5">
                             {movies && movies.length > 0 ? (
                               movies.map((c) => {
@@ -148,7 +188,7 @@ const searchMovie = async (e) => {
                             )}
                           </div>
                         </Tab.Pane>
-                        <Tab.Pane eventKey="movieresult">
+                        <Tab.Pane eventKey="Movies">
                           <div className="row mt-5">
                             {searchMovies && searchMovies.length > 0 ? (
                               searchMovies.map((c) => {
@@ -178,7 +218,7 @@ const searchMovie = async (e) => {
                             )}
                           </div>
                         </Tab.Pane>
-                        <Tab.Pane eventKey="tvresult">
+                        <Tab.Pane eventKey="Tv Series">
                           <div className="row mt-5">
                             {searchTv && searchTv.length > 0 ? (
                               searchTv.map((c) => {
@@ -208,7 +248,7 @@ const searchMovie = async (e) => {
                             )}
                           </div>
                         </Tab.Pane>
-                        <Tab.Pane eventKey="personresult">
+                        <Tab.Pane eventKey="Actor/Actress">
                           <div className="row mt-5">
                             {searchPerson && searchPerson.length > 0 ? (
                               searchPerson.map((c) => {
