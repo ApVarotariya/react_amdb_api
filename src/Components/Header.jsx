@@ -28,9 +28,9 @@ const Header = () => {
                 </Navbar.Brand>
                 <Navbar.Toggle
                   aria-controls="basic-navbar-nav"
-                  className="d-md-block d-lg-none d-none"
+                  className="d-none"
                 />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav d-flex">
                   <Nav className="me-auto">
                     {/* <NavLink activeclassname="active" to="trending-movies">
                       Trending

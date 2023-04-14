@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormControl, Button, Tab, Nav } from "react-bootstrap";
 import { Triangle } from "react-loader-spinner";
-// import CustomPagination from "./CustomPagination";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import SearchDetails from "./SearchDetails";
+import axios from "axios";
+import { unavailable } from "./README";
+import dateFormat from "dateformat";
+import { Link } from "react-router-dom";
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -14,51 +17,61 @@ const Search = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const [selectedValue, setSelectedValue] = useState('All');
-  // const [type, setType] = useState(0);
-  // const [numOfPages, setNumOfpages] = useState();
+  const [searchSuggestion, setSearchSuggestion] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const searchMovie = async (e) => {
-    setIsLoading(true);
-    // e.preventDefault();
-    try {
-      const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const moviesArray = data.results.filter(
-        (result) => result.media_type === "movie"
-      );
-      const tvArray = data.results.filter(
-        (result) => result.media_type === "tv"
-      );
-      const personArray = data.results.filter(
-        (result) => result.media_type === "person"
-      );
-      setSearchMovies(moviesArray);
-      setSearchTv(tvArray);
-      setSearchPerson(personArray);
-      setMovies(data.results);
-      setIsLoading(false);
-    } catch (e) {
-      // handle error
-      setIsLoading(false);
-    }
+const API_IMG = "https://image.tmdb.org/t/p/original";
+
+const fetchSearchResults = async () => {
+  setIsLoading(true);
+  const data = await axios.get(
+    `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`
+  );
+  const searchresult = data.data.results;
+  const moviesArray = searchresult.filter(
+    (result) => result.media_type === "movie"
+  );
+  const tvArray = searchresult.filter((result) => result.media_type === "tv");
+  const personArray = searchresult.filter(
+    (result) => result.media_type === "person"
+  );
+  setSearchMovies(moviesArray);
+  setSearchTv(tvArray);
+  setSearchPerson(personArray);
+  setMovies(searchresult);
+  setIsLoading(false);
   };
+  
+ const fetchSearchSuggestions = async (text) => {
+   const data = await axios.get(
+     `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=1`
+   );
+   const searchresult = data.data.results;
+   setSearchSuggestion(searchresult);
+
+ };
 
   const changeHandler = (e) => {
     setQuery(e.target.value);
   };
   const handleSelect = (value) => {
     setSelectedValue(value);
-    // console.log(value)
   };
-  useEffect(() => {
-    // setSearchMovies()
-    // setSearchTv()
-    // setMovies()
-    // setSearchPerson()
-  }, [query]);
 
+   useEffect(() => {
+     const timeoutId = setTimeout(() => {
+       if (query.trim().length > 0) {
+         fetchSearchSuggestions();
+       } else {
+         setSearchSuggestion([]);
+       }
+     }, 500);
+
+     return () => {
+       clearTimeout(timeoutId);
+     };
+   }, [query]);
+  
   return (
     <>
       <div className="moviecard_main search_page_main">
@@ -84,7 +97,7 @@ const Search = () => {
                 />
               ) : (
                 <>
-                  <Form className="d-flex search-form-main">
+                  <Form className="d-flex search-form-main position-relative">
                     <FormControl
                       type="search"
                       placeholder="Search Movie"
@@ -97,10 +110,58 @@ const Search = () => {
                     <Button
                       variant="success"
                       type="submit"
-                      onClick={searchMovie}
+                      onClick={fetchSearchResults}
                     >
                       Search
                     </Button>
+                    <div className="search_suggestion position-absolute w-100">
+                      {searchSuggestion.slice(0, 5).map((suggest) => {
+                        return (
+                          <>
+                            <div className="d-flex suggestion_item">
+                              <Link to={`/${suggest.media_type}/${suggest.id}`} className="d-flex">
+                                <img
+                                  style={{
+                                    width: "40px",
+                                    borderRadius: "6px",
+                                    marginRight: "20px",
+                                  }}
+                                  src={
+                                    suggest?.profile_path
+                                      ? API_IMG + suggest?.profile_path
+                                      : suggest?.poster_path
+                                      ? API_IMG + suggest?.poster_path
+                                      : unavailable
+                                  }
+                                />
+                                <div>
+                                  <p
+                                    className="text-black suggestion_title"
+                                  >
+                                    {suggest?.title ||
+                                      suggest?.name ||
+                                      suggest?.original_name}
+                                  </p>
+                                  <span className="text-black suggestion_type">
+                                    {suggest.media_type === "movie"
+                                      ? "Movie"
+                                      : suggest.media_type === "tv"
+                                      ? "TV Series"
+                                      : "Actor"}
+                                  </span>
+                                  <span className="text-black suggestion_release_date">
+                                    {dateFormat(
+                                      suggest.release_date,
+                                      "mmmm dS, yyyy"
+                                    )}
+                                  </span>
+                                </div>
+                              </Link>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </div>
                   </Form>
                   <div className="search_by_tabs mt-5">
                     <Tab.Container defaultActiveKey="All">
@@ -126,7 +187,11 @@ const Search = () => {
                         </Nav>
                       </div>
                       <div className="d-md-none search_dropdown text-center">
-                        <Dropdown as={ButtonGroup} onSelect={handleSelect} SelectedValue="All">
+                        <Dropdown
+                          as={ButtonGroup}
+                          onSelect={handleSelect}
+                          SelectedValue="All"
+                        >
                           <Button variant="primary">{selectedValue}</Button>
                           <Dropdown.Toggle
                             split
@@ -134,9 +199,7 @@ const Search = () => {
                             id="dropdown-split-basic"
                           />
                           <Dropdown.Menu>
-                            <Dropdown.Item eventKey="All">
-                              All
-                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="All">All</Dropdown.Item>
                             <Dropdown.Item eventKey="Movies">
                               Movies
                             </Dropdown.Item>
@@ -149,14 +212,16 @@ const Search = () => {
                           </Dropdown.Menu>
                         </Dropdown>
                       </div>
-                      <div className="mt-5">
-                        <h2 className="text-black text-center">
-                          Search Results for :
-                          <h3 className="search_text-query text-uppercase d-inline-block font-weight-bold">
-                            &nbsp;{query}
-                          </h3>
-                        </h2>
-                      </div>
+                      {query && (
+                        <div className="mt-5">
+                          <h2 className="text-black text-center">
+                            Search Results for :
+                            <h3 className="search_text-query text-uppercase d-inline-block font-weight-bold">
+                              &nbsp;{query}
+                            </h3>
+                          </h2>
+                        </div>
+                      )}
                       <Tab.Content>
                         <Tab.Pane eventKey="All">
                           <div className="row mt-5">

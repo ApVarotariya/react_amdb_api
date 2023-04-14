@@ -15,6 +15,7 @@ const SearchDetails = ({
   media_type,
   vote_average,
   poster,
+  popularity
 }) => {
   return (
     <>
@@ -33,7 +34,7 @@ const SearchDetails = ({
                   <strong>
                     <span>{title}</span>
                   </strong>
-                  <span>{vote_average}</span>
+                  <span>{vote_average || popularity}</span>
                 </h3>
                 <div className="d-flex justify-content-between align-items-start">
                   <p style={{ fontSize: "12px" }}>

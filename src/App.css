@@ -487,10 +487,11 @@ a:hover {
 .search_by_tabs .bg-nav-pills .nav-item a{
   color: #eac56b;
 }
-.search_by_tabs .bg-nav-pills .nav-item .nav-link.active{
-  background-color:#eac56b;
-  color: #fff;
-  font-family: 'Boston Black';
+.search_by_tabs .bg-nav-pills .nav-item .nav-link.active {
+    background-color: #eac56b;
+    color: #2c2d30;
+    font-family: 'Boston Black';
+    border-radius: 5px;
 }
 .search_dropdown .dropdown button{
   background: #2c2d30;
@@ -518,11 +519,52 @@ a:hover {
   color: #2c2d30;
   font-weight: 600;
   border: 1px solid #2c2d30;
+  padding-left: 15px;
+  padding-right:15px;
 }
 .search_dropdown .dropdown #dropdown-split-basic:focus{
   box-shadow: none;
 }
-
+.search_dropdown .dropdown-menu.show {
+    background: #eac56b;
+    border: 1px solid #2c2d30;
+}
+.search_dropdown .dropdown-menu.show a{
+color: #2c2d30;
+}
+.search_suggestion {
+    left: 0;
+    top: 50px;
+    transition: 0.3s ease;
+    background: #fff;
+    border-radius: 10px;
+    display: none;
+}
+.search_suggestion .suggestion_item {
+    border-bottom: 2px solid #2c2d30;
+    margin: 10px;
+    padding: 5px;
+}
+.search_suggestion .suggestion_item .suggestion_type{
+  padding-right: 50px;
+}
+.search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
+    display: block;
+    transition: 0.3s ease;
+    z-index: 9;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus {
+ display: none !important;
+}
+.suggestion_item:hover {
+    background-color: #c3cdc7;
+    border-radius: 5px;
+}
+.suggestion_item .suggestion_title{
+  margin-bottom: 5px !important;
+}
 /* Responsive Css */
 @media (min-width: 767px) {
   .details_page_fact_main {
@@ -590,8 +632,21 @@ a:hover {
     top: -50px;
     right: 0px;
   }
+.navbar-main .navbar-collapse {
+    display: flex !important;
+    position: static !important;
+    background-color: transparent !important;
+    width: auto;
+}
+.navbar-main .navbar-nav{
+      flex-basis: unset !important;
+          flex-direction: row;
+}
 }
 @media (max-width: 767px) {
+  .navbar-main .navbar-collapse{
+    display: none !important;
+  }
   .model-main .modal-body .card {
     flex-direction: column !important;
   }
