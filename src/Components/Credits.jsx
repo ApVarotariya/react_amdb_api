@@ -57,7 +57,8 @@ const Credits = ({ id, media_type }) => {
   ));
 
   const responsive = {
-    0: { items: 1 },
+    0: { items: 2 },
+    400: { items: 3 },
     568: { items: 5 },
     1024: { items: 5 },
   };

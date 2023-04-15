@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import dateFormat from "dateformat";
 import { unavailable, unavailableLandscape } from "./README";
 import TrailerVideo from "./TrailerVideo";
@@ -30,6 +30,7 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
+    // console.log(res.data)
   };
   useEffect(() => {
     fetchData();
@@ -40,7 +41,7 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}/similar?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSimilar(res.data.results);
-    console.log(res.data.results);
+    // console.log(res.data.results);
   };
   useEffect(() => {
       fetchSimilar();
@@ -198,7 +199,7 @@ const SingleDetails = () => {
                 {(state === "movie" || state === "tv") && (
                   
                   <span className="details_air_date">
-                    ({movies.release_date || movies.first_air_date})
+                    ({dateFormat(movies.release_date || movies.first_air_date, "yyyy")})
                   </span>
                 )}
                 <div>
@@ -225,11 +226,11 @@ const SingleDetails = () => {
                     <div
                       className="details_userscore"
                       style={{
-                        width: 70,
-                        height: 70,
+                        width: 50,
+                        height: 50,
                         background: "#000",
                         borderRadius: "50%",
-                        padding: "5px",
+                        padding: "4px",
                         margin: "20px 0",
                       }}
                     >
@@ -244,7 +245,7 @@ const SingleDetails = () => {
                 )}
                 {state === "movie" && (
                   <p className="details_revenue">
-                    Total Revenue : ${movies.revenue}
+                    Total Revenue : ${(movies.revenue/1000000).toFixed(0) + " Millions"}
                   </p>
                 )}
               </div>
@@ -331,7 +332,7 @@ const SingleDetails = () => {
                                   <strong>
                                     <span>{s.title || s.name}</span>
                                   </strong>
-                                  <span>{s.vote_average}</span>
+                                  <span>{s.vote_average.toFixed(1)}</span>
                                 </h3>
                                 <div className="d-flex justify-content-between align-items-start">
                                   <p style={{ fontSize: "12px" }}>

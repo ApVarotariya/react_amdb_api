@@ -8,8 +8,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
-const MovieBox = ({ id, title, date, media_type, vote_average, poster }) => {
-
+const MovieBox = ({ id, title, date, media_type, vote_average, poster,popularity }) => {
   return (
     <>
       <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
@@ -26,7 +25,7 @@ const MovieBox = ({ id, title, date, media_type, vote_average, poster }) => {
                   <strong>
                     <span>{title}</span>
                   </strong>
-                  <span>{vote_average}</span>
+                  <span>{vote_average?.toFixed(1) || popularity?.toFixed(1)}</span>
                 </h3>
                 <div className="d-flex justify-content-between align-items-start">
                   <p style={{ fontSize: "12px" }}>

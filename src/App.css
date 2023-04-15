@@ -285,14 +285,19 @@ a:hover {
 }
 .carouselItem {
   display: flex;
+  width: 95%;
   flex-direction: column;
   object-fit: cover;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #eee;
   margin: 5px;
+  border-radius: 10px;
+}
+.alice-carousel__stage-item{
+  display: inline-flex !important;
 }
 .carouselItem__img {
-  border-radius: 10px;
+  border-radius: 5px;
   margin-bottom: 5px;
   object-fit: cover;
   box-shadow: 0px 0px 5px black;
@@ -526,32 +531,35 @@ a:hover {
   box-shadow: none;
 }
 .search_dropdown .dropdown-menu.show {
-    background: #eac56b;
-    border: 1px solid #2c2d30;
+  background: #eac56b;
+  border: 1px solid #2c2d30;
+  padding: 0;
 }
-.search_dropdown .dropdown-menu.show a{
-color: #2c2d30;
+.search_dropdown .dropdown-menu.show a {
+  color: #2c2d30;
+  border-bottom: 1px solid #2c2d30;
 }
 .search_suggestion {
     left: 0;
-    top: 50px;
+    top: 55px;
     transition: 0.3s ease;
     background: #fff;
     border-radius: 10px;
     display: none;
 }
+.search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
+  display: block;
+  transition: 0.3s ease;
+  z-index: 9;
+}
 .search_suggestion .suggestion_item {
     border-bottom: 2px solid #2c2d30;
     margin: 10px;
     padding: 5px;
+    flex-direction: column;
 }
 .search_suggestion .suggestion_item .suggestion_type{
   padding-right: 50px;
-}
-.search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
-    display: block;
-    transition: 0.3s ease;
-    z-index: 9;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -559,11 +567,24 @@ input:-webkit-autofill:focus {
  display: none !important;
 }
 .suggestion_item:hover {
-    background-color: #c3cdc7;
-    border-radius: 5px;
+  background-color: #eac56b5c;
+  border-radius: 5px;
 }
 .suggestion_item .suggestion_title{
   margin-bottom: 5px !important;
+}
+.suggestion_knwonfor a:hover{
+  border-radius: 5px;
+  background-color: #eac56b;
+}
+.suggestion_knwonfor .suggestion_title{
+  font-style: italic;
+}
+.suggestion_title strong{
+  text-transform: capitalize;
+}
+.suggestion_title strong + strong{
+  display: none;
 }
 /* Responsive Css */
 @media (min-width: 767px) {
