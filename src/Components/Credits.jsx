@@ -55,6 +55,14 @@ const Credits = ({ id, media_type }) => {
     </>
   ));
 
+  const itemsPerSlide = 5;
+  const slideWidth = 20;
+
+  let stagePadding = 0;
+  if (items.length < itemsPerSlide) {
+    stagePadding = (100 - slideWidth * items.length) / 2;
+  }
+
   const responsive = {
     0: { items: 2 },
     400: { items: 3 },
@@ -71,12 +79,15 @@ const Credits = ({ id, media_type }) => {
       {(state === "movie" || state === "tv") && (
         <AliceCarousel
           mouseTracking
-          infinite
           disableDotsControls
           disableButtonsControls
           responsive={responsive}
           items={items}
+          itemsPerSlide={itemsPerSlide}
+          slideToWidth={true}
+          slideWidth={slideWidth}
           autoPlayInterval={600}
+          stagePadding={{ paddingLeft: stagePadding, paddingRight: stagePadding }}
         />
       )}
       {state === "person" && disableCarousel && (

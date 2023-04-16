@@ -30,7 +30,7 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    console.log(res.data)
+    // console.log(res.data)
   };
   useEffect(() => {
     fetchData();
@@ -62,10 +62,10 @@ const SingleDetails = () => {
   useEffect(() => {
     // Dynamic pass img and generate the linear gradient color from it.
     const img = new Image();
-    const dynamicimage = API_IMG + movies?.data?.poster_path;
+    const dynamicimage = API_IMG + movies?.poster_path;
     img.crossOrigin = "Anonymous";
     img.src =
-      // "https://cors-anywhere.herokuapp.com/" +
+      "https://cors-anywhere.herokuapp.com/" +
       dynamicimage;
     img.onload = function () {
       const canvas = document.createElement("canvas");

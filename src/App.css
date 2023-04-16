@@ -622,7 +622,7 @@ input:-webkit-autofill:focus {
 .genre_filter_title{
   white-space: nowrap;
 }
-.moviecard .card h3 span:nth-child(2).badge.badge-danger{
+.moviecard .card h3 span:nth-child(2).red{
   background-color: red !important;
 }
 .moviecard .card > a{

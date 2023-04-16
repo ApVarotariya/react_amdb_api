@@ -34,7 +34,9 @@ const MovieBox = ({
                   <strong>
                     <span>{title}</span>
                   </strong>
-                  <span>
+                  <span
+                    className={vote_average < 5 || popularity < 5 ? "red" : ""}
+                  >
                     {vote_average?.toFixed(1) || popularity?.toFixed(1)}
                   </span>
                 </h3>
