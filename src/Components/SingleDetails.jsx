@@ -30,7 +30,7 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    // console.log(res.data)
+    console.log(res.data)
   };
   useEffect(() => {
     fetchData();
@@ -41,7 +41,6 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}/similar?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSimilar(res.data.results);
-    // console.log(res.data.results);
   };
   useEffect(() => {
       fetchSimilar();
@@ -189,7 +188,7 @@ const SingleDetails = () => {
                       {movies.name || movies.title}
                     </h1>
                     <div className="details_hero_right position-relative w-100 px-0 text-black">
-                      <p className="details_overview">
+                      <p className="details_overview pe-2">
                         Overview : <br />
                         {movies.biography || "Sorry Details not available!"}
                       </p>
@@ -287,7 +286,13 @@ const SingleDetails = () => {
             </>
           )}
           {(state === "movie" || state === "tv") && (
+            <div className="yt_trailer_videos">
+            <h2 className="similar_title my-4 text-black w-100"
+             style={{padding:"0 15px"}}>
+              Trailer Videos :
+            </h2>
             <TrailerVideo media_type={state} id={id} />
+            </div>
           )}
           <div className="row" style={{ margin: "0", justifyContent: "start" }}>
             <h2 className="similar_title my-4 text-black">

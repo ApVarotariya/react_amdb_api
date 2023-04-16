@@ -8,7 +8,16 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
-const MovieBox = ({ id, title, date, media_type, vote_average, poster,popularity }) => {
+const MovieBox = ({
+  id,
+  title,
+  date,
+  media_type,
+  vote_average,
+  poster,
+  popularity,
+  gender,
+}) => {
   return (
     <>
       <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
@@ -25,14 +34,27 @@ const MovieBox = ({ id, title, date, media_type, vote_average, poster,popularity
                   <strong>
                     <span>{title}</span>
                   </strong>
-                  <span>{vote_average?.toFixed(1) || popularity?.toFixed(1)}</span>
+                  <span>
+                    {vote_average?.toFixed(1) || popularity?.toFixed(1)}
+                  </span>
                 </h3>
                 <div className="d-flex justify-content-between align-items-start">
                   <p style={{ fontSize: "12px" }}>
                     <span>{dateFormat(date, "mmmm dS, yyyy")}</span>
                   </p>
                   <p style={{ fontSize: "12px" }}>
-                    {media_type === "tv" ? "TV Series" : "Movie"}
+                    {media_type === "movie"
+                      ? "Movie"
+                      : media_type === "tv"
+                      ? "TV Series"
+                      : media_type === "person" &&
+                        (gender === 0
+                          ? "Not Specified"
+                          : gender === 1
+                          ? "Actress"
+                          : gender === 2
+                          ? "Actor"
+                          : "")}
                   </p>
                 </div>
               </Card.Title>

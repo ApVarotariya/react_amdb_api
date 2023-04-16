@@ -12,7 +12,6 @@ const TvSeries = () => {
       `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     setMovies(movies.data.results);
-    console.log(movies.data.results);
   };
   useEffect(() => {
     fetchData();

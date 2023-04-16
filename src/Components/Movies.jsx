@@ -2,26 +2,52 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
+import { FaTimes } from "react-icons/fa";
 
 const Movies = () => {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
+  const [genres, setGenres] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const [numOfPages, setNumOfPages] = useState();
 
   const fetchData = async () => {
     const movies = await axios.get(
-
-      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
+      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}${selectedGenres.length > 0 ? `&with_genres=${selectedGenres.join(',')}` : ''}`
     );
     setMovies(movies.data.results);
     setNumOfPages(movies.data.total_pages);
-    console.log(movies.data.total_pages);
-    console.log(movies.data.results);
-    console.log(movies);
   };
+
+  const fetchGenres = async () => {
+    const genres = await axios.get(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
+    );
+    setGenres(genres.data.genres);
+  };
+
+  const handleGenreClick = (genreId) => {
+    if (selectedGenres.includes(genreId)) {
+      setSelectedGenres(selectedGenres.filter((id) => id !== genreId));
+    } else {
+      setSelectedGenres([...selectedGenres, genreId]);
+    }
+    setPage(1);
+  };
+
+  const handleRemoveSelectedGenre = (genreId) => {
+    setSelectedGenres(selectedGenres.filter((id) => id !== genreId));
+    setPage(1);
+  };
+
   useEffect(() => {
     fetchData();
-  }, [page]);
+  }, [page, selectedGenres]);
+
+  useEffect(() => {
+    fetchGenres();
+  }, []);
+
   return (
     <>
       <div className="container-fluid">
@@ -29,29 +55,50 @@ const Movies = () => {
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
             Discover Movies
           </h1>
-          {movies.map((c) => {
-            return (
-              <MovieBox
-                key={c.id}
-                id={c.id}
-                title={c.title || c.original_name}
-                poster={c.poster_path}
-                backdrop_path={c.backdrop_path}
-                date={c.first_air_date || c.release_date}
-                vote_average={c.vote_average}
-                media_type={"movie"}
-                overview={c.overview}
-                vote_count={c.vote_count}
-                popularity={c.popularity}
-              />
-            );
-          })}
+          <div className="d-flex genre_filter_main mb-3">
+          <p className="text-black me-2 genre_filter_title">Filter :</p>
+          <div>
+            {genres.map((genre) => (
+              <button
+                key={genre.id}
+                className={`genrebtn mx-1 my-2 ${
+                  selectedGenres.includes(genre.id) ? "btn_selected" : "btn_not_selected"
+                }`}
+                onClick={() => handleGenreClick(genre.id)}
+              >
+                {genre.name}
+                {selectedGenres.includes(genre.id) && (
+                  <FaTimes
+                    className="selected-genre-icon"
+                    onClick={() => handleRemoveSelectedGenre(genre.id)}
+                  />
+                )}
+              </button>
+            ))}
+            </div>
+          </div>
+          {movies.map((movie) => (
+            <MovieBox
+              key={movie.id}
+              id={movie.id}
+              title={movie.title || movie.original_name}
+              poster={movie.poster_path}
+              backdrop_path={movie.backdrop_path}
+              date={movie.first_air_date || movie.release_date}
+              vote_average={movie.vote_average}
+              media_type={"movie"}
+              overview={movie.overview}
+              vote_count={movie.vote_count}
+              popularity={movie.popularity}
+            />
+          ))}
         </div>
         {numOfPages > 1 && (
-          <CustomPagination setPage={setPage} numOfPages={500} />
+          <CustomPagination setPage={setPage} numOfPages={numOfPages} />
         )}
       </div>
     </>
   );
 };
+
 export default Movies;

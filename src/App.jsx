@@ -7,8 +7,6 @@ import Search from "./Components/Search";
 import Header from "./Components/Header";
 import { Routes, Route } from "react-router-dom";
 import Movies from "./Components/Movies";
-// import SingleTv from "./Components/SingleTv";
-// import SinglePerson from "./Components/SinglePerson";
 import BollyWoodMovies from "./Components/BollyWoodMovies";
 import SingleDetails from "./Components/SingleDetails";
 
@@ -20,8 +18,6 @@ function App() {
         <Route path="/react_amdb_api" element={<Main />} />
         <Route path="/bollywoodmovies" element={<BollyWoodMovies />} />
         <Route path="/:state/:id" element={<SingleDetails />} />
-        {/* <Route path="/tv/:id" element={<SingleTv />} />
-        <Route path="/person/:id" element={<SinglePerson />}></Route> */}
         <Route path="trending-movies" element={<TrendingMovies />} />
         <Route path="movies" element={<Movies />} />
         <Route path="tv-series" element={<TvSeries />} />

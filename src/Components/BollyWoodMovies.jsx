@@ -12,7 +12,6 @@ const BollyWoodMovies = () => {
       `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=hi-IN&region=IN&sort_by=popularity.desc&page=${page}&primary_release_year=2018&with_original_language=hi`
     );
     setTrendingMovies(trendingMovies.data.results);
-    // console.log(trendingMovies.data.results);
   };
   useEffect(() => {
     fetchData();

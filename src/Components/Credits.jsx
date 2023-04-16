@@ -28,7 +28,6 @@ const Credits = ({ id, media_type }) => {
       `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
     );
     setCredits(data.cast);
-    // console.log(data.cast);
   };
 
   const items = credits?.map((c) => (

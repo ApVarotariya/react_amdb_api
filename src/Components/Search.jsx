@@ -117,7 +117,6 @@ const Search = () => {
                     </Button>
                     <div className="search_suggestion position-absolute w-100">
                       {searchSuggestion.slice(0, 5).map((suggest) => {
-                        console.log(suggest);
                         return (
                           <div className="d-flex suggestion_item">
                             <Link
@@ -172,7 +171,13 @@ const Search = () => {
                                           ? ` (${suggest.original_language})`
                                           : ""
                                       }`
-                                    : "Actor"}
+                                    : suggest.gender === 0
+                                    ? "Not specified"
+                                    : suggest.gender === 1
+                                    ? "Female"
+                                    : suggest.gender === 2
+                                    ? "Male"
+                                    : ""}
                                 </span>
                                 <span className="text-black suggestion_release_date">
                                   {suggest.release_date ||
@@ -288,6 +293,7 @@ const Search = () => {
                                     overview={c.overview}
                                     vote_count={c.vote_count}
                                     popularity={c.popularity}
+                                    gender={c.gender}
                                   />
                                 );
                               })
@@ -317,8 +323,7 @@ const Search = () => {
                                     media_type={c.media_type}
                                     overview={c.overview}
                                     vote_count={c.vote_count}
-                                    popularity={c.popularity}
-                                  />
+                                    popularity={c.popularity}                                 />
                                 );
                               })
                             ) : (
@@ -378,6 +383,7 @@ const Search = () => {
                                     overview={c.overview}
                                     vote_count={c.vote_count}
                                     popularity={c.popularity}
+                                    gender={c.gender}
                                   />
                                 );
                               })

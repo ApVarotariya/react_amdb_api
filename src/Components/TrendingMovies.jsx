@@ -12,7 +12,6 @@ const TrendingMovies = () => {
       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     setTrendingMovies(trendingMovies.data.results);
-    // console.log(trendingMovies.data.results);
   };
   useEffect(() => {
     fetchData();
