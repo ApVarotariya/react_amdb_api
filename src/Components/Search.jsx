@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, FormControl, Button, Tab, Nav } from "react-bootstrap";
 import { Triangle } from "react-loader-spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -9,6 +9,7 @@ import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import MovieBox from "./MovieBox";
+import CustomPagination from "./CustomPagination";
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -96,7 +97,7 @@ const Search = () => {
                   visible={true}
                 />
               ) : (
-                <>
+                <div className="search_main" style={{overflow:"hidden"}}>
                   <Form className="d-flex search-form-main position-relative">
                     <FormControl
                       type="search"
@@ -323,7 +324,8 @@ const Search = () => {
                                     media_type={c.media_type}
                                     overview={c.overview}
                                     vote_count={c.vote_count}
-                                    popularity={c.popularity}                                 />
+                                    popularity={c.popularity}
+                                  />
                                 );
                               })
                             ) : (
@@ -397,11 +399,13 @@ const Search = () => {
                       </Tab.Content>
                     </Tab.Container>
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>
-          {/* <CustomPagination setPage={setPage} /> */}
+          {/* {movies && movies.length > 0 && (
+            <CustomPagination setPage={setPage} />
+          )} */}
         </div>
       </div>
     </>

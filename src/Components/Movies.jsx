@@ -13,7 +13,15 @@ const Movies = () => {
 
   const fetchData = async () => {
     const movies = await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}${selectedGenres.length > 0 ? `&with_genres=${selectedGenres.join(',')}` : ''}`
+      `https://api.themoviedb.org/3/discover/movie?api_key=${
+        process.env.REACT_APP_ACCESS_KEY
+      }&page=${page}${
+        selectedGenres.length > 0
+          ? `&with_genres=${selectedGenres.join(",")}`
+          : ""
+      }${
+        selectedGenres.includes("bollywood") ? "&with_original_language=hi" : ""
+      }`
     );
     setMovies(movies.data.results);
     setNumOfPages(movies.data.total_pages);
@@ -40,6 +48,17 @@ const Movies = () => {
     setPage(1);
   };
 
+    const handleBollywoodFilter = () => {
+      if (selectedGenres.includes("bollywood")) {
+        setSelectedGenres(
+          selectedGenres.filter((genre) => genre !== "bollywood")
+        );
+      } else {
+        setSelectedGenres([...selectedGenres, "bollywood"]);
+      }
+      setPage(1);
+    };
+
   useEffect(() => {
     fetchData();
   }, [page, selectedGenres]);
@@ -56,42 +75,58 @@ const Movies = () => {
             Discover Movies
           </h1>
           <div className="d-flex genre_filter_main mb-3">
-          <p className="text-black me-2 genre_filter_title">Filter :</p>
-          <div>
-            {genres.map((genre) => (
+            <p className="text-black me-2 genre_filter_title">Filter :</p>
+            <div>
+              {genres.map((genre) => (
+                <button
+                  key={genre.id}
+                  className={`genrebtn mx-1 my-2 ${
+                    selectedGenres.includes(genre.id)
+                      ? "btn_selected"
+                      : "btn_not_selected"
+                  }`}
+                  onClick={() => handleGenreClick(genre.id)}
+                >
+                  {genre.name}
+                  {selectedGenres.includes(genre.id) && (
+                    <FaTimes
+                      className="selected-genre-icon"
+                      onClick={() => handleRemoveSelectedGenre(genre.id)}
+                    />
+                  )}
+                </button>
+              ))}
               <button
-                key={genre.id}
                 className={`genrebtn mx-1 my-2 ${
-                  selectedGenres.includes(genre.id) ? "btn_selected" : "btn_not_selected"
+                  selectedGenres.includes("bollywood")
+                    ? "btn_selected"
+                    : "btn_not_selected"
                 }`}
-                onClick={() => handleGenreClick(genre.id)}
-              >
-                {genre.name}
-                {selectedGenres.includes(genre.id) && (
-                  <FaTimes
-                    className="selected-genre-icon"
-                    onClick={() => handleRemoveSelectedGenre(genre.id)}
-                  />
-                )}
-              </button>
-            ))}
+                onClick={() => handleBollywoodFilter()}
+              >Bollywood</button>
             </div>
           </div>
-          {movies.map((movie) => (
-            <MovieBox
-              key={movie.id}
-              id={movie.id}
-              title={movie.title || movie.original_name}
-              poster={movie.poster_path}
-              backdrop_path={movie.backdrop_path}
-              date={movie.first_air_date || movie.release_date}
-              vote_average={movie.vote_average}
-              media_type={"movie"}
-              overview={movie.overview}
-              vote_count={movie.vote_count}
-              popularity={movie.popularity}
-            />
-          ))}
+          {movies.length > 0 ? (
+            movies.map((movie) => (
+              <MovieBox
+                key={movie.id}
+                id={movie.id}
+                title={movie.title || movie.original_name}
+                poster={movie.poster_path}
+                backdrop_path={movie.backdrop_path}
+                date={movie.first_air_date || movie.release_date}
+                vote_average={movie.vote_average}
+                media_type={"movie"}
+                overview={movie.overview}
+                vote_count={movie.vote_count}
+                popularity={movie.popularity}
+              />
+            ))
+          ) : (
+            <h2 className="text-black text-center mt-5">
+              No matching Combinations.
+            </h2>
+          )}
         </div>
         {numOfPages > 1 && (
           <CustomPagination setPage={setPage} numOfPages={numOfPages} />
