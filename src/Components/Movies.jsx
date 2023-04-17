@@ -77,6 +77,14 @@ const Movies = () => {
           <div className="d-flex genre_filter_main mb-3">
             <p className="text-black me-2 genre_filter_title">Filter :</p>
             <div>
+            <button
+                className={`genrebtn mx-1 my-2 ${
+                  selectedGenres.includes("bollywood")
+                    ? "btn_selected"
+                    : "btn_not_selected"
+                }`}
+                onClick={() => handleBollywoodFilter()}
+              >Bollywood</button>
               {genres.map((genre) => (
                 <button
                   key={genre.id}
@@ -96,14 +104,6 @@ const Movies = () => {
                   )}
                 </button>
               ))}
-              <button
-                className={`genrebtn mx-1 my-2 ${
-                  selectedGenres.includes("bollywood")
-                    ? "btn_selected"
-                    : "btn_not_selected"
-                }`}
-                onClick={() => handleBollywoodFilter()}
-              >Bollywood</button>
             </div>
           </div>
           {movies.length > 0 ? (

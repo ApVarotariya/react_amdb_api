@@ -193,10 +193,11 @@ a:hover {
   color: #fff !important;
   background: #10162f;
   border-radius: 10px;
+  z-index: 99;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 .search-form-main input:focus {
-  background: unset;
+  background: #fff;
 }
 .search-form-main input::placeholder {
   color: #fff;

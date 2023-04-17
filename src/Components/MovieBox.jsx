@@ -23,11 +23,11 @@ const MovieBox = ({
       <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
         <Card>
           <Link to={`/${media_type}/${id}`}>
-            {/* <LazyLoadImage
+            <LazyLoadImage
               src={poster ? API_IMG + poster : unavailable}
               className="movie-backdrop-poster"
               alt={title}
-            /> */}
+            />
             <Card.Body>
               <Card.Title>
                 <h3>

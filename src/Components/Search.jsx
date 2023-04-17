@@ -97,7 +97,7 @@ const Search = () => {
                   visible={true}
                 />
               ) : (
-                <div className="search_main" style={{overflow:"hidden"}}>
+                <div className="search_main" style={{overflow:"hidden",minHeight:"600px"}}>
                   <Form className="d-flex search-form-main position-relative">
                     <FormControl
                       type="search"

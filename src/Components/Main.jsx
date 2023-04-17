@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
-import Skeleton from "react-loading-skeleton";
 import { Triangle } from "react-loader-spinner";
 
 const Main = () => {
