@@ -47,6 +47,17 @@ const TvSeries = () => {
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
             TV Series
           </h1>
+          <div className="mt-5 mb-5 text-center">
+            {hindiTv.length > 0 ? (
+              <button className="genrebtn me-2" onClick={handleAllTv}>
+                All TV Series
+              </button>
+            ) : (
+              <button className="genrebtn me-2" onClick={handleHindiTv}>
+                Hindi TV Series
+              </button>
+            )}
+          </div>
           {hindiTv.length > 0
             ? hindiTv.map((c) => {
                 return (
@@ -82,15 +93,6 @@ const TvSeries = () => {
               })}
         </div>
         <div className="d-flex justify-content-center mt-4">
-          {hindiTv.length > 0 ? (
-            <button className="genrebtn me-2" onClick={handleAllTv}>
-              All TV Series
-            </button>
-          ) : (
-            <button className="genrebtn me-2" onClick={handleHindiTv}>
-              Hindi TV Series
-            </button>
-          )}
           {tv.length > 0 && <CustomPagination setPage={setPage} />}
         </div>
       </div>

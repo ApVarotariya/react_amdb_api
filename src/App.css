@@ -542,15 +542,16 @@ a:hover {
     z-index: 1;
     transition-timing-function: cubic-bezier(.25,.25,.75,.75);
     opacity: 0;
-    transform: translate3d(0%,-100%,0);
-    transition-property: opacity,transform;
+    height: 0;
+    /* transform: translate3d(0%,-100%,0); */
+    transition-property: opacity,height;
     border-radius: 10px;
     transition-duration: 0.5s;
     pointer-events: none;
 }
 .search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
     opacity: 1;
-    transform: translateZ(0);
+    /* transform: translateZ(0); */
 }
 .search_suggestion .suggestion_item {
     border-bottom: 2px solid #2c2d30;

@@ -21,6 +21,7 @@ const Search = () => {
   const [selectedValue, setSelectedValue] = useState("All");
   const [searchSuggestion, setSearchSuggestion] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [height, setHeight] = useState(0);
 
   const API_IMG = "https://image.tmdb.org/t/p/original";
 
@@ -59,6 +60,20 @@ const Search = () => {
     setSelectedValue(value);
   };
 
+const handleInputFocus = (e) => {
+  const suggestionItems = document.querySelectorAll(".search_suggestion .suggestion_item");
+  let height = 0;
+  if (query && suggestionItems.length > 0) {
+    suggestionItems.forEach((item) => {
+      height += item.offsetHeight;
+    });
+  }
+  setHeight(height);
+};
+  useEffect(() => {
+    handleInputFocus();
+  }, [query]);
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (query.trim().length > 0) {
@@ -97,7 +112,7 @@ const Search = () => {
                   visible={true}
                 />
               ) : (
-                <div className="search_main" style={{overflow:"hidden",minHeight:"600px"}}>
+                <>
                   <Form className="d-flex search-form-main position-relative">
                     <FormControl
                       type="search"
@@ -106,9 +121,12 @@ const Search = () => {
                       aria-label="search"
                       name="query"
                       value={query}
-                      onChange={changeHandler}
+                      onChange={(e) => {
+                        changeHandler(e);
+                        handleInputFocus(e);
+                      }}
                       autoComplete="off"
-                    ></FormControl>
+                    />
                     <Button
                       variant="success"
                       type="submit"
@@ -116,7 +134,10 @@ const Search = () => {
                     >
                       Search
                     </Button>
-                    <div className="search_suggestion position-absolute w-100">
+                    <div
+                      className="search_suggestion position-absolute w-100"
+                      style={{ height: `${height}px` }}
+                    >
                       {searchSuggestion.slice(0, 5).map((suggest) => {
                         return (
                           <div className="d-flex suggestion_item">
@@ -218,6 +239,7 @@ const Search = () => {
                       })}
                     </div>
                   </Form>
+                  <p className="text-black">{height}</p>
                   <div className="search_by_tabs mt-5">
                     <Tab.Container defaultActiveKey="All">
                       <div className="d-none d-md-block">
@@ -399,7 +421,7 @@ const Search = () => {
                       </Tab.Content>
                     </Tab.Container>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>
