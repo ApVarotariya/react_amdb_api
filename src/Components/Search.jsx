@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Form, FormControl, Button, Tab, Nav } from "react-bootstrap";
 import { Triangle } from "react-loader-spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -60,19 +60,17 @@ const Search = () => {
     setSelectedValue(value);
   };
 
-const handleInputFocus = (e) => {
-  const suggestionItems = document.querySelectorAll(".search_suggestion .suggestion_item");
-  let height = 0;
-  if (query && suggestionItems.length > 0) {
+  const handleInputFocus = () => {
+    const suggestionItems = document.querySelectorAll(".search_suggestion .suggestion_item");
+    let height = 0;
     suggestionItems.forEach((item) => {
-      height += item.offsetHeight;
+      height += item.getBoundingClientRect().height;
     });
-  }
-  setHeight(height);
-};
-  useEffect(() => {
-    handleInputFocus();
-  }, [query]);
+    setHeight(height);
+  };
+useLayoutEffect(() => {
+  handleInputFocus();
+}, [query]);
   
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -121,10 +119,8 @@ const handleInputFocus = (e) => {
                       aria-label="search"
                       name="query"
                       value={query}
-                      onChange={(e) => {
-                        changeHandler(e);
-                        handleInputFocus(e);
-                      }}
+                      onChange={changeHandler}
+  onFocus={handleInputFocus}
                       autoComplete="off"
                     />
                     <Button

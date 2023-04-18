@@ -1,7 +1,7 @@
 {
   "name": "amdb-clone",
   "version": "0.1.0",
-  "homepage": "https://ApVarotariya.github.io/react_amdb_api",
+  "homepage": "/",
   "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.4",

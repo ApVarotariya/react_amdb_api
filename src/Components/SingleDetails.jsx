@@ -135,7 +135,7 @@ useEffect(() => {
             >
               <canvas ref={canvasRef} style={{ display: "none" }} />
               <div className="details_hero_left">
-                {/* <LazyLoadImage
+                <LazyLoadImage
                   className="details_postar"
                   id="details_postar"
                   src={
@@ -146,9 +146,8 @@ useEffect(() => {
                         : movies?.profile_path
                     }`
                   }
-                  cross-origin="anonymous"
                   alt={movies?.title || movies?.name}
-                /> */}
+                />
                 {state === "person" && (
                   <>
                     <p className="text-center mt-2 text-black">
