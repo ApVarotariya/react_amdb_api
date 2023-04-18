@@ -15,7 +15,7 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/react_amdb_api" element={<Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="/bollywoodmovies" element={<BollyWoodMovies />} />
         <Route path="/:state/:id" element={<SingleDetails />} />
         <Route path="trending-movies" element={<TrendingMovies />} />
