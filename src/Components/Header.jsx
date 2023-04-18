@@ -17,7 +17,7 @@ const Header = () => {
           <div className="row align-items-center">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <Navbar expand="lg" className="px-0 navbar-main">
-                <Navbar.Brand href="/react_amdb_api">
+                <Navbar.Brand href="/">
                   <img
                     src={brandLogo}
                     style={{

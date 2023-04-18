@@ -21,7 +21,12 @@ const Search = () => {
   const [selectedValue, setSelectedValue] = useState("All");
   const [searchSuggestion, setSearchSuggestion] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [height, setHeight] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
+  const [suggestionBoxHeight, setSuggestionBoxHeight] = useState(0);
+
+  
+  const inputRef = useRef(null);
+  const suggestionBoxRef = useRef(null);
 
   const API_IMG = "https://image.tmdb.org/t/p/original";
 
@@ -61,17 +66,24 @@ const Search = () => {
   };
 
   const handleInputFocus = () => {
-    const suggestionItems = document.querySelectorAll(".search_suggestion .suggestion_item");
-    let height = 0;
-    suggestionItems.forEach((item) => {
-      height += item.getBoundingClientRect().height;
-    });
-    setHeight(height);
+    setIsFocused(true);
   };
-useLayoutEffect(() => {
-  handleInputFocus();
-}, [query]);
-  
+
+  const handleInputBlur = () => {
+    setIsFocused(false);
+  };
+
+  useEffect(() => {
+    // Update the height of the suggestion box based on the number of suggestions
+    if (suggestionBoxRef.current) {
+      setSuggestionBoxHeight(
+        suggestionBoxRef.current.scrollHeight > 600
+          ? 600
+          : suggestionBoxRef.current.scrollHeight
+      );
+    }
+  }, [searchSuggestion]);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (query.trim().length > 0) {
@@ -120,7 +132,9 @@ useLayoutEffect(() => {
                       name="query"
                       value={query}
                       onChange={changeHandler}
-  onFocus={handleInputFocus}
+                      ref={inputRef}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
                       autoComplete="off"
                     />
                     <Button
@@ -130,9 +144,19 @@ useLayoutEffect(() => {
                     >
                       Search
                     </Button>
+                    {isFocused && (
                     <div
                       className="search_suggestion position-absolute w-100"
-                      style={{ height: `${height}px` }}
+                      ref={suggestionBoxRef}
+          style={{
+            height: suggestionBoxHeight,
+            overflow: "hidden",
+            transition: "height 0.3s ease",
+            marginTop: "5px",
+            backgroundColor: "white",
+            border: "1px solid black",
+            borderRadius: "5px",
+          }}
                     >
                       {searchSuggestion.slice(0, 5).map((suggest) => {
                         return (
@@ -234,8 +258,8 @@ useLayoutEffect(() => {
                         );
                       })}
                     </div>
+                    )}
                   </Form>
-                  <p className="text-black">{height}</p>
                   <div className="search_by_tabs mt-5">
                     <Tab.Container defaultActiveKey="All">
                       <div className="d-none d-md-block">

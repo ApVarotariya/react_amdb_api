@@ -533,24 +533,22 @@ a:hover {
   border-bottom: 1px solid #2c2d30;
 }
 .search_suggestion {
-     overflow: hidden;
+     /* overflow: hidden; */
      background: #fff;
-    transform-origin: top;
+    /* transform-origin: top; */
     position: absolute;
      left: 0;
     top: 55px;
     z-index: 1;
-    transition-timing-function: cubic-bezier(.25,.25,.75,.75);
-    opacity: 0;
-    height: 0;
+    /* transition-timing-function: cubic-bezier(.25,.25,.75,.75); */
     /* transform: translate3d(0%,-100%,0); */
-    transition-property: opacity,height;
+    /* transition-property: opacity,height; */
     border-radius: 10px;
-    transition-duration: 0.5s;
+    /* transition-duration: 0.5s; */
     pointer-events: none;
 }
 .search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
-    opacity: 1;
+    /* opacity: 1; */
     /* transform: translateZ(0); */
 }
 .search_suggestion .suggestion_item {
