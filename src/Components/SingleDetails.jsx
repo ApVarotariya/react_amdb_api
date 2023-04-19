@@ -11,17 +11,15 @@ import { Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
-const API_IMG500 = "https://image.tmdb.org/t/p/w500";
+const API_IMG300 = "https://image.tmdb.org/t/p/w500";
 
 const SingleDetails = () => {
   const { state } = useParams();
   const { id } = useParams();
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
-  // const [bgColor, setBgColor] = useState("");
   const perPage = 8;
   const [next, setNext] = useState(perPage);
-  // const [brightness, setBrightness] = useState(0);
   const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
@@ -31,7 +29,6 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    // console.log(res.data)
   };
   useEffect(() => {
     fetchData();
@@ -61,7 +58,7 @@ const SingleDetails = () => {
   }
 
   useEffect(() => {
-    const dynamicImage = API_IMG500 + movies?.poster_path;
+    const dynamicImage = API_IMG300 + movies?.poster_path;
 
     const getImageData = async () => {
       try {

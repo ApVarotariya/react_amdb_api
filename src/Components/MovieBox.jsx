@@ -60,7 +60,7 @@ const MovieBox = ({
                   </p>
                 </div>
               </Card.Title>
-              <Link to={`/${media_type}/${id}`}>
+              <Link to={`/${media_type}/${id}`} as="button">
                 <Button variant="success">More Details</Button>
               </Link>
             </Card.Body>
