@@ -11,7 +11,7 @@ import { Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
-const API_IMG300 = "https://image.tmdb.org/t/p/w500";
+const API_IMG300 = "https://image.tmdb.org/t/p/w300";
 
 const SingleDetails = () => {
   const { state } = useParams();
@@ -89,7 +89,7 @@ const SingleDetails = () => {
         const element = document.getElementById("single_content_details");
         element.style.background = gradient;
       } catch (error) {
-        console.error(error);
+        console.error("eror", error);
       }
     };
     getImageData();
@@ -102,132 +102,136 @@ const SingleDetails = () => {
           className="single_content_details_main"
           style={{ overflowX: "hidden" }}
         >
-          <div
-            className={`either_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
-            id="either_dark_bg"
-            style={{
-              backgroundImage: `url(${
-                API_IMG + movies?.backdrop_path
-                  ? API_IMG + movies?.backdrop_path
-                  : unavailableLandscape
-              })`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              position: "relative",
-              width: "100%",
-              minHeight: "100vh",
-            }}
-          >
+          <div className="banner_bg_main">
             <div
-              className="single_content_details"
-              id="single_content_details"
+              className={`either_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
+              id="either_dark_bg"
               style={{
+                backgroundImage: `url(${
+                  API_IMG + movies?.backdrop_path
+                    ? API_IMG + movies?.backdrop_path
+                    : unavailableLandscape
+                })`,
+                backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 position: "relative",
                 width: "100%",
                 minHeight: "100vh",
               }}
             >
-              <canvas ref={canvasRef} style={{ display: "none" }} />
-              <div className="details_hero_left">
-                <LazyLoadImage
-                  className="details_postar"
-                  id="details_postar"
-                  src={
-                    API_IMG +
-                    `${
-                      movies?.poster_path
-                        ? movies?.poster_path
-                        : movies?.profile_path
-                    }`
-                  }
-                  alt={movies?.title || movies?.name}
-                />
-                {state === "person" && (
-                  <>
-                    <p className="text-center mt-2 text-black">
-                      {movies.place_of_birth}
-                    </p>
-                    <span className="person_details_birth text-center text-black">
-                      <p>{dateFormat(movies.birthday, "mmmm dS, yyyy")}</p>
-                    </span>
-                  </>
-                )}
-              </div>
-              <div className="details_hero_right position-relative">
-                {(state === "movie" || state === "tv") && (
-                  <h1 className="d-inline-block details_title">
-                    {movies.name || movies.title}
-                  </h1>
-                )}
-                {state === "person" && (
-                  <>
-                    <h1 className="d-inline-block details_title text-black">
-                      {movies.name || movies.title}
-                    </h1>
-                    <div className="details_hero_right position-relative w-100 px-0 text-black">
-                      <p className="details_overview pe-2">
-                        Overview : <br />
-                        {movies.biography || "Sorry Details not available!"}
+              <div
+                className="single_content_details"
+                id="single_content_details"
+                style={{
+                  backgroundSize: "cover",
+                  position: "relative",
+                  width: "100%",
+                  minHeight: "100vh",
+                }}
+              >
+                <canvas ref={canvasRef} style={{ display: "none" }} />
+                <div className="details_hero_left">
+                  <LazyLoadImage
+                    className="details_postar"
+                    id="details_postar"
+                    src={
+                      API_IMG +
+                      `${
+                        movies?.poster_path
+                          ? movies?.poster_path
+                          : movies?.profile_path
+                      }`
+                    }
+                    alt={movies?.title || movies?.name}
+                  />
+                  {state === "person" && (
+                    <>
+                      <p className="text-center mt-2 text-black">
+                        {movies.place_of_birth}
                       </p>
-                    </div>
-                  </>
-                )}
-                {(state === "movie" || state === "tv") && (
-                  <span className="details_air_date">
-                    (
-                    {dateFormat(
-                      movies.release_date || movies.first_air_date,
-                      "yyyy"
-                    )}
-                    )
-                  </span>
-                )}
-                <div>
-                  {(state === "movie" || state === "tv") && (
-                    <span className="details_genre">
-                      ~&nbsp;
-                      {movies.genres?.map((c, index) => {
-                        return (
-                          <span key={c.id}>{(index ? ", " : "") + c.name}</span>
-                        );
-                      })}
-                    </span>
-                  )}
-                  {state === "movie" && (
-                    <span className="details_runtime">
-                      {timeConvert(movies.runtime)}
-                    </span>
+                      <span className="person_details_birth text-center text-black">
+                        <p>{dateFormat(movies.birthday, "mmmm dS, yyyy")}</p>
+                      </span>
+                    </>
                   )}
                 </div>
-                {(state === "movie" || state === "tv") && (
-                  <>
-                    <div
-                      className="details_userscore"
-                      style={{
-                        width: 50,
-                        height: 50,
-                        background: "#000",
-                        borderRadius: "50%",
-                        padding: "4px",
-                        margin: "20px 0",
-                      }}
-                    >
-                      <CircularProgressbar
-                        value={movies.vote_average * 10}
-                        text={movies?.vote_average?.toFixed(1) * 10 + "%"}
-                      />
-                    </div>
-                    <p className="details_tagline">{movies?.tagline}</p>
-                    <p className="details_overview">{movies?.overview}</p>
-                  </>
-                )}
-                {state === "movie" && (
-                  <p className="details_revenue">
-                    Total Revenue : $
-                    {(movies.revenue / 1000000).toFixed(0) + " Millions"}
-                  </p>
-                )}
+                <div className="details_hero_right position-relative">
+                  {(state === "movie" || state === "tv") && (
+                    <h1 className="d-inline-block details_title">
+                      {movies.name || movies.title}
+                    </h1>
+                  )}
+                  {state === "person" && (
+                    <>
+                      <h1 className="d-inline-block details_title text-black">
+                        {movies.name || movies.title}
+                      </h1>
+                      <div className="details_hero_right position-relative w-100 px-0 text-black">
+                        <p className="details_overview pe-2">
+                          Overview : <br />
+                          {movies.biography || "Sorry Details not available!"}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {(state === "movie" || state === "tv") && (
+                    <span className="details_air_date">
+                      (
+                      {dateFormat(
+                        movies.release_date || movies.first_air_date,
+                        "yyyy"
+                      )}
+                      )
+                    </span>
+                  )}
+                  <div>
+                    {(state === "movie" || state === "tv") && (
+                      <span className="details_genre">
+                        ~&nbsp;
+                        {movies.genres?.map((c, index) => {
+                          return (
+                            <span key={index}>
+                              {(index ? ", " : "") + c.name}
+                            </span>
+                          );
+                        })}
+                      </span>
+                    )}
+                    {state === "movie" && (
+                      <span className="details_runtime">
+                        {timeConvert(movies.runtime)}
+                      </span>
+                    )}
+                  </div>
+                  {(state === "movie" || state === "tv") && (
+                    <>
+                      <div
+                        className="details_userscore"
+                        style={{
+                          width: 50,
+                          height: 50,
+                          background: "#000",
+                          borderRadius: "50%",
+                          padding: "4px",
+                          margin: "20px 0",
+                        }}
+                      >
+                        <CircularProgressbar
+                          value={movies.vote_average * 10}
+                          text={movies?.vote_average?.toFixed(1) * 10 + "%"}
+                        />
+                      </div>
+                      <p className="details_tagline">{movies?.tagline}</p>
+                      <p className="details_overview">{movies?.overview}</p>
+                    </>
+                  )}
+                  {state === "movie" && (
+                    <p className="details_revenue">
+                      Total Revenue : $
+                      {(movies.revenue / 1000000).toFixed(0) + " Millions"}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -249,7 +253,7 @@ const SingleDetails = () => {
                     <br />
                     {movies.production_companies?.map((c, index) => {
                       return (
-                        <span key={c.id}>{(index ? " , " : "") + c.name}</span>
+                        <span key={index}>{(index ? " , " : "") + c.name}</span>
                       );
                     })}
                   </p>
@@ -258,7 +262,7 @@ const SingleDetails = () => {
                     <br />
                     {movies.production_countries?.map((c, index) => {
                       return (
-                        <span key={c.id}>{(index ? " , " : "") + c.name}</span>
+                        <span key={index}>{(index ? " , " : "") + c.name}</span>
                       );
                     })}
                   </p>
@@ -292,7 +296,10 @@ const SingleDetails = () => {
                 {similar && similar.length > 0 ? (
                   similar.slice(0, next).map((s) => {
                     return (
-                      <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
+                      <div
+                        className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard"
+                        key={s.id}
+                      >
                         <Card>
                           <Link
                             to={`/${state}/${s.id}`}
@@ -337,6 +344,7 @@ const SingleDetails = () => {
                                 </div>
                               </Card.Title>
                               <Link
+                                as="button"
                                 to={`/${state}/${s.id}`}
                                 onClick={() => {
                                   window.scrollTo({
