@@ -59,26 +59,25 @@ const Search = () => {
     setSelectedValue(value);
   };
 
-const handleInputFocus = (e) => {
-  let box = document.querySelectorAll(".suggestion_item");
-  let ans = [...box].map((val) => {
-    return val;
-  });
-  let sum = ans.reduce((acc, val) => {
-    return (
-      acc +
-      val.getBoundingClientRect().height +
-      parseFloat(getComputedStyle(val).marginTop) +
-      parseFloat(getComputedStyle(val).marginBottom)
-    );
-  }, 0);
-  setHeight(sum);
-};
+  const handleInputFocus = (e) => {
+    let box = document.querySelectorAll(".suggestion_item");
+    let ans = [...box].map((val) => {
+      return val;
+    });
+    let sum = ans.reduce((acc, val) => {
+      return (
+        acc +
+        val.getBoundingClientRect().height +
+        parseFloat(getComputedStyle(val).marginTop) +
+        parseFloat(getComputedStyle(val).marginBottom)
+      );
+    }, 0);
+    setHeight(sum);
+  };
 
   useEffect(() => {
     handleInputFocus();
   }, [searchSuggestion, query]);
-
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -168,7 +167,7 @@ const handleInputFocus = (e) => {
                               <div>
                                 <p className="text-black suggestion_title">
                                   {query.length > 0 && (
-                                    <div>
+                                    <>
                                       {(
                                         suggest?.title ||
                                         suggest?.name ||
@@ -183,7 +182,7 @@ const handleInputFocus = (e) => {
                                             part
                                           )
                                         )}
-                                    </div>
+                                    </>
                                   )}
                                 </p>
                                 <span className="text-black suggestion_type">
@@ -295,9 +294,9 @@ const handleInputFocus = (e) => {
                         <div className="mt-5">
                           <h2 className="text-black text-center">
                             Search Results for :
-                            <h3 className="search_text-query text-uppercase d-inline-block font-weight-bold">
+                            <span className="search_text-query text-uppercase d-inline-block font-weight-bold">
                               &nbsp;{query}
-                            </h3>
+                            </span>
                           </h2>
                         </div>
                       )}

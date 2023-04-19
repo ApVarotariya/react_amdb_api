@@ -11,6 +11,7 @@ import { Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
+const API_IMG500 = "https://image.tmdb.org/t/p/w500";
 
 const SingleDetails = () => {
   const { state } = useParams();
@@ -18,7 +19,7 @@ const SingleDetails = () => {
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
   // const [bgColor, setBgColor] = useState("");
-    const perPage = 8;
+  const perPage = 8;
   const [next, setNext] = useState(perPage);
   // const [brightness, setBrightness] = useState(0);
   const [isDarkBg, setIsDarkBg] = useState(false);
@@ -43,7 +44,7 @@ const SingleDetails = () => {
     setSimilar(res.data.results);
   };
   useEffect(() => {
-      fetchSimilar();
+    fetchSimilar();
   }, [id]);
 
   const handleClick = () => {
@@ -59,46 +60,43 @@ const SingleDetails = () => {
     return rhours + "h " + rminutes + "m";
   }
 
-useEffect(() => {
-  const dynamicImage = API_IMG + movies?.poster_path;
+  useEffect(() => {
+    const dynamicImage = API_IMG500 + movies?.poster_path;
 
-  const getImageData = async () => {
-    try {
-      const response = await fetch(
-        `https://cors-anywhere.herokuapp.com/${dynamicImage}`
-      );
-      const blob = await response.blob();
-      const img = await createImageBitmap(blob);
+    const getImageData = async () => {
+      try {
+        const response = await fetch(`${dynamicImage}`);
+        const blob = await response.blob();
+        const img = await createImageBitmap(blob);
 
-      const canvas = document.createElement("canvas");
-      canvas.width = img.width;
-      canvas.height = img.height;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const colors = { r: 0, g: 0, b: 0 };
-      const pixelCount = imageData.data.length / 4;
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const colors = { r: 0, g: 0, b: 0 };
+        const pixelCount = imageData.data.length / 4;
 
-      for (let i = 0; i < imageData.data.length; i += 4) {
-        colors.r += imageData.data[i];
-        colors.g += imageData.data[i + 1];
-        colors.b += imageData.data[i + 2];
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          colors.r += imageData.data[i];
+          colors.g += imageData.data[i + 1];
+          colors.b += imageData.data[i + 2];
+        }
+
+        colors.r = Math.round(colors.r / pixelCount);
+        colors.g = Math.round(colors.g / pixelCount);
+        colors.b = Math.round(colors.b / pixelCount);
+
+        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
+        const element = document.getElementById("single_content_details");
+        element.style.background = gradient;
+      } catch (error) {
+        console.error(error);
       }
-
-      colors.r = Math.round(colors.r / pixelCount);
-      colors.g = Math.round(colors.g / pixelCount);
-      colors.b = Math.round(colors.b / pixelCount);
-
-      const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
-      const element = document.getElementById("single_content_details");
-      element.style.background = gradient;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  getImageData();
-}, [movies]);
-
+    };
+    getImageData();
+  }, [movies]);
 
   return (
     <>
@@ -179,9 +177,13 @@ useEffect(() => {
                   </>
                 )}
                 {(state === "movie" || state === "tv") && (
-                  
                   <span className="details_air_date">
-                    ({dateFormat(movies.release_date || movies.first_air_date, "yyyy")})
+                    (
+                    {dateFormat(
+                      movies.release_date || movies.first_air_date,
+                      "yyyy"
+                    )}
+                    )
                   </span>
                 )}
                 <div>
@@ -190,9 +192,7 @@ useEffect(() => {
                       ~&nbsp;
                       {movies.genres?.map((c, index) => {
                         return (
-                          <span key={c.id}>
-                            {(index ? ", " : "") + c.name}
-                          </span>
+                          <span key={c.id}>{(index ? ", " : "") + c.name}</span>
                         );
                       })}
                     </span>
@@ -227,7 +227,8 @@ useEffect(() => {
                 )}
                 {state === "movie" && (
                   <p className="details_revenue">
-                    Total Revenue : ${(movies.revenue/1000000).toFixed(0) + " Millions"}
+                    Total Revenue : $
+                    {(movies.revenue / 1000000).toFixed(0) + " Millions"}
                   </p>
                 )}
               </div>
@@ -270,11 +271,13 @@ useEffect(() => {
           )}
           {(state === "movie" || state === "tv") && (
             <div className="yt_trailer_videos">
-            <h2 className="similar_title my-4 text-black w-100"
-             style={{padding:"0 15px"}}>
-              Trailer Videos :
-            </h2>
-            <TrailerVideo media_type={state} id={id} />
+              <h2
+                className="similar_title my-4 text-black w-100"
+                style={{ padding: "0 15px" }}
+              >
+                Trailer Videos :
+              </h2>
+              <TrailerVideo media_type={state} id={id} />
             </div>
           )}
           <div className="row" style={{ margin: "0", justifyContent: "start" }}>

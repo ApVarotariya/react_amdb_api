@@ -1,48 +1,50 @@
 /* @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap"); */
 /*  */
 @font-face {
-  font-family: 'Boston Regular';
+  font-family: "Boston Regular";
   font-style: normal;
   font-weight: normal;
-  src: local('Boston Regular'), url('./fonts/BostonRegular.woff') format('woff');
-  }
-  @font-face {
-    font-family: 'Boston Regular It';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Boston Regular It'), url('./fonts/BostonRegularIt.woff') format('woff');
-    }
-  @font-face {
-  font-family: 'Boston Light';
+  src: local("Boston Regular"), url("./fonts/BostonRegular.woff") format("woff");
+}
+@font-face {
+  font-family: "Boston Regular It";
   font-style: normal;
   font-weight: normal;
-  src: local('Boston Light'), url('./fonts/BostonLight.woff') format('woff');
-  }
-  @font-face {
-  font-family: 'Boston Black';
+  src: local("Boston Regular It"),
+    url("./fonts/BostonRegularIt.woff") format("woff");
+}
+@font-face {
+  font-family: "Boston Light";
   font-style: normal;
   font-weight: normal;
-  src: local('Boston Black'), url('./fonts/BostonBlack.woff') format('woff');
-  }
-  @font-face {
-  font-family: 'Boston Heavy';
+  src: local("Boston Light"), url("./fonts/BostonLight.woff") format("woff");
+}
+@font-face {
+  font-family: "Boston Black";
   font-style: normal;
   font-weight: normal;
-  src: local('Boston Heavy'), url('./fonts/BostonHeavy.woff') format('woff');
-  }
-  @font-face {
-  font-family: 'Boston Heavy It';
+  src: local("Boston Black"), url("./fonts/BostonBlack.woff") format("woff");
+}
+@font-face {
+  font-family: "Boston Heavy";
   font-style: normal;
   font-weight: normal;
-  src: local('Boston Heavy It'), url('./fonts/BostonHeavyIt.woff') format('woff');
-  }
+  src: local("Boston Heavy"), url("./fonts/BostonHeavy.woff") format("woff");
+}
+@font-face {
+  font-family: "Boston Heavy It";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Boston Heavy It"),
+    url("./fonts/BostonHeavyIt.woff") format("woff");
+}
 /*  */
 
 body {
   margin: 0;
   min-height: 100vh;
   background-color: #fff0e5 !important;
-  font-family: 'Boston Regular' !important;
+  font-family: "Boston Regular" !important;
   color: white !important;
   padding-top: 0;
   padding-bottom: 50px;
@@ -60,8 +62,8 @@ a:hover {
   width: 100%;
   background: #10162f;
 }
-.page_heading{
-  font-family: 'Boston Black';
+.page_heading {
+  font-family: "Boston Black";
   text-transform: uppercase;
 }
 .moviecard {
@@ -72,9 +74,9 @@ a:hover {
   margin-bottom: 30px;
   border-radius: 10px;
   position: relative;
-  font-family: 'Boston Black';
+  font-family: "Boston Black";
 }
-.moviecard .card .card-title h3{
+.moviecard .card .card-title h3 {
   color: #000 !important;
 }
 .moviecard img {
@@ -152,7 +154,7 @@ a:hover {
   position: absolute;
   color: #2c2d30;
   right: -16px;
-  font-family: 'Boston Regular It';
+  font-family: "Boston Regular It";
   background-color: #eac56b !important;
   top: -5px;
   font-weight: 400;
@@ -185,9 +187,9 @@ a:hover {
   object-fit: contain;
 }
 .search-form-main {
-    height: 50px;
-    justify-content: flex-end;
-    z-index: 9;
+  height: 50px;
+  justify-content: flex-end;
+  z-index: 9;
 }
 .search-form-main input {
   justify-content: flex-end;
@@ -214,7 +216,7 @@ a:hover {
 .moviecard .card-title p {
   color: #9e9191;
   font-weight: 600;
-  font-family: 'Boston Regular It';
+  font-family: "Boston Regular It";
 }
 .navbar-brand img {
   width: 100px;
@@ -243,7 +245,7 @@ a:hover {
   text-decoration: none;
   margin: 0 15px;
   text-transform: uppercase;
-  font-family: 'Boston Heavy It';
+  font-family: "Boston Heavy It";
 }
 .navbar-main .navbar-nav .active {
   color: #eac56b;
@@ -363,10 +365,10 @@ a:hover {
 .details_runtime {
   padding-left: 50px;
   position: relative;
-  font-family: 'Boston Regular It';
+  font-family: "Boston Regular It";
 }
-.details_revenue{
-  font-family: 'Boston Regular It';
+.details_revenue {
+  font-family: "Boston Regular It";
 }
 .details_runtime::before {
   font-size: 1.1em;
@@ -387,8 +389,8 @@ a:hover {
 }
 .details_page_sidebar h2,
 .single_content_slider h2,
-.similar_title{
-  font-family: 'Boston black';
+.similar_title {
+  font-family: "Boston black";
 }
 .details_userscore .CircularProgressbar .CircularProgressbar-path {
   stroke: #25ff00;
@@ -401,12 +403,12 @@ a:hover {
 }
 .details_title {
   font-size: 40px;
-  font-family: 'Boston Heavy';
+  font-family: "Boston Heavy";
 }
 .details_air_date {
   font-size: 34px;
   padding-left: 6px;
-  font-family: 'Boston Heavy It';
+  font-family: "Boston Heavy It";
 }
 .search_page_main {
   padding-top: 80px;
@@ -464,36 +466,36 @@ a:hover {
   display: contents;
 }
 .single_content_details::before {
-    content: "";
-    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: -1;
+  content: "";
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
 }
-.dark_bg .details_hero_right *{
+.dark_bg .details_hero_right * {
   color: #000 !important;
 }
-.search_text-query{
-  font-family: 'Boston Black';
+.search_text-query {
+  font-family: "Boston Black";
 }
 .search_by_tabs .bg-nav-pills {
   background: #10162f;
   padding: 10px;
   border-radius: 10px;
 }
-.search_by_tabs .bg-nav-pills .nav-item a{
+.search_by_tabs .bg-nav-pills .nav-item a {
   color: #eac56b;
 }
 .search_by_tabs .bg-nav-pills .nav-item .nav-link.active {
-    background-color: #eac56b;
-    color: #2c2d30;
-    font-family: 'Boston Black';
-    border-radius: 5px;
+  background-color: #eac56b;
+  color: #2c2d30;
+  font-family: "Boston Black";
+  border-radius: 5px;
 }
-.search_dropdown .dropdown button{
+.search_dropdown .dropdown button {
   background: #2c2d30;
   color: #eac56b;
   font-weight: 600;
@@ -501,27 +503,27 @@ a:hover {
   font-size: 14px;
   border: 1px solid #eac56b;
 }
-.search-form-main button:hover{
+.search-form-main button:hover {
   background: #10162f !important;
   color: #fff !important;
 }
-.search-form-main input:focus{
+.search-form-main input:focus {
   border-color: #10162f;
   box-shadow: none;
-    color: #10162f;
+  color: #10162f;
 }
-.search-form-main input:focus::placeholder{
+.search-form-main input:focus::placeholder {
   color: #10162f !important;
 }
-.search_dropdown .dropdown #dropdown-split-basic{
+.search_dropdown .dropdown #dropdown-split-basic {
   background: #eac56b;
   color: #2c2d30;
   font-weight: 600;
   border: 1px solid #2c2d30;
   padding-left: 15px;
-  padding-right:15px;
+  padding-right: 15px;
 }
-.search_dropdown .dropdown #dropdown-split-basic:focus{
+.search_dropdown .dropdown #dropdown-split-basic:focus {
   box-shadow: none;
 }
 .search_dropdown .dropdown-menu.show {
@@ -534,67 +536,69 @@ a:hover {
   border-bottom: 1px solid #2c2d30;
 }
 .search_suggestion {
-     background: #fff;
-    position: absolute;
-     left: 0;
-    top: 55px;
-    z-index: -1;
-     opacity: 0; 
-     transition-timing-function: cubic-bezier(.25,.25,.75,.75); 
-     height: 0;
-     transition-property: opacity,height; 
-    border-radius: 10px;
-    transition-duration: 0.3s;
-    pointer-events: none;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  top: 55px;
+  z-index: -1;
+  opacity: 0;
+  height: 0;
+  border-radius: 10px;
+  pointer-events: none;
+  transition-duration: 0.4s;
+  transition-property: opacity, height;
+  transition-timing-function: cubic-bezier(0.25, 0.25, 0.75, 0.75);
 }
-.search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
-    opacity: 1;
-    pointer-events: all;
+.search-form-main:focus .search_suggestion,
+.search-form-main:focus-visible .search_suggestion,
+.search-form-main:focus-within .search_suggestion {
+  opacity: 1;
+  pointer-events: all;
 }
 .search_suggestion .suggestion_item {
-    border-bottom: 2px solid #2c2d30;
-    margin: 10px;
-    padding: 5px;
-    flex-direction: column;
+  border-bottom: 2px solid #2c2d30;
+  margin: 10px;
+  padding: 5px;
+  flex-direction: column;
 }
-.search_suggestion .suggestion_item .suggestion_type{
+.search_suggestion .suggestion_item .suggestion_type {
   padding-right: 50px;
 }
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
- display: none !important;
+  display: none !important;
 }
 .suggestion_item:hover {
   background-color: #eac56b5c;
   border-radius: 5px;
 }
-.suggestion_item .suggestion_title{
+.suggestion_item .suggestion_title {
   margin-bottom: 5px !important;
 }
-.suggestion_knwonfor a:hover{
+.suggestion_knwonfor a:hover {
   border-radius: 5px;
   background-color: #eac56b;
 }
-.suggestion_knwonfor .suggestion_title{
+.suggestion_knwonfor .suggestion_title {
   font-style: italic;
 }
-.suggestion_title strong{
+.suggestion_title strong {
   text-transform: capitalize;
 }
-.suggestion_title strong + strong{
+.suggestion_title strong + strong {
   display: none;
 }
 .yt_trailer_videos {
   width: 100%;
   overflow: auto;
 }
-.trailer_video_main > div img{
+.trailer_video_main > div img {
   width: 100%;
 }
 .modal-content,
 .modal-body .card {
- background: #404a72 !important;
+  background: #404a72 !important;
 }
 .btn-close {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath d='M.293.293A1 1 0 0 1 1.707 1.707L4.586 4.586 1.707 7.464A1 1 0 1 1 .293 6.05L3.172 3.172.293.293z'/%3e%3cpath d='M7.464.293A1 1 0 0 1 6.05 1.707L3.172 4.586l2.879 2.879a1 1 0 1 1-1.414 1.414L1.758 6.829a1 1 0 0 1 0-1.414L4.586 1.707a1 1 0 0 1 1.414 0l1.464 1.464c.04.04.078.085.113.13a1.005 1.005 0 0 1 .118.182c.025.05.05.097.07.147.015.038.023.077.035.116.01.032.022.06.03.092.007.034.013.069.017.104 0 .026.003.052.003.078 0 .057-.006.113-.017.169a2.148 2.148 0 0 1-.088.34c-.008.027-.016.054-.025.08-.015.042-.03.084-.049.124-.02.043-.042.084-.066.125-.014.025-.026.05-.042.074-.022.035-.044.068-.069.1-.026.03-.053.06-.082.088-.032.03-.064.06-.1.087-.032.026-.063.053-.097.077l-1.464 1.464a1 1 0 0 1-1.414-1.414l2.879-2.879L1.707 1.707A1 1 0 0 1 .293.293z'/%3e%3c/svg%3e");
@@ -603,28 +607,28 @@ input:-webkit-autofill:focus {
   opacity: 1;
 }
 .btn-close:hover {
- background-color: #f4af00 !important;
+  background-color: #f4af00 !important;
 }
-.genrebtn{
-  color:#2c2d30 ;
+.genrebtn {
+  color: #2c2d30;
   border: 1px solid #2c2d30;
   background-color: transparent;
   border-radius: 5px;
 }
-.genrebtn.btn_selected{
+.genrebtn.btn_selected {
   border: 1px solid #eac56b;
   background-color: #f4af00;
 }
-.genrebtn.btn_selected svg{
+.genrebtn.btn_selected svg {
   margin-top: -2px;
 }
-.genre_filter_title{
+.genre_filter_title {
   white-space: nowrap;
 }
-.moviecard .card h3 span:nth-child(2).red{
+.moviecard .card h3 span:nth-child(2).red {
   background-color: red !important;
 }
-.moviecard .card > a{
+.moviecard .card > a {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -696,19 +700,19 @@ input:-webkit-autofill:focus {
     top: -50px;
     right: 0px;
   }
-.navbar-main .navbar-collapse {
+  .navbar-main .navbar-collapse {
     display: flex !important;
     position: static !important;
     background-color: transparent !important;
     width: auto;
-}
-.navbar-main .navbar-nav{
-      flex-basis: unset !important;
-          flex-direction: row;
-}
+  }
+  .navbar-main .navbar-nav {
+    flex-basis: unset !important;
+    flex-direction: row;
+  }
 }
 @media (max-width: 767px) {
-  .navbar-main .navbar-collapse{
+  .navbar-main .navbar-collapse {
     display: none !important;
   }
   .model-main .modal-body .card {
@@ -749,13 +753,13 @@ input:-webkit-autofill:focus {
     margin: 0 auto;
     height: 40px;
     width: auto !important;
-}
+  }
   .moviecard {
     width: 33.33% !important;
   }
   body {
     padding-top: 65px;
-}
+  }
   .details_hero_left {
     width: 100%;
   }
@@ -790,11 +794,11 @@ input:-webkit-autofill:focus {
   .trailer_video_main {
     flex-wrap: wrap;
   }
-  .genre_filter_main .genrebtn{
-    margin-top: 0rem!important;
-    margin-bottom: 0.3rem!important;
-    margin-right: 0.05rem!important;
-    margin-left: 0.15rem!important;
+  .genre_filter_main .genrebtn {
+    margin-top: 0rem !important;
+    margin-bottom: 0.3rem !important;
+    margin-right: 0.05rem !important;
+    margin-left: 0.15rem !important;
   }
 }
 @media (max-width: 575px) {
@@ -873,7 +877,7 @@ input:-webkit-autofill:focus {
   .trailer_video_main > div {
     width: 100% !important;
   }
-  .details_page_fact_main{
+  .details_page_fact_main {
     flex-direction: column;
   }
 }
