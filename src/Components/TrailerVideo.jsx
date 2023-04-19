@@ -40,7 +40,7 @@ const TrailerVideo = ({ media_type, id }) => {
             <div key={v.id} style={{ position: "relative" }}>
               <LazyLoadImage
                 src={`https://img.youtube.com/vi/${v.key}/hqdefault.jpg`}
-                alt=""
+                alt={v.name}
                 width={400}
                 title={v.name}
                 style={{padding:"10px 15px"}}

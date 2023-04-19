@@ -185,8 +185,9 @@ a:hover {
   object-fit: contain;
 }
 .search-form-main {
-  height: 50px;
-  justify-content: flex-end;
+    height: 50px;
+    justify-content: flex-end;
+    z-index: 9;
 }
 .search-form-main input {
   justify-content: flex-end;
@@ -533,23 +534,22 @@ a:hover {
   border-bottom: 1px solid #2c2d30;
 }
 .search_suggestion {
-     /* overflow: hidden; */
      background: #fff;
-    /* transform-origin: top; */
     position: absolute;
      left: 0;
     top: 55px;
-    z-index: 1;
-    /* transition-timing-function: cubic-bezier(.25,.25,.75,.75); */
-    /* transform: translate3d(0%,-100%,0); */
-    /* transition-property: opacity,height; */
+    z-index: -1;
+     opacity: 0; 
+     transition-timing-function: cubic-bezier(.25,.25,.75,.75); 
+     height: 0;
+     transition-property: opacity,height; 
     border-radius: 10px;
-    /* transition-duration: 0.5s; */
+    transition-duration: 0.3s;
     pointer-events: none;
 }
 .search-form-main:focus .search_suggestion, .search-form-main:focus-visible .search_suggestion, .search-form-main:focus-within .search_suggestion {
-    /* opacity: 1; */
-    /* transform: translateZ(0); */
+    opacity: 1;
+    pointer-events: all;
 }
 .search_suggestion .suggestion_item {
     border-bottom: 2px solid #2c2d30;

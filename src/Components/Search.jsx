@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, FormControl, Button, Tab, Nav } from "react-bootstrap";
 import { Triangle } from "react-loader-spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -9,7 +9,6 @@ import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import MovieBox from "./MovieBox";
-import CustomPagination from "./CustomPagination";
 
 const Search = () => {
   const [movies, setMovies] = useState([]);
@@ -21,12 +20,7 @@ const Search = () => {
   const [selectedValue, setSelectedValue] = useState("All");
   const [searchSuggestion, setSearchSuggestion] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [suggestionBoxHeight, setSuggestionBoxHeight] = useState(0);
-
-  
-  const inputRef = useRef(null);
-  const suggestionBoxRef = useRef(null);
+  const [height, setHeight] = useState(0);
 
   const API_IMG = "https://image.tmdb.org/t/p/original";
 
@@ -65,24 +59,26 @@ const Search = () => {
     setSelectedValue(value);
   };
 
-  const handleInputFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleInputBlur = () => {
-    setIsFocused(false);
-  };
+const handleInputFocus = (e) => {
+  let box = document.querySelectorAll(".suggestion_item");
+  let ans = [...box].map((val) => {
+    return val;
+  });
+  let sum = ans.reduce((acc, val) => {
+    return (
+      acc +
+      val.getBoundingClientRect().height +
+      parseFloat(getComputedStyle(val).marginTop) +
+      parseFloat(getComputedStyle(val).marginBottom)
+    );
+  }, 0);
+  setHeight(sum);
+};
 
   useEffect(() => {
-    // Update the height of the suggestion box based on the number of suggestions
-    if (suggestionBoxRef.current) {
-      setSuggestionBoxHeight(
-        suggestionBoxRef.current.scrollHeight > 600
-          ? 600
-          : suggestionBoxRef.current.scrollHeight
-      );
-    }
-  }, [searchSuggestion]);
+    handleInputFocus();
+  }, [searchSuggestion, query]);
+
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -132,9 +128,6 @@ const Search = () => {
                       name="query"
                       value={query}
                       onChange={changeHandler}
-                      ref={inputRef}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
                       autoComplete="off"
                     />
                     <Button
@@ -144,23 +137,16 @@ const Search = () => {
                     >
                       Search
                     </Button>
-                    {isFocused && (
                     <div
                       className="search_suggestion position-absolute w-100"
-                      ref={suggestionBoxRef}
-          style={{
-            height: suggestionBoxHeight,
-            overflow: "hidden",
-            transition: "height 0.3s ease",
-            marginTop: "5px",
-            backgroundColor: "white",
-            border: "1px solid black",
-            borderRadius: "5px",
-          }}
+                      style={{ height: `${height}px` }}
                     >
                       {searchSuggestion.slice(0, 5).map((suggest) => {
                         return (
-                          <div className="d-flex suggestion_item">
+                          <div
+                            className="d-flex suggestion_item"
+                            key={suggest.id}
+                          >
                             <Link
                               to={`/${suggest.media_type}/${suggest.id}`}
                               className="d-flex"
@@ -242,6 +228,7 @@ const Search = () => {
                                       <Link
                                         to={`/${knownfor.media_type}/${knownfor.id}`}
                                         className="d-flex"
+                                        key={knownfor.id}
                                       >
                                         <p className="ms-4 mt-1 text-black suggestion_title mb-0">
                                           {knownfor?.title ||
@@ -258,7 +245,6 @@ const Search = () => {
                         );
                       })}
                     </div>
-                    )}
                   </Form>
                   <div className="search_by_tabs mt-5">
                     <Tab.Container defaultActiveKey="All">
@@ -445,9 +431,6 @@ const Search = () => {
               )}
             </div>
           </div>
-          {/* {movies && movies.length > 0 && (
-            <CustomPagination setPage={setPage} />
-          )} */}
         </div>
       </div>
     </>

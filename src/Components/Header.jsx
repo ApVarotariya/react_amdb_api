@@ -32,9 +32,6 @@ const Header = () => {
                 />
                 <Navbar.Collapse id="basic-navbar-nav d-flex">
                   <Nav className="me-auto">
-                    {/* <NavLink activeclassname="active" to="trending-movies">
-                      Trending
-                    </NavLink> */}
                     <NavLink activeclassname="active" to="movies">
                       Discover
                     </NavLink>
@@ -55,7 +52,7 @@ const Header = () => {
               <Navbar expand="lg" fixed="bottom" className="navbar-mobile">
                 <Container fluid>
                   <Nav className="me-auto">
-                    <NavLink activeclassname="active" to="react_amdb_api">
+                    <NavLink activeclassname="active" to="">
                       <span>Home</span>
                       <AiFillHome />
                     </NavLink>
@@ -67,10 +64,6 @@ const Header = () => {
                       <span>BollyWood</span>
                       <CgTrending />
                     </NavLink>
-                    {/* <NavLink activeclassname="active" to="trending-movies">
-                      <span>Trending</span>
-                      <CgTrending />
-                    </NavLink> */}
                     <NavLink activeclassname="active" to="tv-series">
                       <span>Tv Series</span>
                       <RiMovie2Fill />
