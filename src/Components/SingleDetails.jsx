@@ -231,13 +231,12 @@ const SingleDetails = () => {
                       <p className="details_overview">{movies?.overview}</p>
                     </>
                   )}
-                  {state === "movie" &&
-                    (!movies.revenue === 0)(
-                      <p className="details_revenue">
-                        Total Revenue : $
-                        {(movies.revenue / 1000000).toFixed(0) + " Millions"}
-                      </p>
-                    )}
+                  {state === "movie" && movies.revenue !== 0 && (
+                    <p className="details_revenue">
+                      Total Revenue: ${(movies.revenue / 1000000).toFixed(0)}
+                      Millions
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
