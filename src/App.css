@@ -633,6 +633,10 @@ input:-webkit-autofill:focus {
   flex-direction: column;
   height: 100%;
 }
+.search_dropdown .dropdown-menu.show a.selected {
+  background: #2c2d30;
+  color: #fff;
+}
 /* Responsive Css */
 @media (min-width: 767px) {
   .details_page_fact_main {
@@ -831,6 +835,9 @@ input:-webkit-autofill:focus {
   .banner_bg_main {
     min-height: 100vh;
   }
+  .header-main {
+    z-index: 99;
+  }
   /*  */
 }
 @media (max-width: 575px) {
@@ -919,6 +926,13 @@ input:-webkit-autofill:focus {
   }
   .single_content_details img {
     margin: 20px auto;
+  }
+  .search_suggestion .suggestion_item .suggestion_type {
+    padding-right: 20px;
+  }
+  .suggestion_release_date,
+  .suggestion_type {
+    font-size: 14px;
   }
 }
 @media (max-width: 400px) {

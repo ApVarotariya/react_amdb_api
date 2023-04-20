@@ -277,14 +277,38 @@ const Search = () => {
                             id="dropdown-split-basic"
                           />
                           <Dropdown.Menu>
-                            <Dropdown.Item eventKey="All">All</Dropdown.Item>
-                            <Dropdown.Item eventKey="Movies">
+                            <Dropdown.Item
+                              eventKey="All"
+                              className={
+                                selectedValue === "All" ? "selected" : ""
+                              }
+                            >
+                              All
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              eventKey="Movies"
+                              className={
+                                selectedValue === "Movies" ? "selected" : ""
+                              }
+                            >
                               Movies
                             </Dropdown.Item>
-                            <Dropdown.Item eventKey="Tv Series">
+                            <Dropdown.Item
+                              eventKey="Tv Series"
+                              className={
+                                selectedValue === "Tv Series" ? "selected" : ""
+                              }
+                            >
                               Tv Series
                             </Dropdown.Item>
-                            <Dropdown.Item eventKey="Actor/Actress">
+                            <Dropdown.Item
+                              eventKey="Actor/Actress"
+                              className={
+                                selectedValue === "Actor/Actress"
+                                  ? "selected"
+                                  : ""
+                              }
+                            >
                               Actor/Actress
                             </Dropdown.Item>
                           </Dropdown.Menu>

@@ -23,6 +23,7 @@ const SingleDetails = () => {
   const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
+  const windowWidth = useRef(window.innerWidth);
 
   const fetchData = async () => {
     const res = await axios.get(
@@ -59,7 +60,6 @@ const SingleDetails = () => {
 
   useEffect(() => {
     const dynamicImage = API_IMG300 + movies?.poster_path;
-
     const getImageData = async () => {
       try {
         const response = await fetch(`${dynamicImage}`);
@@ -85,9 +85,15 @@ const SingleDetails = () => {
         colors.g = Math.round(colors.g / pixelCount);
         colors.b = Math.round(colors.b / pixelCount);
 
-        const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
-        const element = document.getElementById("single_content_details");
-        element.style.background = gradient;
+        if (window.innerWidth > 767) {
+          const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
+          const element = document.getElementById("single_content_details");
+          element.style.background = gradient;
+        } else {
+          const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 50%)`;
+          const element = document.getElementById("single_content_details");
+          element.style.background = gradient;
+        }
       } catch (error) {
         console.error("eror", error);
       }
@@ -225,12 +231,13 @@ const SingleDetails = () => {
                       <p className="details_overview">{movies?.overview}</p>
                     </>
                   )}
-                  {state === "movie" && (
-                    <p className="details_revenue">
-                      Total Revenue : $
-                      {(movies.revenue / 1000000).toFixed(0) + " Millions"}
-                    </p>
-                  )}
+                  {state === "movie" &&
+                    (!movies.revenue === 0)(
+                      <p className="details_revenue">
+                        Total Revenue : $
+                        {(movies.revenue / 1000000).toFixed(0) + " Millions"}
+                      </p>
+                    )}
                 </div>
               </div>
             </div>
