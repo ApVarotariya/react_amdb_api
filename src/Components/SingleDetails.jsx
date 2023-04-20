@@ -101,6 +101,8 @@ const SingleDetails = () => {
     getImageData();
   }, [movies]);
 
+  const isMobile = window.innerWidth > 768;
+
   return (
     <>
       {movies && (
@@ -113,16 +115,17 @@ const SingleDetails = () => {
               className={`either_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
               id="either_dark_bg"
               style={{
-                backgroundImage: `url(${
-                  API_IMG + movies?.backdrop_path
-                    ? API_IMG + movies?.backdrop_path
-                    : unavailableLandscape
-                })`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                position: "relative",
-                width: "100%",
-                minHeight: "100vh",
+                ...(isMobile
+                  ? {
+                      width: "100%",
+                      minHeight: "100vh",
+                      backgroundImage: `url(${
+                        API_IMG + movies?.backdrop_path ?? unavailableLandscape
+                      })`,
+                      backgroundSize: "cover",
+                      position: "relative",
+                    }
+                  : {}),
               }}
             >
               <div
@@ -137,7 +140,24 @@ const SingleDetails = () => {
               >
                 <canvas ref={canvasRef} style={{ display: "none" }} />
                 {(state === "movie" || state === "tv") && (
-                  <div className="details_hero_left details_hero_left_movie_tv">
+                  <div
+                    className="details_hero_left details_hero_left_movie_tv"
+                    style={{
+                      ...(isMobile
+                        ? {}
+                        : {
+                            width: "100%",
+                            minHeight: "100vh",
+                            backgroundImage: `url(${
+                              API_IMG + movies?.backdrop_path ??
+                              unavailableLandscape
+                            })`,
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: "cover",
+                            position: "relative",
+                          }),
+                    }}
+                  >
                     <LazyLoadImage
                       className="details_postar"
                       id="details_postar"

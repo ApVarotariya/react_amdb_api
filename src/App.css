@@ -805,39 +805,43 @@ input:-webkit-autofill:focus {
     margin-left: 0.15rem !important;
   }
   /*  */
-  .single_content_details_main .either_dark_bg {
-    min-width: 100vw !important;
-    width: 100vw !important;
-    height: calc(100vw / 1.622222) !important;
-    min-height: auto !important;
-    background-position: calc((((100vw / 1.622222) - 20px) / 1.5) / 2) 0 !important;
+  .single_content_details {
+    padding: 0 0 50px !important;
   }
   .single_content_details_main .single_content_details {
     min-height: 100vh;
   }
   .single_content_details_main .details_hero_left_movie_tv {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: calc(((100vw / 1.622222) - 40px) / 1.5);
-    min-width: calc(((100vw / 1.622222) - 40px) / 1.5);
-    height: calc((100vw / 1.622222) - 40px);
-    min-height: calc((100vw / 1.622222) - 40px);
     z-index: 4;
+    background-position: calc((((100vw / 1.622222) - 20px) / 1.5) / 2) 0 !important;
+    min-width: 100vw !important;
+    width: 100vw !important;
+    min-height: auto !important;
+    height: calc(100vw / 1.622222) !important;
+  }
+  .single_content_details_main .details_hero_left_movie_tv img {
+    width: 34% !important;
+    margin-left: 20px !important;
+    margin-top: 20px;
   }
   .single_content_details_main .details_postar {
     width: 100% !important;
     margin: 0px auto;
   }
   .single_content_details_main .details_hero_right_movie_tv {
-    margin-top: 58% !important;
-  }
-  .banner_bg_main {
-    min-height: 100vh;
+    padding: 20px;
   }
   .header-main {
     z-index: 99;
   }
+  .details_hero_left_person {
+    width: 70%;
+    padding-top: 40px;
+  }
+  .details_hero_right_person {
+    padding: 20px;
+  }
+
   /*  */
 }
 @media (max-width: 575px) {
