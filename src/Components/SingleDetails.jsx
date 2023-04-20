@@ -11,7 +11,7 @@ import { Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
-const API_IMG300 = "https://image.tmdb.org/t/p/w300";
+const API_IMG200 = "https://image.tmdb.org/t/p/w200";
 
 const SingleDetails = () => {
   const { state } = useParams();
@@ -59,7 +59,7 @@ const SingleDetails = () => {
   }
 
   useEffect(() => {
-    const dynamicImage = API_IMG300 + movies?.poster_path;
+    const dynamicImage = API_IMG200 + movies?.poster_path;
     const getImageData = async () => {
       try {
         const response = await fetch(`${dynamicImage}`);
@@ -136,51 +136,51 @@ const SingleDetails = () => {
                 }}
               >
                 <canvas ref={canvasRef} style={{ display: "none" }} />
-                <div className="details_hero_left">
-                  <LazyLoadImage
-                    className="details_postar"
-                    id="details_postar"
-                    src={
-                      API_IMG +
-                      `${
-                        movies?.poster_path
-                          ? movies?.poster_path
-                          : movies?.profile_path
-                      }`
-                    }
-                    alt={movies?.title || movies?.name}
-                  />
-                  {state === "person" && (
-                    <>
-                      <p className="text-center mt-2 text-black">
-                        {movies.place_of_birth}
-                      </p>
-                      <span className="person_details_birth text-center text-black">
-                        <p>{dateFormat(movies.birthday, "mmmm dS, yyyy")}</p>
-                      </span>
-                    </>
-                  )}
-                </div>
-                <div className="details_hero_right position-relative">
-                  {(state === "movie" || state === "tv") && (
+                {(state === "movie" || state === "tv") && (
+                  <div className="details_hero_left details_hero_left_movie_tv">
+                    <LazyLoadImage
+                      className="details_postar"
+                      id="details_postar"
+                      src={
+                        API_IMG +
+                        `${
+                          movies?.poster_path
+                            ? movies?.poster_path
+                            : movies?.profile_path
+                        }`
+                      }
+                      alt={movies?.title || movies?.name}
+                    />
+                  </div>
+                )}
+                {state === "person" && (
+                  <div className="details_hero_left details_hero_left_person">
+                    <LazyLoadImage
+                      className="details_postar"
+                      id="details_postar"
+                      src={
+                        API_IMG +
+                        `${
+                          movies?.poster_path
+                            ? movies?.poster_path
+                            : movies?.profile_path
+                        }`
+                      }
+                      alt={movies?.title || movies?.name}
+                    />
+                    <p className="text-center mt-2 text-black">
+                      {movies.place_of_birth}
+                    </p>
+                    <span className="person_details_birth text-center text-black">
+                      <p>{dateFormat(movies.birthday, "mmmm dS, yyyy")}</p>
+                    </span>
+                  </div>
+                )}
+                {(state === "movie" || state === "tv") && (
+                  <div className="details_hero_right position-relative details_hero_right_movie_tv">
                     <h1 className="d-inline-block details_title">
                       {movies.name || movies.title}
                     </h1>
-                  )}
-                  {state === "person" && (
-                    <>
-                      <h1 className="d-inline-block details_title text-black">
-                        {movies.name || movies.title}
-                      </h1>
-                      <div className="details_hero_right position-relative w-100 px-0 text-black">
-                        <p className="details_overview pe-2">
-                          Overview : <br />
-                          {movies.biography || "Sorry Details not available!"}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                  {(state === "movie" || state === "tv") && (
                     <span className="details_air_date">
                       (
                       {dateFormat(
@@ -189,9 +189,7 @@ const SingleDetails = () => {
                       )}
                       )
                     </span>
-                  )}
-                  <div>
-                    {(state === "movie" || state === "tv") && (
+                    <div>
                       <span className="details_genre">
                         ~&nbsp;
                         {movies.genres?.map((c, index) => {
@@ -202,42 +200,52 @@ const SingleDetails = () => {
                           );
                         })}
                       </span>
-                    )}
-                    {state === "movie" && (
+                      {/* {state === "movie" && (
                       <span className="details_runtime">
                         {timeConvert(movies.runtime)}
                       </span>
-                    )}
-                  </div>
-                  {(state === "movie" || state === "tv") && (
-                    <>
-                      <div
-                        className="details_userscore"
-                        style={{
-                          width: 50,
-                          height: 50,
-                          background: "#000",
-                          borderRadius: "50%",
-                          padding: "4px",
-                          margin: "20px 0",
-                        }}
-                      >
-                        <CircularProgressbar
-                          value={movies.vote_average * 10}
-                          text={movies?.vote_average?.toFixed(1) * 10 + "%"}
-                        />
-                      </div>
-                      <p className="details_tagline">{movies?.tagline}</p>
-                      <p className="details_overview">{movies?.overview}</p>
-                    </>
-                  )}
-                  {state === "movie" && movies.revenue !== 0 && (
+                    )} */}
+                    </div>
+                    <div
+                      className="details_userscore"
+                      style={{
+                        width: 50,
+                        height: 50,
+                        background: "#000",
+                        borderRadius: "50%",
+                        padding: "4px",
+                        margin: "20px 0",
+                      }}
+                    >
+                      <CircularProgressbar
+                        value={movies.vote_average * 10}
+                        text={movies?.vote_average?.toFixed(1) * 10 + "%"}
+                      />
+                    </div>
+                    <p className="details_tagline">{movies?.tagline}</p>
+                    <p className="details_overview">{movies?.overview}</p>
+
+                    {/* {state === "movie" && movies.revenue !== 0 && (
                     <p className="details_revenue">
                       Total Revenue: ${(movies.revenue / 1000000).toFixed(0)}
                       Millions
                     </p>
-                  )}
-                </div>
+                  )} */}
+                  </div>
+                )}
+                {state === "person" && (
+                  <div className="details_hero_right position-relative details_hero_right_person">
+                    <h1 className="d-inline-block details_title text-black">
+                      {movies.name || movies.title}
+                    </h1>
+                    <div className="position-relative w-100 px-0 text-black">
+                      <p className="details_overview pe-2">
+                        Overview : <br />
+                        {movies.biography || "Sorry Details not available!"}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
