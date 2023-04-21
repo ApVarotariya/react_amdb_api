@@ -22,7 +22,16 @@ const MovieBox = ({
     <>
       <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
         <Card>
-          <Link to={`/${media_type}/${id}`}>
+          <Link
+            to={`/${media_type}/${id}`}
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth",
+              });
+            }}
+          >
             <LazyLoadImage
               src={poster ? API_IMG + poster : unavailable}
               className="movie-backdrop-poster"
@@ -60,7 +69,17 @@ const MovieBox = ({
                   </p>
                 </div>
               </Card.Title>
-              <Link to={`/${media_type}/${id}`} as="button">
+              <Link
+                to={`/${media_type}/${id}`}
+                as="button"
+                onClick={() => {
+                  window.scrollTo({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                  });
+                }}
+              >
                 <Button variant="success">More Details</Button>
               </Link>
             </Card.Body>

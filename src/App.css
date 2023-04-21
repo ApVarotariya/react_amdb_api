@@ -838,10 +838,21 @@ input:-webkit-autofill:focus {
     z-index: 99;
   }
   .details_hero_left_person {
-    width: 70%;
-    padding-top: 40px;
+    width: 100%;
+    padding-top: 20px;
+    text-align: left;
   }
-  .details_hero_right_person {
+  .single_content_details_main .details_hero_left_person .details_postar {
+    width: 40% !important;
+    max-width: 300px;
+    margin: 0 20px 0;
+  }
+  .details_hero_left_person p,
+  .details_hero_left_person span {
+    text-align: left !important;
+    padding-left: 20px;
+  }
+  .single_content_details_main .details_hero_right_person {
     padding: 20px;
   }
 }

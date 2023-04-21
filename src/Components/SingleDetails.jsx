@@ -20,9 +20,9 @@ const SingleDetails = () => {
   const [similar, setSimilar] = useState([]);
   const perPage = 8;
   const [next, setNext] = useState(perPage);
-  const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
+  const isMobile = window.innerWidth > 767;
 
   const fetchData = async () => {
     const res = await axios.get(
@@ -88,9 +88,9 @@ const SingleDetails = () => {
         colors.b = Math.round(colors.b / pixelCount);
 
         if (window.innerWidth > 767) {
-          const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
-          const element = document.getElementById("single_content_details");
-          element.style.background = gradient;
+          const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
+          const bgelement = document.getElementById("single_content_details");
+          bgelement.style.background = bggradient;
         } else {
           const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 50%)`;
           const postergradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 50%)`;
@@ -109,18 +109,20 @@ const SingleDetails = () => {
     getImageData();
   }, [movies]);
 
-  const isMobile = window.innerWidth > 767;
-
   return (
     <>
       {movies && (
         <div
-          className="single_content_details_main"
+          className={`single_content_details_main ${
+            state === "movie" || state === "tv"
+              ? "single_main_movie"
+              : "single_main_person"
+          }`}
           style={{ overflowX: "hidden" }}
         >
           <div className="banner_bg_main">
             <div
-              className={`either_dark_bg ${isDarkBg ? "dark-bg" : ""}`}
+              className="either_dark_bg"
               id="either_dark_bg"
               style={{
                 ...(isMobile
@@ -205,8 +207,8 @@ const SingleDetails = () => {
                       alt={movies?.title || movies?.name}
                     />
                     <p className="text-center mt-2">{movies.place_of_birth}</p>
-                    <span className="person_details_birth text-center">
-                      <p>{dateFormat(movies.birthday, "mmmm dS, yyyy")}</p>
+                    <span className="person_details_birth text-center d-block">
+                      {dateFormat(movies.birthday, "mmmm dS, yyyy")}
                     </span>
                   </div>
                 )}

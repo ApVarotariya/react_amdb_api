@@ -149,6 +149,13 @@ const Search = () => {
                             <Link
                               to={`/${suggest.media_type}/${suggest.id}`}
                               className="d-flex"
+                              onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}
                             >
                               <LazyLoadImage
                                 style={{
@@ -228,6 +235,13 @@ const Search = () => {
                                         to={`/${knownfor.media_type}/${knownfor.id}`}
                                         className="d-flex"
                                         key={knownfor.id}
+                                        onClick={() => {
+                                          window.scrollTo({
+                                            top: 0,
+                                            left: 0,
+                                            behavior: "smooth",
+                                          });
+                                        }}
                                       >
                                         <p className="ms-4 mt-1 text-black suggestion_title mb-0">
                                           {knownfor?.title ||

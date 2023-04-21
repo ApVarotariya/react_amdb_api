@@ -15,14 +15,14 @@ const handleDragStart = (e) => e.preventDefault();
 const Credits = ({ id, media_type }) => {
   const { state } = useParams();
   const [credits, setCredits] = useState([]);
-   const perPage = 8;
+  const perPage = 8;
   const [next, setNext] = useState(perPage);
   const [disableCarousel, setDisableCarousel] = useState(true);
 
-    const handleClick = () => {
-      setNext(next + perPage);
+  const handleClick = () => {
+    setNext(next + perPage);
   };
-  
+
   const fetchCredits = async () => {
     const { data } = await axios.get(
       `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
@@ -33,7 +33,16 @@ const Credits = ({ id, media_type }) => {
   const items = credits?.map((c) => (
     <>
       <div className="carouselItem">
-        <Link to={`/person/${credits && c.id}`}>
+        <Link
+          to={`/person/${credits && c.id}`}
+          onClick={() => {
+            window.scrollTo({
+              top: 0,
+              left: 0,
+              behavior: "smooth",
+            });
+          }}
+        >
           <LazyLoadImage
             src={
               c?.profile_path
@@ -86,8 +95,17 @@ const Credits = ({ id, media_type }) => {
           itemsPerSlide={itemsPerSlide}
           slideToWidth={true}
           slideWidth={slideWidth}
-          autoPlayInterval={600}
-          stagePadding={{ paddingLeft: stagePadding, paddingRight: stagePadding }}
+          autoPlay
+          autoPlayStrategy="none"
+          autoPlayInterval={200}
+          animationDuration={1000}
+          animationType="fadeout"
+          infinite
+          touchTracking={false}
+          stagePadding={{
+            paddingLeft: stagePadding,
+            paddingRight: stagePadding,
+          }}
         />
       )}
       {state === "person" && disableCarousel && (
