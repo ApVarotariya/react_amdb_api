@@ -23,7 +23,6 @@ const SingleDetails = () => {
   const [isDarkBg, setIsDarkBg] = useState(false);
 
   const canvasRef = useRef(null);
-  const windowWidth = useRef(window.innerWidth);
 
   const fetchData = async () => {
     const res = await axios.get(
@@ -31,9 +30,6 @@ const SingleDetails = () => {
     );
     setMovies(res.data);
   };
-  useEffect(() => {
-    fetchData();
-  }, [id]);
 
   const fetchSimilar = async () => {
     const res = await axios.get(
@@ -42,6 +38,7 @@ const SingleDetails = () => {
     setSimilar(res.data.results);
   };
   useEffect(() => {
+    fetchData();
     fetchSimilar();
   }, [id]);
 
@@ -59,7 +56,12 @@ const SingleDetails = () => {
   }
 
   useEffect(() => {
-    const dynamicImage = API_IMG200 + movies?.poster_path;
+    let dynamicImage;
+    if (state === "movie" || state === "tv") {
+      dynamicImage = API_IMG200 + movies?.poster_path;
+    } else if (state === "person") {
+      dynamicImage = API_IMG200 + movies?.profile_path;
+    }
     const getImageData = async () => {
       try {
         const response = await fetch(`${dynamicImage}`);
@@ -90,18 +92,24 @@ const SingleDetails = () => {
           const element = document.getElementById("single_content_details");
           element.style.background = gradient;
         } else {
-          const gradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 50%)`;
-          const element = document.getElementById("single_content_details");
-          element.style.background = gradient;
+          const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 50%)`;
+          const postergradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 50%)`;
+          const bgelement = document.getElementById("single_content_details");
+          const posterelement = document.getElementById(
+            "details_postar_overlay"
+          );
+          bgelement.style.background = bggradient;
+          posterelement.style.background = postergradient;
         }
       } catch (error) {
         console.error("eror", error);
       }
     };
+
     getImageData();
   }, [movies]);
 
-  const isMobile = window.innerWidth > 768;
+  const isMobile = window.innerWidth > 767;
 
   return (
     <>
@@ -158,6 +166,14 @@ const SingleDetails = () => {
                           }),
                     }}
                   >
+                    <div
+                      id="details_postar_overlay"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        position: "absolute",
+                      }}
+                    ></div>
                     <LazyLoadImage
                       className="details_postar"
                       id="details_postar"
@@ -188,10 +204,8 @@ const SingleDetails = () => {
                       }
                       alt={movies?.title || movies?.name}
                     />
-                    <p className="text-center mt-2 text-black">
-                      {movies.place_of_birth}
-                    </p>
-                    <span className="person_details_birth text-center text-black">
+                    <p className="text-center mt-2">{movies.place_of_birth}</p>
+                    <span className="person_details_birth text-center">
                       <p>{dateFormat(movies.birthday, "mmmm dS, yyyy")}</p>
                     </span>
                   </div>
@@ -220,11 +234,11 @@ const SingleDetails = () => {
                           );
                         })}
                       </span>
-                      {/* {state === "movie" && (
-                      <span className="details_runtime">
-                        {timeConvert(movies.runtime)}
-                      </span>
-                    )} */}
+                      {state === "movie" && (
+                        <span className="details_runtime">
+                          {timeConvert(movies.runtime)}
+                        </span>
+                      )}
                     </div>
                     <div
                       className="details_userscore"
@@ -245,20 +259,20 @@ const SingleDetails = () => {
                     <p className="details_tagline">{movies?.tagline}</p>
                     <p className="details_overview">{movies?.overview}</p>
 
-                    {/* {state === "movie" && movies.revenue !== 0 && (
-                    <p className="details_revenue">
-                      Total Revenue: ${(movies.revenue / 1000000).toFixed(0)}
-                      Millions
-                    </p>
-                  )} */}
+                    {state === "movie" && movies.revenue !== 0 && (
+                      <p className="details_revenue">
+                        Total Revenue: ${(movies.revenue / 1000000).toFixed(0)}
+                        Millions
+                      </p>
+                    )}
                   </div>
                 )}
                 {state === "person" && (
                   <div className="details_hero_right position-relative details_hero_right_person">
-                    <h1 className="d-inline-block details_title text-black">
+                    <h1 className="d-inline-block details_title">
                       {movies.name || movies.title}
                     </h1>
-                    <div className="position-relative w-100 px-0 text-black">
+                    <div className="position-relative w-100 px-0">
                       <p className="details_overview pe-2">
                         Overview : <br />
                         {movies.biography || "Sorry Details not available!"}

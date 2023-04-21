@@ -804,7 +804,6 @@ input:-webkit-autofill:focus {
     margin-right: 0.05rem !important;
     margin-left: 0.15rem !important;
   }
-  /*  */
   .single_content_details {
     padding: 0 0 50px !important;
   }
@@ -818,11 +817,15 @@ input:-webkit-autofill:focus {
     width: 100vw !important;
     min-height: auto !important;
     height: calc(100vw / 1.622222) !important;
+    display: flex;
+    align-items: center !important;
   }
   .single_content_details_main .details_hero_left_movie_tv img {
-    width: 34% !important;
+    width: auto !important;
     margin-left: 20px !important;
-    margin-top: 20px;
+    z-index: 9;
+    position: relative;
+    height: 90% !important;
   }
   .single_content_details_main .details_postar {
     width: 100% !important;
@@ -841,8 +844,6 @@ input:-webkit-autofill:focus {
   .details_hero_right_person {
     padding: 20px;
   }
-
-  /*  */
 }
 @media (max-width: 575px) {
   .moviecard {
