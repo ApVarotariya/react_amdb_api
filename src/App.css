@@ -670,6 +670,9 @@ input:-webkit-autofill:focus {
   .col-lg-2 {
     width: 25% !important;
   }
+  .navbar-main {
+    flex-wrap: nowrap !important;
+  }
   .navbar-collapse {
     flex-basis: 100%;
     position: absolute;

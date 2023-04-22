@@ -135,29 +135,31 @@ const Movies = (props) => {
               </div>
             </div>
           )}
-          {movies.length > 0 ? (
-            movies
-              .slice(0, cardLimit)
-              .map((movie) => (
-                <MovieBox
-                  key={movie.id}
-                  id={movie.id}
-                  title={movie.title || movie.original_name}
-                  poster={movie.poster_path}
-                  backdrop_path={movie.backdrop_path}
-                  date={movie.first_air_date || movie.release_date}
-                  vote_average={movie.vote_average}
-                  media_type={"movie"}
-                  overview={movie.overview}
-                  vote_count={movie.vote_count}
-                  popularity={movie.popularity}
-                />
-              ))
-          ) : (
-            <h2 className="text-black text-center mt-5">
-              No matching Combinations.
-            </h2>
-          )}
+          <div className="d-flex flex-wrap discover_wrapper">
+            {movies.length > 0 ? (
+              movies
+                .slice(0, cardLimit)
+                .map((movie) => (
+                  <MovieBox
+                    key={movie.id}
+                    id={movie.id}
+                    title={movie.title || movie.original_name}
+                    poster={movie.poster_path}
+                    backdrop_path={movie.backdrop_path}
+                    date={movie.first_air_date || movie.release_date}
+                    vote_average={movie.vote_average}
+                    media_type={"movie"}
+                    overview={movie.overview}
+                    vote_count={movie.vote_count}
+                    popularity={movie.popularity}
+                  />
+                ))
+            ) : (
+              <h2 className="text-black text-center mt-5">
+                No matching Combinations.
+              </h2>
+            )}
+          </div>
         </div>
         {showPagination === true && numOfPages > 1 && (
           <CustomPagination setPage={setPage} numOfPages={numOfPages} />

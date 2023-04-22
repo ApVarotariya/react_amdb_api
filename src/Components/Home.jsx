@@ -12,6 +12,7 @@ import dateFormat from "dateformat";
 import Main from "./Main";
 import TvSeries from "./TvSeries";
 import Movies from "./Movies";
+import LatestTrailers from "./LatestTrailers";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -76,7 +77,9 @@ const Home = () => {
       console.error("error", error);
     }
   };
-
+  if (trending[0]?.backdrop_path) {
+    getImageData(trending[0]?.backdrop_path);
+  }
   const handleSlideChange = (swiper) => {
     const currentSlideIndex = swiper.realIndex;
     const currentSlide = trending[currentSlideIndex];
@@ -176,6 +179,7 @@ const Home = () => {
         showGenre={false}
         showButton={true}
       />
+      {/* <LatestTrailers /> */}
     </>
   );
 };

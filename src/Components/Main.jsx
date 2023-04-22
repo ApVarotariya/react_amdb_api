@@ -68,7 +68,7 @@ const Main = (props) => {
                 visible={true}
               />
             ) : (
-              <>
+              <div className="card_wrapper">
                 {movies.slice(0, cardLimit).map((c) => {
                   return (
                     <MovieBox
@@ -85,7 +85,7 @@ const Main = (props) => {
                     />
                   );
                 })}
-              </>
+              </div>
             )}
           </div>
           {showPagination === true && <CustomPagination setPage={setPage} />}

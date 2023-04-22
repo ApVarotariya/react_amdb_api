@@ -85,39 +85,41 @@ const TvSeries = (props) => {
               )}
             </div>
           )}
-          {hindiTv.length > 0
-            ? hindiTv.map((c) => {
-                return (
-                  <MovieBox
-                    key={c.id}
-                    id={c.id}
-                    title={c.title || c.original_name}
-                    poster={c.poster_path || c.backdrop_path}
-                    date={c.first_air_date || c.release_date}
-                    vote_average={c.vote_average}
-                    media_type={"tv"}
-                    overview={c.overview}
-                    vote_count={c.vote_count}
-                    popularity={c.popularity}
-                  />
-                );
-              })
-            : tv.slice(0, cardLimit).map((c) => {
-                return (
-                  <MovieBox
-                    key={c.id}
-                    id={c.id}
-                    title={c.title || c.original_name}
-                    poster={c.poster_path || c.backdrop_path}
-                    date={c.first_air_date || c.release_date}
-                    vote_average={c.vote_average}
-                    media_type={"tv"}
-                    overview={c.overview}
-                    vote_count={c.vote_count}
-                    popularity={c.popularity}
-                  />
-                );
-              })}
+          <div className="d-flex flex-wrap tv_series_wrapper">
+            {hindiTv.length > 0
+              ? hindiTv.map((c) => {
+                  return (
+                    <MovieBox
+                      key={c.id}
+                      id={c.id}
+                      title={c.title || c.original_name}
+                      poster={c.poster_path || c.backdrop_path}
+                      date={c.first_air_date || c.release_date}
+                      vote_average={c.vote_average}
+                      media_type={"tv"}
+                      overview={c.overview}
+                      vote_count={c.vote_count}
+                      popularity={c.popularity}
+                    />
+                  );
+                })
+              : tv.slice(0, cardLimit).map((c) => {
+                  return (
+                    <MovieBox
+                      key={c.id}
+                      id={c.id}
+                      title={c.title || c.original_name}
+                      poster={c.poster_path || c.backdrop_path}
+                      date={c.first_air_date || c.release_date}
+                      vote_average={c.vote_average}
+                      media_type={"tv"}
+                      overview={c.overview}
+                      vote_count={c.vote_count}
+                      popularity={c.popularity}
+                    />
+                  );
+                })}
+          </div>
         </div>
         {showPagination === true && (
           <div className="d-flex justify-content-center mt-4">

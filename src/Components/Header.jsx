@@ -38,9 +38,9 @@ const Header = () => {
                     <NavLink activeclassname="active" to="movies">
                       Discover
                     </NavLink>
-                    <NavLink activeclassname="active" to="bollywoodmovies">
+                    {/* <NavLink activeclassname="active" to="bollywoodmovies">
                       BollyWood Movies
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink activeclassname="active" to="tv-series">
                       TV Series
                     </NavLink>
@@ -59,12 +59,12 @@ const Header = () => {
                       <span>Home</span>
                       <AiFillHome />
                     </NavLink>
-                    <NavLink activeclassname="active" to="movies">
-                      <span>Discover</span>
+                    <NavLink activeclassname="active" to="trending">
+                      <span>Trending</span>
                       <CgTrending />
                     </NavLink>
-                    <NavLink activeclassname="active" to="bollywoodmovies">
-                      <span>BollyWood</span>
+                    <NavLink activeclassname="active" to="movies">
+                      <span>Discover</span>
                       <CgTrending />
                     </NavLink>
                     <NavLink activeclassname="active" to="tv-series">
