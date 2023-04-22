@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 import { Triangle } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
-const Main = () => {
+const Main = (props) => {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { cardLimit = 20, showPagination = true, showButton = false } = props;
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -17,7 +19,7 @@ const Main = () => {
     setMovies(movies.data.results);
     setIsLoading(false);
   };
-  
+
   useEffect(() => {
     fetchData();
   }, [page]);
@@ -30,6 +32,24 @@ const Main = () => {
             <h1 className="text-center fw-lighter page_heading my-3 text-black">
               Trending Movies
             </h1>
+            {showButton === true && (
+              <div className="show_more_btn_main">
+                <div className="show_more_btn">
+                  <Link
+                    to={`/trending`}
+                    onClick={() => {
+                      window.scrollTo({
+                        top: 0,
+                        left: 0,
+                        behavior: "smooth",
+                      });
+                    }}
+                  >
+                    Show More
+                  </Link>
+                </div>
+              </div>
+            )}
             {isLoading ? (
               <Triangle
                 height="80"
@@ -49,7 +69,7 @@ const Main = () => {
               />
             ) : (
               <>
-                  {movies.map((c) => {
+                {movies.slice(0, cardLimit).map((c) => {
                   return (
                     <MovieBox
                       key={c.id}
@@ -68,7 +88,7 @@ const Main = () => {
               </>
             )}
           </div>
-          <CustomPagination setPage={setPage} />
+          {showPagination === true && <CustomPagination setPage={setPage} />}
         </div>
       </div>
     </>

@@ -32,6 +32,9 @@ const Header = () => {
                 />
                 <Navbar.Collapse id="basic-navbar-nav d-flex">
                   <Nav className="me-auto">
+                    <NavLink activeclassname="active" to="trending">
+                      Trending
+                    </NavLink>
                     <NavLink activeclassname="active" to="movies">
                       Discover
                     </NavLink>

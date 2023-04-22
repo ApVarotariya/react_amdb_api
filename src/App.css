@@ -647,6 +647,9 @@ input:-webkit-autofill:focus {
   .details_title {
     font-size: 34px;
   }
+  .col-lg-2 {
+    width: 20% !important;
+  }
 }
 @media (max-width: 1100px) {
   .model-main .modal-body .card img {
@@ -664,6 +667,9 @@ input:-webkit-autofill:focus {
   }
 }
 @media (max-width: 991px) {
+  .col-lg-2 {
+    width: 25% !important;
+  }
   .navbar-collapse {
     flex-basis: 100%;
     position: absolute;

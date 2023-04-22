@@ -3,15 +3,15 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 
-const TrendingMovies = () => {
+const PopularMovies = () => {
   const [page, setPage] = useState(1);
-  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [popular, setPopular] = useState([]);
 
   const fetchData = async () => {
-    const trendingMovies = await axios.get(
+    const result = await axios.get(
       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
-    setTrendingMovies(trendingMovies.data.results);
+    setPopular(result.data.results);
   };
   useEffect(() => {
     fetchData();
@@ -23,7 +23,7 @@ const TrendingMovies = () => {
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
             Popular Movies
           </h1>
-          {trendingMovies.map((c) => {
+          {popular.map((c) => {
             return (
               <MovieBox
                 key={c.id}
@@ -46,4 +46,4 @@ const TrendingMovies = () => {
   );
 };
 
-export default TrendingMovies;
+export default PopularMovies;

@@ -2,11 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
+import { Link } from "react-router-dom";
 
-const TvSeries = () => {
+const TvSeries = (props) => {
   const [page, setPage] = useState(1);
   const [tv, setTv] = useState([]);
   const [hindiTv, setHindiTv] = useState([]);
+  const {
+    cardLimit = 20,
+    showPagination = true,
+    showHindi = false,
+    showButton = false,
+  } = props;
 
   const fetchData = async () => {
     const tvData = await axios.get(
@@ -47,17 +54,37 @@ const TvSeries = () => {
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
             TV Series
           </h1>
-          <div className="mt-5 mb-5 text-center">
-            {hindiTv.length > 0 ? (
-              <button className="genrebtn me-2" onClick={handleAllTv}>
-                All TV Series
-              </button>
-            ) : (
-              <button className="genrebtn me-2" onClick={handleHindiTv}>
-                Hindi TV Series
-              </button>
-            )}
-          </div>
+          {showButton === true && (
+            <div className="show_more_btn_main">
+              <div className="show_more_btn">
+                <Link
+                  to={`/tv-series`}
+                  onClick={() => {
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  Show More
+                </Link>
+              </div>
+            </div>
+          )}
+          {showHindi === true && (
+            <div className="mt-5 mb-5 text-center">
+              {hindiTv.length > 0 ? (
+                <button className="genrebtn me-2" onClick={handleAllTv}>
+                  All TV Series
+                </button>
+              ) : (
+                <button className="genrebtn me-2" onClick={handleHindiTv}>
+                  Hindi TV Series
+                </button>
+              )}
+            </div>
+          )}
           {hindiTv.length > 0
             ? hindiTv.map((c) => {
                 return (
@@ -75,7 +102,7 @@ const TvSeries = () => {
                   />
                 );
               })
-            : tv.map((c) => {
+            : tv.slice(0, cardLimit).map((c) => {
                 return (
                   <MovieBox
                     key={c.id}
@@ -92,9 +119,11 @@ const TvSeries = () => {
                 );
               })}
         </div>
-        <div className="d-flex justify-content-center mt-4">
-          {tv.length > 0 && <CustomPagination setPage={setPage} />}
-        </div>
+        {showPagination === true && (
+          <div className="d-flex justify-content-center mt-4">
+            {tv.length > 0 && <CustomPagination setPage={setPage} />}
+          </div>
+        )}
       </div>
     </>
   );
