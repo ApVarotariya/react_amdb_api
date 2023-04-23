@@ -12,7 +12,8 @@ import dateFormat from "dateformat";
 import Main from "./Main";
 import TvSeries from "./TvSeries";
 import Movies from "./Movies";
-import LatestTrailers from "./LatestTrailers";
+import PopularPeople from "./PopularPeople";
+import UpComing from "./Upcoming";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -77,9 +78,7 @@ const Home = () => {
       console.error("error", error);
     }
   };
-  if (trending[0]?.backdrop_path) {
-    getImageData(trending[0]?.backdrop_path);
-  }
+
   const handleSlideChange = (swiper) => {
     const currentSlideIndex = swiper.realIndex;
     const currentSlide = trending[currentSlideIndex];
@@ -115,7 +114,7 @@ const Home = () => {
             ref={sliderRef}
             className="home_hero_slider"
             effect={"fade"}
-            modules={[Navigation, Pagination, EffectFade]}
+            modules={[Autoplay, Navigation, Pagination, EffectFade]}
             spaceBetween={50}
             slidesPerView={1}
             navigation
@@ -179,7 +178,8 @@ const Home = () => {
         showGenre={false}
         showButton={true}
       />
-      {/* <LatestTrailers /> */}
+      <PopularPeople cardLimit={10} showPagination={false} showButton={false} />
+      <UpComing cardLimit={10} showPagination={false} showButton={false} />
     </>
   );
 };

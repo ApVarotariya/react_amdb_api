@@ -30,7 +30,7 @@ const Main = (props) => {
         <div className="container-fluid">
           <div className="row">
             <h1 className="text-center fw-lighter page_heading my-3 text-black">
-              Trending Movies
+              Trending
             </h1>
             {showButton === true && (
               <div className="show_more_btn_main">
@@ -68,7 +68,7 @@ const Main = (props) => {
                 visible={true}
               />
             ) : (
-              <div className="card_wrapper">
+              <div className="card_wrapper d-flex flex-wrap">
                 {movies.slice(0, cardLimit).map((c) => {
                   return (
                     <MovieBox

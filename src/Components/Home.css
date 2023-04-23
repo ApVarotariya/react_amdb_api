@@ -49,7 +49,7 @@
 .show_more_btn:hover a {
   color: #2c2d30;
 }
-.moviecard_main .card_wrapper,
+.home .card_wrapper,
 .home .tv_series_wrapper,
 .home .discover_wrapper {
   display: flex;
@@ -60,26 +60,26 @@
 .moviecard {
   flex: 0 0 auto;
 }
-.moviecard_main .card_wrapper::-webkit-scrollbar,
+.home .card_wrapper::-webkit-scrollbar,
 .home .tv_series_wrapper::-webkit-scrollbar,
 .home .discover_wrapper::-webkit-scrollbar {
   display: none;
 }
-.moviecard_main .card_wrapper:hover::-webkit-scrollbar,
+.home .card_wrapper:hover::-webkit-scrollbar,
 .home .tv_series_wrapper:hover::-webkit-scrollbar,
 .home .discover_wrapper:hover::-webkit-scrollbar {
   display: block;
   position: absolute !important;
   bottom: 0;
 }
-.moviecard_main .card_wrapper::-webkit-scrollbar,
+.home .card_wrapper::-webkit-scrollbar,
 .home .tv_series_wrapper::-webkit-scrollbar,
 .home .discover_wrapper::-webkit-scrollbar {
   width: 5px;
   height: 8px;
   background-color: transparent;
 }
-.moviecard_main .card_wrapper::-webkit-scrollbar-thumb,
+.home .card_wrapper::-webkit-scrollbar-thumb,
 .home .tv_series_wrapper::-webkit-scrollbar-thumb,
 .home .discover_wrapper::-webkit-scrollbar-thumb {
   background-color: #ccc;
@@ -118,7 +118,7 @@
     min-width: 100vw !important;
     width: 100vw !important;
     min-height: auto !important;
-    height: calc(100vw / 1.622222) !important;
+    height: calc(100vw / 1.422222) !important;
   }
   .swiper-button-next:after,
   .swiper-button-prev:after {
@@ -127,9 +127,10 @@
 }
 @media (max-width: 575px) {
   .home_slider_title {
-    padding-bottom: 20px;
+    padding-bottom: 0px;
     padding-left: 20px;
     max-width: 90%;
     font-size: 33px;
+    line-height: 31px;
   }
 }
