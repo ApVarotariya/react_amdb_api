@@ -46,7 +46,7 @@ const MovieBox = ({
                   <span
                     className={vote_average < 5 || popularity < 5 ? "red" : ""}
                   >
-                    {vote_average?.toFixed(1) || popularity?.toFixed(1)}
+                    {vote_average?.toFixed(0) || popularity?.toFixed(0)}
                   </span>
                 </h3>
                 <div className="d-flex justify-content-between align-items-start">

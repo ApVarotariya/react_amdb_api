@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MovieBox from "./MovieBox";
-import CustomPagination from "./CustomPagination";
 
 const UpComing = (props) => {
   const [page, setPage] = useState(1);
@@ -10,7 +9,7 @@ const UpComing = (props) => {
 
   const fetchData = async () => {
     const upComing = await axios.get(
-      `//api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_ACCESS_KEY}&original_language=hi&page=1`
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_ACCESS_KEY}&original_language=hi&page=1`
     );
     setUpComing(upComing.data.results);
   };
@@ -22,7 +21,7 @@ const UpComing = (props) => {
       <div className="container-fluid">
         <div className="row justify-content-around">
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
-            upComing
+            UpComing Movies
           </h1>
           <div className="card_wrapper d-flex flex-wrap">
             {upComing?.slice(0, cardLimit).map((c) => {

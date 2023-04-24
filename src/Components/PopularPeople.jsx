@@ -14,7 +14,7 @@ const PopularPeople = (props) => {
       `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setPopularPeople(popularPeople.data.results);
-    console.log(popularPeople);
+    // console.log(popularPeople);
   };
   useEffect(() => {
     fetchData();

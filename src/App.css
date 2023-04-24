@@ -153,10 +153,10 @@ a:hover {
   border-radius: 15px;
   position: absolute;
   color: #2c2d30;
-  right: -16px;
+  right: -3px;
   font-family: "Boston Regular It";
   background-color: #eac56b !important;
-  top: -5px;
+  top: -4px;
   font-weight: 400;
   font-size: 13px;
   padding: 3px 8px;
@@ -637,6 +637,22 @@ input:-webkit-autofill:focus {
   background: #2c2d30;
   color: #fff;
 }
+/* ===== Scrollbar CSS ===== */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #eac56b #666666;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #666666;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #eac56b;
+  border-radius: 10px;
+  border: 0px solid #ffffff;
+}
 /* Responsive Css */
 @media (min-width: 767px) {
   .details_page_fact_main {
@@ -915,9 +931,6 @@ input:-webkit-autofill:focus {
     padding: 5px 5px;
     border: 1px solid #eee;
     border-radius: 5px;
-  }
-  .moviecard .card h3 span:nth-child(2) {
-    right: -12px;
   }
   .model-main .modal-dialog .btn-close {
     opacity: 1;

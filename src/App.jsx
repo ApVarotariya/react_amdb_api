@@ -9,7 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import Movies from "./Components/Movies";
 import BollyWoodMovies from "./Components/BollyWoodMovies";
 import SingleDetails from "./Components/SingleDetails";
-import PopularMovies from "./Components/TrendingMovies";
+import PopularMovies from "./Components/PopularMovies";
 
 function App() {
   return (

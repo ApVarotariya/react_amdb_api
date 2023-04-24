@@ -5,13 +5,13 @@ import CustomPagination from "./CustomPagination";
 
 const BollyWoodMovies = () => {
   const [page, setPage] = useState(1);
-  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [bollywoodMovies, setBollywoodMovies] = useState([]);
 
   const fetchData = async () => {
-    const trendingMovies = await axios.get(
+    const bollywoodMovies = await axios.get(
       `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=hi-IN&region=IN&sort_by=popularity.desc&page=${page}&primary_release_year=2018&with_original_language=hi`
     );
-    setTrendingMovies(trendingMovies.data.results);
+    setBollywoodMovies(bollywoodMovies.data.results);
   };
   useEffect(() => {
     fetchData();
@@ -23,7 +23,7 @@ const BollyWoodMovies = () => {
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
             Bollywood Movies
           </h1>
-          {trendingMovies.map((c) => {
+          {bollywoodMovies.map((c) => {
             return (
               <MovieBox
                 key={c.id}

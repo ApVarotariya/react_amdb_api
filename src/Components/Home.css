@@ -10,14 +10,48 @@
   width: 100%;
 }
 .home_slider_title {
-  padding-bottom: 100px;
-  z-index: 9;
-  padding-left: 100px;
-  max-width: 60%;
   font-family: "Boston black";
   font-size: 53px;
   font-style: italic;
   text-transform: capitalize;
+}
+.home_slider_title,
+.home .overview {
+  max-width: 60%;
+}
+.home .overview {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.home_slider_title,
+.home .media_type,
+.home .overview,
+.home .release_date {
+  z-index: 9;
+  padding-left: 100px;
+  position: relative;
+}
+.home .learn_more {
+  z-index: 9;
+  position: relative;
+  margin-left: 100px;
+  color: #eac56b;
+  width: 150px;
+  display: flex;
+  border: 1px solid #eac56b;
+  padding: 5px 0;
+  border-radius: 5px;
+  margin-bottom: 100px;
+  align-items: center;
+  justify-content: center;
+}
+.home .learn_more:hover {
+  color: #2c2d30;
+  background-color: #eac56b;
+  border: 1px solid #2c2d30;
 }
 .home_slider_title span {
   font-size: 35px;
@@ -79,14 +113,8 @@
   height: 8px;
   background-color: transparent;
 }
-.home .card_wrapper::-webkit-scrollbar-thumb,
-.home .tv_series_wrapper::-webkit-scrollbar-thumb,
-.home .discover_wrapper::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 10px;
-}
 .moviecard {
-  margin: 5px 5px;
+  padding: 5px;
 }
 .home .moviecard_main {
   padding: 0 0px 20px 0px;
@@ -94,6 +122,9 @@
 .swiper-button-next:after,
 .swiper-button-prev:after {
   color: #eac56b;
+}
+.home .release_date b {
+  font-weight: 100;
 }
 /* Responsive css */
 @media (max-width: 991px) {
@@ -103,10 +134,24 @@
 }
 @media (max-width: 767px) {
   .home_slider_title {
-    padding-bottom: 40px;
     padding-left: 40px;
     max-width: 90%;
     font-size: 43px;
+  }
+  .home .overview {
+    max-width: 90%;
+  }
+  .home .overview {
+    -webkit-line-clamp: 2;
+  }
+  .home_slider_title,
+  .home .media_type,
+  .home .overview,
+  .home .release_date {
+    padding-left: 40px;
+  }
+  .home .learn_more {
+    margin-left: 40px;
   }
   .home_slider_title span {
     font-size: 25px;
@@ -124,13 +169,21 @@
   .swiper-button-prev:after {
     font-size: 26px;
   }
+  .home .learn_more {
+    margin-bottom: 40px;
+  }
 }
 @media (max-width: 575px) {
   .home_slider_title {
-    padding-bottom: 0px;
-    padding-left: 20px;
     max-width: 90%;
     font-size: 33px;
     line-height: 31px;
+  }
+  .home .learn_more {
+    margin-bottom: 20px;
+  }
+  .home .overview,
+  .home .release_date b {
+    display: none;
   }
 }

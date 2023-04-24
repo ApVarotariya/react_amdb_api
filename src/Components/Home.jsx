@@ -14,6 +14,7 @@ import TvSeries from "./TvSeries";
 import Movies from "./Movies";
 import PopularPeople from "./PopularPeople";
 import UpComing from "./Upcoming";
+import { Link } from "react-router-dom";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -31,7 +32,7 @@ const Home = () => {
       `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page}`
     );
     setTrending(trending.data.results);
-    // console.log(trending.data.results);
+    console.log(trending.data.results);
     setIsLoading(false);
   };
 
@@ -71,7 +72,6 @@ const Home = () => {
       colors.r = Math.round(colors.r / pixelCount);
       colors.g = Math.round(colors.g / pixelCount);
       colors.b = Math.round(colors.b / pixelCount);
-      // const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
       const bggradient = `linear-gradient(to top right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 90%)`;
       setGradient(bggradient);
     } catch (error) {
@@ -121,6 +121,7 @@ const Home = () => {
             autoplay={{
               delay: 2000,
               disableOnInteraction: false,
+              pauseOnMouseEnter: true,
             }}
             pagination={{ clickable: true }}
             onSlideChange={handleSlideChange}
@@ -142,14 +143,33 @@ const Home = () => {
                       justifyContent: "end",
                     }}
                   >
-                    <h1 className="home_slider_title">
-                      {c.title || c.name}
-                      <span>
-                        (
-                        {dateFormat(c.release_date || c.first_air_date, "yyyy")}
-                        )
+                    <p>
+                      <span className="media_type">
+                        {c.media_type === "movie" ? "Movie" : "Tv Series"}
                       </span>
-                    </h1>
+                      <span className="release_date">
+                        <b>Released on&nbsp;</b>
+                        {dateFormat(
+                          c.release_date || c.first_air_date,
+                          "mmmm dS, yyyy"
+                        )}
+                      </span>
+                    </p>
+                    <h1 className="home_slider_title">{c.title || c.name}</h1>
+                    <p className="overview">{c.overview}</p>
+                    <Link
+                      className="learn_more"
+                      to={`/${c.media_type}/${c.id}`}
+                      onClick={() => {
+                        window.scrollTo({
+                          top: 0,
+                          left: 0,
+                          behavior: "smooth",
+                        });
+                      }}
+                    >
+                      View More
+                    </Link>
                     <div
                       style={{
                         backgroundImage: gradient,
