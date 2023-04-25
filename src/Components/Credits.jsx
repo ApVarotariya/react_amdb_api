@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import AliceCarousel from "react-alice-carousel";
 import { unavailable } from "./README";
-import "react-alice-carousel/lib/alice-carousel.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useParams } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import dateFormat from "dateformat";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
@@ -30,55 +32,6 @@ const Credits = ({ id, media_type }) => {
     setCredits(data.cast);
   };
 
-  const items = credits?.map((c) => (
-    <>
-      <div className="carouselItem">
-        <Link
-          to={`/person/${credits && c.id}`}
-          onClick={() => {
-            window.scrollTo({
-              top: 0,
-              left: 0,
-              behavior: "smooth",
-            });
-          }}
-        >
-          <LazyLoadImage
-            src={
-              c?.profile_path
-                ? API_IMG + c.profile_path
-                : c?.poster_path
-                ? API_IMG + c.poster_path
-                : unavailable
-            }
-            alt={c?.name}
-            onDragStart={handleDragStart}
-            className="carouselItem__img"
-          />
-          <p className="carouselItem__txt text-black my-1">
-            <strong>{c?.name || c?.original_title}</strong>
-          </p>
-          <b className="carouselItem__txt text-black">{c?.character}</b>
-        </Link>
-      </div>
-    </>
-  ));
-
-  const itemsPerSlide = 5;
-  const slideWidth = 20;
-
-  let stagePadding = 0;
-  if (items.length < itemsPerSlide) {
-    stagePadding = (100 - slideWidth * items.length) / 2;
-  }
-
-  const responsive = {
-    0: { items: 2 },
-    400: { items: 3 },
-    568: { items: 5 },
-    1024: { items: 5 },
-  };
-
   useEffect(() => {
     fetchCredits();
   }, [id, state]);
@@ -86,27 +39,67 @@ const Credits = ({ id, media_type }) => {
   return (
     <>
       {(state === "movie" || state === "tv") && (
-        <AliceCarousel
-          mouseTracking
-          disableDotsControls
-          disableButtonsControls
-          responsive={responsive}
-          items={items}
-          itemsPerSlide={itemsPerSlide}
-          slideToWidth={true}
-          slideWidth={slideWidth}
-          autoPlay
-          autoPlayStrategy="none"
-          autoPlayInterval={200}
-          animationDuration={1000}
-          animationType="fadeout"
-          infinite
-          touchTracking={false}
-          stagePadding={{
-            paddingLeft: stagePadding,
-            paddingRight: stagePadding,
+        <Swiper
+          className="credit_slider"
+          modules={[Autoplay, Navigation, Pagination]}
+          slidesPerView={6}
+          autoplay={{
+            delay: 2000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
-        />
+          breakpoints={{
+            320: {
+              slidesPerView: 2,
+            },
+            575: {
+              slidesPerView: 4,
+            },
+            1024: {
+              slidesPerView: 5,
+            },
+            1200: {
+              slidesPerView: 6,
+            },
+          }}
+          pagination={{ clickable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+        >
+          {credits?.map((c) => {
+            return (
+              <SwiperSlide className="carouselItem" key={c.id}>
+                <Link
+                  to={`/person/${credits && c.id}`}
+                  onClick={() => {
+                    window.scrollTo({
+                      top: 0,
+                      left: 0,
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  <LazyLoadImage
+                    src={
+                      c?.profile_path
+                        ? API_IMG + c.profile_path
+                        : c?.poster_path
+                        ? API_IMG + c.poster_path
+                        : unavailable
+                    }
+                    alt={c?.name}
+                    onDragStart={handleDragStart}
+                    className="carouselItem__img"
+                  />
+                  <p className="carouselItem__txt text-black my-1">
+                    <strong>{c?.name || c?.original_title}</strong>
+                  </p>
+                  <b className="carouselItem__txt text-black">{c?.character}</b>
+                </Link>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       )}
       {state === "person" && disableCarousel && (
         <div className="d-flex flex-wrap">

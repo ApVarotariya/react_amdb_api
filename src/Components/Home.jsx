@@ -32,7 +32,6 @@ const Home = () => {
       `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page}`
     );
     setTrending(trending.data.results);
-    console.log(trending.data.results);
     setIsLoading(false);
   };
 

@@ -20,6 +20,8 @@ const SingleDetails = () => {
   const [similar, setSimilar] = useState([]);
   const perPage = 8;
   const [next, setNext] = useState(perPage);
+  const [gradient, setGradient] = useState("");
+  const [gradientPoster, setGradientPoster] = useState("");
 
   const canvasRef = useRef(null);
   const isMobile = window.innerWidth > 767;
@@ -89,17 +91,12 @@ const SingleDetails = () => {
 
         if (window.innerWidth > 767) {
           const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
-          const bgelement = document.getElementById("single_content_details");
-          bgelement.style.background = bggradient;
+          setGradient(bggradient);
         } else {
           const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 50%)`;
+          setGradient(bggradient);
           const postergradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 50%)`;
-          const bgelement = document.getElementById("single_content_details");
-          const posterelement = document.getElementById(
-            "details_postar_overlay"
-          );
-          bgelement.style.background = bggradient;
-          posterelement.style.background = postergradient;
+          setGradientPoster(postergradient);
         }
       } catch (error) {
         console.error("eror", error);
@@ -108,7 +105,6 @@ const SingleDetails = () => {
 
     getImageData();
   }, [movies]);
-
   return (
     <>
       {movies && (
@@ -142,6 +138,7 @@ const SingleDetails = () => {
                 className="single_content_details"
                 id="single_content_details"
                 style={{
+                  backgroundImage: gradient,
                   backgroundSize: "cover",
                   position: "relative",
                   width: "100%",
@@ -171,6 +168,7 @@ const SingleDetails = () => {
                     <div
                       id="details_postar_overlay"
                       style={{
+                        backgroundImage: gradientPoster,
                         width: "100%",
                         height: "100%",
                         position: "absolute",
@@ -351,63 +349,63 @@ const SingleDetails = () => {
                         key={s.id}
                       >
                         <Card>
-                          <Link
-                            to={`/${state}/${s.id}`}
-                            onClick={() => {
-                              window.scrollTo({
-                                top: 0,
-                                left: 0,
-                                behavior: "smooth",
-                              });
-                            }}
-                          >
-                            <LazyLoadImage
-                              variant="top"
-                              src={
-                                s.poster_path
-                                  ? API_IMG + s.poster_path
-                                  : unavailable
-                              }
-                              alt={s.title}
-                              className="movie-backdrop-poster"
-                            />
-                            <Card.Body>
-                              <Card.Title>
-                                <h3>
-                                  <strong>
-                                    <span>{s.title || s.name}</span>
-                                  </strong>
-                                  <span>{s.vote_average.toFixed(1)}</span>
-                                </h3>
-                                <div className="d-flex justify-content-between align-items-start">
-                                  <p style={{ fontSize: "12px" }}>
-                                    <span>
-                                      {dateFormat(
-                                        s.release_date,
-                                        "mmmm dS, yyyy"
-                                      )}
-                                    </span>
-                                  </p>
-                                  <p style={{ fontSize: "12px" }}>
-                                    {state === "tv" ? "TV Series" : "Movie"}
-                                  </p>
-                                </div>
-                              </Card.Title>
-                              <Link
-                                as="button"
-                                to={`/${state}/${s.id}`}
-                                onClick={() => {
-                                  window.scrollTo({
-                                    top: 0,
-                                    left: 0,
-                                    behavior: "smooth",
-                                  });
-                                }}
-                              >
-                                <Button variant="success">More Details</Button>
-                              </Link>
-                            </Card.Body>
-                          </Link>
+                          <LazyLoadImage
+                            variant="top"
+                            src={
+                              s.poster_path
+                                ? API_IMG + s.poster_path
+                                : unavailable
+                            }
+                            alt={s.title}
+                            className="movie-backdrop-poster"
+                          />
+                          <Card.Body>
+                            <Card.Title>
+                              <h3>
+                                <strong>
+                                  <span>{s.title || s.name}</span>
+                                </strong>
+                                <span>{s.vote_average.toFixed(1)}</span>
+                              </h3>
+                              <div className="d-flex justify-content-between align-items-start">
+                                <p style={{ fontSize: "12px" }}>
+                                  <span>
+                                    {dateFormat(
+                                      s.release_date,
+                                      "mmmm dS, yyyy"
+                                    )}
+                                  </span>
+                                </p>
+                                <p style={{ fontSize: "12px" }}>
+                                  {state === "tv" ? "TV Series" : "Movie"}
+                                </p>
+                              </div>
+                            </Card.Title>
+                            <Link
+                              style={{ zIndex: "9" }}
+                              to={`/${state}/${s.id}`}
+                              onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}
+                            >
+                              <Button variant="success">More Details</Button>
+                            </Link>
+                            <Link
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                position: "absolute",
+                                left: "0",
+                                top: "0",
+                                opacity: "0",
+                              }}
+                              to={`/${state}/${s.id}`}
+                            ></Link>
+                          </Card.Body>
                         </Card>
                       </div>
                     );
