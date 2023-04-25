@@ -9,6 +9,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import GetGradientData from "./GetGradientData";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -58,37 +59,15 @@ const SingleDetails = () => {
   }
 
   useEffect(() => {
-    let dynamicImage;
+    let imagePath;
     if (state === "movie" || state === "tv") {
-      dynamicImage = API_IMG200 + movies?.poster_path;
+      imagePath = API_IMG200 + movies?.poster_path;
     } else if (state === "person") {
-      dynamicImage = API_IMG200 + movies?.profile_path;
+      imagePath = API_IMG200 + movies?.profile_path;
     }
-    const getImageData = async () => {
-      try {
-        const response = await fetch(`${dynamicImage}`);
-        const blob = await response.blob();
-        const img = await createImageBitmap(blob);
-
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const colors = { r: 0, g: 0, b: 0 };
-        const pixelCount = imageData.data.length / 4;
-
-        for (let i = 0; i < imageData.data.length; i += 4) {
-          colors.r += imageData.data[i];
-          colors.g += imageData.data[i + 1];
-          colors.b += imageData.data[i + 2];
-        }
-
-        colors.r = Math.round(colors.r / pixelCount);
-        colors.g = Math.round(colors.g / pixelCount);
-        colors.b = Math.round(colors.b / pixelCount);
-
+    const getGradient = async () => {
+      const colors = await GetGradientData(imagePath);
+      if (colors) {
         if (window.innerWidth > 767) {
           const bggradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) calc((50vw - 170px) - 340px), rgba(${colors.r},${colors.g},${colors.b},0.84) 50%,rgba(${colors.r},${colors.g},${colors.b},0.84) 100%)`;
           setGradient(bggradient);
@@ -98,13 +77,13 @@ const SingleDetails = () => {
           const postergradient = `linear-gradient(to right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 50%)`;
           setGradientPoster(postergradient);
         }
-      } catch (error) {
-        console.error("eror", error);
       }
+      return null;
     };
 
-    getImageData();
+    getGradient();
   }, [movies]);
+
   return (
     <>
       {movies && (

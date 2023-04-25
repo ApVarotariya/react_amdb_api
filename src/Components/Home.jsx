@@ -15,6 +15,7 @@ import Movies from "./Movies";
 import PopularPeople from "./PopularPeople";
 import UpComing from "./Upcoming";
 import { Link } from "react-router-dom";
+import GetGradientData from "./GetGradientData";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -45,38 +46,17 @@ const Home = () => {
     };
   }, []);
 
-  const getImageData = async (imagePath) => {
-    let dynamicImage;
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const colors = { r: 0, g: 0, b: 0 };
-
-    dynamicImage = API_IMG200 + imagePath;
-    try {
-      const response = await fetch(`${dynamicImage}`);
-      const blob = await response.blob();
-      const img = await createImageBitmap(blob);
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const pixelCount = imageData.data.length / 4;
-
-      for (let i = 0; i < imageData.data.length; i += 4) {
-        colors.r += imageData.data[i];
-        colors.g += imageData.data[i + 1];
-        colors.b += imageData.data[i + 2];
+  useEffect(() => {
+    let imagePath = API_IMG200 + currentSlide.backdrop_path;
+    const getGradient = async () => {
+      const colors = await GetGradientData(imagePath);
+      if (colors) {
+        const bggradient = `linear-gradient(to top right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 90%)`;
+        setGradient(bggradient);
       }
-
-      colors.r = Math.round(colors.r / pixelCount);
-      colors.g = Math.round(colors.g / pixelCount);
-      colors.b = Math.round(colors.b / pixelCount);
-      const bggradient = `linear-gradient(to top right, rgba(${colors.r},${colors.g},${colors.b},1) 20%, rgba(${colors.r},${colors.g},${colors.b},0) 90%)`;
-      setGradient(bggradient);
-    } catch (error) {
-      console.error("error", error);
-    }
-  };
+    };
+    getGradient();
+  }, [currentSlide]);
 
   const handleSlideChange = (swiper) => {
     const currentSlideIndex = swiper.realIndex;
@@ -84,7 +64,7 @@ const Home = () => {
 
     setCurrentSlide(currentSlide);
     if (currentSlide.backdrop_path) {
-      getImageData(currentSlide.backdrop_path);
+      GetGradientData(currentSlide?.backdrop_path);
     }
   };
 
