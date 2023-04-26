@@ -126,6 +126,16 @@
 .home .release_date b {
   font-weight: 100;
 }
+.now_playing_title select {
+  font-size: 20px;
+  margin-left: 20px;
+  font-family: "proxima_novaregular";
+  border: 1px solid #2c2d30;
+  background: #eac56b;
+  color: #fff;
+  border-radius: 5px;
+  padding: 2px 3px;
+}
 /* Responsive css */
 @media (max-width: 991px) {
   body.home {

@@ -4,32 +4,48 @@ import MovieBox from "./MovieBox";
 import { Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
 
-const UpComing = (props) => {
+const NowPlaying = (props) => {
   const [page, setPage] = useState(1);
-  const [upComing, setUpComing] = useState([]);
+  const [nowPlaying, setNowPlaying] = useState([]);
+  const [language, setLanguage] = useState("en-US");
   const { cardLimit = 20, showPagination = true, showButton = false } = props;
 
-  const fetchData = async () => {
-    const upComing = await axios.get(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_ACCESS_KEY}&original_language=hi&page=1`
-    );
-    setUpComing(upComing.data.results);
-  };
   useEffect(() => {
-    fetchData();
-  }, [page]);
+    const fetchNowPlaying = async (language) => {
+      const globalUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=${language}&page=${page}`;
+      const hindiUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&with_original_language=hi&page=${page}`;
+      try {
+        const response =
+          language === "en-US"
+            ? await axios.get(globalUrl)
+            : await axios.get(hindiUrl);
+        setNowPlaying(response.data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNowPlaying(language);
+  }, [language]);
+
+  const handleChange = (event) => {
+    setLanguage(event.target.value);
+  };
   return (
     <>
       <div className="container-fluid">
         <div className="row justify-content-around">
-          <h1 className="text-center fw-lighter page_heading my-3 text-black">
-            UpComing Movies
+          <h1 className="text-center fw-lighter page_heading my-3 text-black now_playing_title">
+            Now in Theaters
+            <select value={language} onChange={handleChange}>
+              <option value="en-US">Global</option>
+              <option value="hi">India</option>
+            </select>
           </h1>
           {showButton === true && (
             <div className="show_more_btn_main">
               <div className="show_more_btn">
                 <Link
-                  to={`/upComing`}
+                  to="/"
                   onClick={() => {
                     window.scrollTo({
                       top: 0,
@@ -44,7 +60,7 @@ const UpComing = (props) => {
             </div>
           )}
           <div className="card_wrapper d-flex flex-wrap">
-            {upComing?.slice(0, cardLimit).map((c) => {
+            {nowPlaying?.slice(0, cardLimit).map((c) => {
               return (
                 <MovieBox
                   key={c.id}
@@ -68,4 +84,4 @@ const UpComing = (props) => {
   );
 };
 
-export default UpComing;
+export default NowPlaying;

@@ -1,15 +1,16 @@
+import { Routes, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Main from "./Components/Main";
 import Home from "./Components/Home";
-import "bootstrap/dist/css/bootstrap.min.css";
 import TvSeries from "./Components/TvSeries";
 import Search from "./Components/Search";
 import Header from "./Components/Header";
-import { Routes, Route } from "react-router-dom";
 import Movies from "./Components/Movies";
 import BollyWoodMovies from "./Components/BollyWoodMovies";
 import SingleDetails from "./Components/SingleDetails";
 import PopularMovies from "./Components/PopularMovies";
+import UpComing from "./Components/Upcoming";
 
 function App() {
   const pages = [
@@ -21,6 +22,7 @@ function App() {
     { path: "/movies", component: Movies },
     { path: "/tv-series", component: TvSeries },
     { path: "/search", component: Search },
+    { path: "/upComing", component: UpComing },
   ];
   return (
     <>
