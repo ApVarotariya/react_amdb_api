@@ -91,7 +91,7 @@ const Home = () => {
         />
       ) : (
         <>
-          <div style={{ minHeight: "100vh" }}>
+          <div>
             <Swiper
               ref={sliderRef}
               className="home_hero_slider"
