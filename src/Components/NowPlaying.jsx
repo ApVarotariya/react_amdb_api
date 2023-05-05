@@ -45,7 +45,7 @@ const NowPlaying = (props) => {
             <div className="show_more_btn_main">
               <div className="show_more_btn">
                 <Link
-                  to="/"
+                  to="/in-theaters-now"
                   onClick={() => {
                     window.scrollTo({
                       top: 0,

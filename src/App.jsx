@@ -11,6 +11,7 @@ import BollyWoodMovies from "./Components/BollyWoodMovies";
 import SingleDetails from "./Components/SingleDetails";
 import PopularMovies from "./Components/PopularMovies";
 import UpComing from "./Components/Upcoming";
+import NowPlaying from "./Components/NowPlaying";
 
 function App() {
   const pages = [
@@ -23,6 +24,7 @@ function App() {
     { path: "/tv-series", component: TvSeries },
     { path: "/search", component: Search },
     { path: "/upComing", component: UpComing },
+    { path: "/in-theaters-now", component: NowPlaying },
   ];
   return (
     <>

@@ -183,7 +183,7 @@ const Home = () => {
       />
       <PopularPeople cardLimit={10} showPagination={false} showButton={false} />
       <UpComing cardLimit={10} showPagination={false} showButton={true} />
-      <NowPlaying showPagination={false} showButton={false} />
+      <NowPlaying cardLimit={10} showPagination={false} showButton={true} />
     </>
   );
 };
