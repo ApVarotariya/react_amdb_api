@@ -149,12 +149,15 @@ a:hover {
   position: absolute;
   color: #2c2d30;
   right: -3px;
+  font-family: "proxima_novaregular";
   font-style: italic;
   background-color: #eac56b !important;
   top: -4px;
-  font-weight: 400;
   font-size: 13px;
   padding: 3px 8px;
+}
+.moviecard .card .card-title p {
+  font-family: "proxima_novaregular";
 }
 .moviecard .card .card-movie-overview {
   text-overflow: ellipsis;
@@ -652,6 +655,7 @@ input:-webkit-autofill:focus {
   border-radius: 10px;
   border: 0px solid #ffffff;
 }
+
 /* Responsive Css */
 @media (min-width: 767px) {
   .details_page_fact_main {
