@@ -383,6 +383,13 @@ const SingleDetails = () => {
                                 opacity: "0",
                               }}
                               to={`/${state}/${s.id}`}
+                              onClick={() => {
+                                window.scrollTo({
+                                  top: 0,
+                                  left: 0,
+                                  behavior: "smooth",
+                                });
+                              }}
                             ></Link>
                           </Card.Body>
                         </Card>
