@@ -4,10 +4,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./CardCarousel.css";
 import axios from "axios";
+
 const API_IMG = "https://image.tmdb.org/t/p/original";
+
 const CardCarousel = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
   const [trending, setTrending] = useState([]);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   const fetchData = async () => {
     const trending = await axios.get(
@@ -20,12 +22,8 @@ const CardCarousel = () => {
     fetchData();
   }, []);
 
-  const handleAfterChange = (currentSlide) => {
-    setActiveSlide(currentSlide);
-  };
-
-  const handleBeforeChange = (currentSlide, nextSlide) => {
-    setActiveSlide(nextSlide);
+  const handleSlideChange = (index) => {
+    setActiveSlide(index);
   };
 
   const settings = {
@@ -35,11 +33,9 @@ const CardCarousel = () => {
     autoplaySpeed: 2000,
     cssEase: "linear",
     infinite: true,
-    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    afterChange: handleAfterChange,
-    beforeChange: handleBeforeChange,
+    afterChange: handleSlideChange,
   };
 
   return (
@@ -53,22 +49,21 @@ const CardCarousel = () => {
                   src={API_IMG + item.backdrop_path}
                   alt={`Slide ${index + 1}`}
                 />
-                <p>{item.title || item.name}</p>
+                <p className="text-black">{item.title || item.name}</p>
               </div>
             ))}
           </Slider>
         </div>
-      </div>
-      <div className="active-slide">
-        <img
-          src={
-            trending[activeSlide] &&
-            `${API_IMG}${trending[activeSlide].backdrop_path}`
-          }
-          alt={`Slide ${activeSlide + 1}`}
-        />
-        <p>{trending[activeSlide]?.title || trending[activeSlide]?.name}</p>
-        {console.log(trending[activeSlide]?.title)}
+        {trending[activeSlide] && (
+          <div
+            className="background-slide"
+            style={{
+              backgroundImage: `url(${
+                API_IMG + trending[activeSlide].backdrop_path
+              })`,
+            }}
+          ></div>
+        )}
       </div>
     </>
   );
