@@ -1,13 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./CardCarousel.css";
 import axios from "axios";
-import Swiper from "swiper";
-import { Splitting } from "splitting";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination, EffectFade } from "swiper";
+// import Splitting from "https://cdn.skypack.dev/splitting@1.0.6";
+import Splitting from "splitting";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
 const CardCarousel = () => {
   const [trending, setTrending] = useState([]);
+  const fullSizeWrapEl = useRef(null);
+  const heroEl = useRef(null);
+  const contentFullsizeEls = useRef([]);
 
   const fetchData = async () => {
     try {
@@ -23,27 +28,24 @@ const CardCarousel = () => {
   useEffect(() => {
     fetchData();
 
-    const heroEl = document.querySelector(".hero");
-    const fullSizeWrapEl = heroEl.querySelector(".hero__fullsize");
-    const contentEls = heroEl.querySelectorAll(".swiper .content");
-    const contentFullsizeEls = Array.from(contentEls, (el) => {
-      const clone = el.cloneNode(true);
-      clone.classList.add(
-        "hero__content",
-        "hero__content--hidden",
-        "content--hero"
-      );
-      clone.classList.remove("content--slide");
-      return clone;
-    });
-
-    contentFullsizeEls.forEach((el) => fullSizeWrapEl.appendChild(el));
-
+    if (fullSizeWrapEl.current) {
+      const contentEls =
+        fullSizeWrapEl.current.querySelectorAll(".swiper .content");
+      contentFullsizeEls.current = Array.from(contentEls, (el) => {
+        const clone = el.cloneNode(true);
+        clone.classList.add(
+          "hero__content",
+          "hero__content--hidden",
+          "content--hero"
+        );
+        clone.classList.remove("content--slide");
+        return clone;
+      });
+    }
     const state = {
       topContent: null,
       bottomContent: null,
     };
-
     function slideChange(swiper) {
       const total = swiper.slides.length - swiper.loopedSlides * 2;
       const contentIndex = (swiper.activeIndex - swiper.loopedSlides) % total;
@@ -117,57 +119,49 @@ const CardCarousel = () => {
       content.classList.add("hero__content--top");
       state.topContent = content;
     }
+  }, [trending]);
 
-    const swiper = new Swiper(".swiper", {
-      slidesPerView: 3.5,
-      spaceBetween: 25,
-      loop: true,
-      speed: 1000,
-      simulateTouch: false,
-
-      autoplay: {
-        delay: 1000,
-      },
-
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      on: { realIndexChange: slideChange, init: swiperInit },
-    });
-
-    return () => {
-      swiper.destroy();
-    };
-  }, []);
-
+  const destroySwiper = (swiper) => {
+    swiper.destroy();
+  };
   return (
     <div className="swiper_main">
-      <div className="hero">
-        <div className="hero__fullsize"></div>
-        <div className="hero__swiper swiper">
-          <div className="swiper-wrapper">
-            {trending.map((s) => (
-              <div className="swiper-slide" key={s.id}>
-                <div className="content content--slide">
-                  <img
-                    className="content__image"
-                    src={API_IMG + s.backdrop_path}
-                    alt={s.original_title || s.original_name}
-                  />
-                  <div className="content__text">
-                    <h2 className="content__title">
-                      {s.original_title || s.original_name}
-                    </h2>
-                    <p className="content__desc">Lorem ipsum dolor</p>
+      <div className="hero" ref={heroEl}>
+        <div className="hero__fullsize" ref={fullSizeWrapEl}></div>
+        <Swiper
+          className="hero__swiper"
+          modules={[Autoplay, Navigation, Pagination]}
+          spaceBetween={25}
+          slidesPerView={3.5}
+          navigation
+          autoplay={{ delay: 2000 }}
+          pagination={{ clickable: true }}
+          onSwiper={swiperInit}
+          onSlideChange={slideChange}
+          onDestroy={destroySwiper}
+        >
+          {trending.map((s) => {
+            return (
+              <SwiperSlide key={s.id}>
+                <div className="swiper-slide">
+                  <div className="content content--slide">
+                    <img
+                      className="content__image"
+                      src={API_IMG + s.backdrop_path}
+                      alt={s.original_title || s.original_name}
+                    />
+                    <div className="content__text">
+                      <h2 className="content__title">
+                        {s.original_title || s.original_name}
+                      </h2>
+                      <p className="content__desc">Lorem ipsum dolor</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="swiper-button-next"></div>
-          <div className="swiper-button-prev"></div>
-        </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </div>
     </div>
   );
