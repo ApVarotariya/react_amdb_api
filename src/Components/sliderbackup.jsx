@@ -6,11 +6,12 @@ import Splitting from "splitting";
 import axios from "axios";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
-const API_IMG = "https://image.tmdb.org/t/p/w200";
+const API_IMG = "https://image.tmdb.org/t/p/w500";
 const CardCarousel = () => {
   const [trending, setTrending] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [topContent, setTopContent] = useState(null);
+  const [bottomContent, setBottomContent] = useState(null);
   const heroElRef = useRef(null);
   const fullSizeWrapElRef = useRef(null);
   const swiperRef = useRef(null);
@@ -50,10 +51,14 @@ const CardCarousel = () => {
       });
 
       const slideChange = (swiper) => {
-        const activeIndex = swiper.realIndex % trending.length;
-        const nextIndex = (activeIndex + trending.length) % trending.length;
-        console.log(nextIndex);
-        const content = contentFullsizeEls[nextIndex];
+        const total = swiper.slides.length;
+        let contentIndex = swiper.realIndex % total;
+        if (contentIndex < 0) {
+          contentIndex = total + contentIndex;
+        }
+        console.log(contentIndex);
+
+        const content = contentFullsizeEls[contentIndex];
 
         if (!content) return;
 
@@ -109,30 +114,74 @@ const CardCarousel = () => {
         }, 0);
       };
 
-      if (!swiperRef.current) {
-        const swiper = new Swiper(".swiper", {
-          slidesPerView: 4.5,
-          spaceBetween: 25,
-          speed: 1000,
-          simulateTouch: false,
-          autoplay: {
-            delay: 2000,
-          },
-          navigation: true,
-          pagination: {
-            clickable: true,
-          },
-          loop: true,
-          loopAdditionalSlides: 5,
-          on: {
-            slideChange: slideChange,
-          },
-        });
+      // const swiperInit = (swiper) => {
+      //   const total = swiper.slides.length;
+      //   let contentIndex = swiper.realIndex % total;
+      //   // if (contentIndex < 0) {
+      //   //   contentIndex = total + contentIndex;
+      //   // }
 
-        swiperRef.current = swiper;
-      }
+      //   const content = contentFullsizeEls[contentIndex];
+      //   if (!content) return;
+
+      //   setTopContent(content);
+
+      //   const slideRect =
+      //     swiper.slides[swiper.activeIndex].getBoundingClientRect();
+      //   const parentRect = heroEl.getBoundingClientRect();
+
+      //   content.style.transition = "none";
+      //   content.style.left = slideRect.left - parentRect.left + "px";
+      //   content.style.top = slideRect.top - parentRect.top + "px";
+      //   content.style.width = slideRect.width + "px";
+      //   content.style.height = slideRect.height + "px";
+      //   content.style.borderRadius = "var(--border-radius, 0)";
+
+      //   content.getBoundingClientRect();
+
+      //   content.classList.remove("hero__content--hidden");
+      //   content.classList.add("hero__content--top");
+
+      //   const onShowTextEnd = (event) => {
+      //     if (event.target !== event.currentTarget) {
+      //       event.currentTarget.removeEventListener(
+      //         "transitionend",
+      //         onShowTextEnd
+      //       );
+      //     }
+      //   };
+
+      //   content.addEventListener("transitionend", onShowTextEnd, {
+      //     once: true,
+      //   });
+      // };
+
+      const swiper = new Swiper(".swiper", {
+        slidesPerView: 4.5,
+        spaceBetween: 25,
+        speed: 1000,
+        simulateTouch: false,
+        autoplay: {
+          delay: 2000,
+        },
+        navigation: true,
+        pagination: {
+          clickable: true,
+        },
+        loop: true,
+        // loopedSlides: 7,
+        on: {
+          // init: swiperInit,
+          slideChange: slideChange,
+        },
+      });
+
+      swiperRef.current = swiper;
+      return () => {
+        swiper.destroy();
+      };
     }
-  }, [isDataLoaded, trending.length]);
+  }, [isDataLoaded]);
 
   if (!isDataLoaded) {
     return <div className="text-black">Loading data...</div>;
@@ -171,4 +220,5 @@ const CardCarousel = () => {
     </div>
   );
 };
+
 export default CardCarousel;

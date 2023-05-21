@@ -1,9 +1,9 @@
 .hero {
   --border-radius: 12px;
-  --transition-duration: 1000ms;
+  --transition-duration: 400ms;
   position: relative;
   width: 100%;
-  height: calc(100vh - 126px);
+  height: calc(100vh - 76px);
 }
 
 .hero__fullsize {
@@ -137,6 +137,7 @@
 
 .swiper-slide {
   display: flex;
+  max-height: 300px;
 }
 
 .content {
