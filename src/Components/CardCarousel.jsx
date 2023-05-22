@@ -4,9 +4,12 @@ import { Swiper } from "swiper";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import Splitting from "splitting";
 import axios from "axios";
+import { Triangle } from "react-bootstrap-icons";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
-const API_IMG = "https://image.tmdb.org/t/p/w200";
+
+const API_IMG = "https://image.tmdb.org/t/p/w500";
+
 const CardCarousel = () => {
   const [trending, setTrending] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -34,7 +37,7 @@ const CardCarousel = () => {
       const fullSizeWrapEl = fullSizeWrapElRef.current;
 
       const contentEls = heroEl.querySelectorAll(".swiper .content");
-      contentFullsizeEls.length = 0;
+      // contentFullsizeEls.length = 0;
       contentEls.forEach((el) => {
         const clone = el.cloneNode(true);
         Splitting({ target: clone, by: "words" });
@@ -50,10 +53,12 @@ const CardCarousel = () => {
       });
 
       const slideChange = (swiper) => {
-        const activeIndex = swiper.realIndex % trending.length;
-        const nextIndex = (activeIndex + trending.length) % trending.length;
-        console.log(nextIndex);
-        const content = contentFullsizeEls[nextIndex];
+        const activeIndex = swiper?.realIndex % trending?.length;
+        // const nextIndex = (activeIndex + trending?.length) % trending?.length;
+        console.log(swiper.activeIndex, "active");
+        console.log(swiper.snapIndex, "snapIndex");
+        console.log(swiper.realIndex, "real");
+        const content = contentFullsizeEls[activeIndex];
 
         if (!content) return;
 
@@ -68,7 +73,7 @@ const CardCarousel = () => {
         content.style.top = slideRect.top - parentRect.top + "px";
         content.style.width = slideRect.width + "px";
         content.style.height = slideRect.height + "px";
-        content.style.borderRadius = "var(--border-radius, 0)";
+        // content.style.borderRadius = "var(--border-radius, 0)";
 
         content.getBoundingClientRect();
 
@@ -81,7 +86,7 @@ const CardCarousel = () => {
           content.style.top = "";
           content.style.width = "";
           content.style.height = "";
-          content.style.borderRadius = "";
+          // content.style.borderRadius = "";
 
           const onShowTextEnd = (event) => {
             if (event.target !== event.currentTarget) {
@@ -135,7 +140,24 @@ const CardCarousel = () => {
   }, [isDataLoaded, trending.length]);
 
   if (!isDataLoaded) {
-    return <div className="text-black">Loading data...</div>;
+    return (
+      <Triangle
+        height="80"
+        width="80"
+        color="#eac56b"
+        ariaLabel="triangle-loading"
+        wrapperStyle={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+        }}
+        visible={true}
+      />
+    );
   }
 
   return (
@@ -151,15 +173,14 @@ const CardCarousel = () => {
                     <img
                       className="content__image"
                       src={API_IMG + t?.backdrop_path}
+                      alt={t?.original_name || t?.original_title}
                     />
 
                     <div className="content__text">
                       <h2 className="content__title">
                         {t?.original_name || t?.original_title}
                       </h2>
-                      <p className="content__desc">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                      </p>
+                      <p className="content__desc">{t?.overview}</p>
                     </div>
                   </div>
                 </div>
