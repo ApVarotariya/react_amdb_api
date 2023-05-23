@@ -121,10 +121,10 @@ const CardCarousel = () => {
           pagination: {
             clickable: true,
           },
-          // loop: true,
+          loop: true,
           // loopAdditionalSlides: 5,
           on: {
-            slideChange: slideChange,
+            realIndexChange: slideChange,
           },
         });
 
