@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import "./CardCarousel.css";
 import { Swiper } from "swiper";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
-import Splitting from "splitting";
 import axios from "axios";
 import { Triangle } from "react-bootstrap-icons";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-const API_IMG = "https://image.tmdb.org/t/p/w500";
+const API_IMG = "https://image.tmdb.org/t/p/original";
 
 const CardCarousel = () => {
   const [trending, setTrending] = useState([]);
@@ -37,10 +36,8 @@ const CardCarousel = () => {
       const fullSizeWrapEl = fullSizeWrapElRef.current;
 
       const contentEls = heroEl.querySelectorAll(".swiper .content");
-      // contentFullsizeEls.length = 0;
       contentEls.forEach((el) => {
         const clone = el.cloneNode(true);
-        Splitting({ target: clone, by: "words" });
         clone.classList.add(
           "hero__content",
           "hero__content--hidden",
@@ -53,12 +50,9 @@ const CardCarousel = () => {
       });
 
       const slideChange = (swiper) => {
-        const activeIndex = swiper?.realIndex % trending?.length;
-        // const nextIndex = (activeIndex + trending?.length) % trending?.length;
-        console.log(swiper.activeIndex, "active");
-        console.log(swiper.snapIndex, "snapIndex");
-        console.log(swiper.realIndex, "real");
+        const activeIndex = swiper.realIndex;
         const content = contentFullsizeEls[activeIndex];
+        console.log(activeIndex, "activeIndex");
 
         if (!content) return;
 
@@ -73,7 +67,7 @@ const CardCarousel = () => {
         content.style.top = slideRect.top - parentRect.top + "px";
         content.style.width = slideRect.width + "px";
         content.style.height = slideRect.height + "px";
-        // content.style.borderRadius = "var(--border-radius, 0)";
+        content.style.borderRadius = "var(--border-radius, 0)";
 
         content.getBoundingClientRect();
 
@@ -86,7 +80,7 @@ const CardCarousel = () => {
           content.style.top = "";
           content.style.width = "";
           content.style.height = "";
-          // content.style.borderRadius = "";
+          content.style.borderRadius = "";
 
           const onShowTextEnd = (event) => {
             if (event.target !== event.currentTarget) {
@@ -115,20 +109,20 @@ const CardCarousel = () => {
       };
 
       if (!swiperRef.current) {
-        const swiper = new Swiper(".swiper", {
+        const swiper = new Swiper(".swiper-container", {
           slidesPerView: 4.5,
           spaceBetween: 25,
-          speed: 1000,
+          speed: 500,
           simulateTouch: false,
           autoplay: {
-            delay: 2000,
+            delay: 500,
           },
           navigation: true,
           pagination: {
             clickable: true,
           },
-          loop: true,
-          loopAdditionalSlides: 5,
+          // loop: true,
+          // loopAdditionalSlides: 5,
           on: {
             slideChange: slideChange,
           },
@@ -137,7 +131,7 @@ const CardCarousel = () => {
         swiperRef.current = swiper;
       }
     }
-  }, [isDataLoaded, trending.length]);
+  }, [isDataLoaded]);
 
   if (!isDataLoaded) {
     return (
@@ -164,7 +158,7 @@ const CardCarousel = () => {
     <div className="swiper_main">
       <div className="hero" ref={heroElRef}>
         <div className="hero__fullsize" ref={fullSizeWrapElRef}></div>
-        <div className="hero__swiper swiper">
+        <div className="hero__swiper swiper swiper-container">
           <div className="swiper-wrapper">
             {trending.map((t) => {
               return (
@@ -178,9 +172,9 @@ const CardCarousel = () => {
 
                     <div className="content__text">
                       <h2 className="content__title">
-                        {t?.original_name || t?.original_title}
+                        {/* {t?.original_name || t?.original_title} */}
                       </h2>
-                      <p className="content__desc">{t?.overview}</p>
+                      <p className="content__desc">{/* {t?.overview} */}</p>
                     </div>
                   </div>
                 </div>
