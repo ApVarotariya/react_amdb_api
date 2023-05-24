@@ -1,18 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./CardCarousel.css";
 import { Swiper } from "swiper";
-import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
+import SwiperCore, { Autoplay, Navigation } from "swiper";
 import axios from "axios";
 import { Triangle } from "react-bootstrap-icons";
 
-SwiperCore.use([Autoplay, Navigation, Pagination]);
+SwiperCore.use([Autoplay, Navigation]);
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 
 const CardCarousel = () => {
   const [trending, setTrending] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [topContent, setTopContent] = useState(null);
   const heroElRef = useRef(null);
   const fullSizeWrapElRef = useRef(null);
   const swiperRef = useRef(null);
@@ -57,11 +56,8 @@ const CardCarousel = () => {
       const slideChange = (swiper) => {
         const activeIndex = swiper.realIndex;
         const content = contentFullsizeEls[activeIndex];
-        console.log(activeIndex, "activeIndex");
 
         if (!content) return;
-
-        setTopContent(content);
 
         if (state.bottomContent) {
           state.bottomContent.classList.remove("hero__content--bottom");
@@ -132,18 +128,7 @@ const CardCarousel = () => {
         const content = contentFullsizeEls[activeIndex];
         if (!content) return;
 
-        setTopContent(content);
-
-        const slideRect =
-          swiper.slides[swiper.activeIndex].getBoundingClientRect();
-        const parentRect = heroEl.getBoundingClientRect();
-
         content.style.transition = "none";
-        content.style.left = slideRect.left - parentRect.left + "px";
-        content.style.top = slideRect.top - parentRect.top + "px";
-        content.style.width = slideRect.width + "px";
-        content.style.height = slideRect.height + "px";
-        content.style.borderRadius = "12px";
 
         content.getBoundingClientRect();
 
@@ -168,20 +153,26 @@ const CardCarousel = () => {
       if (!swiperRef.current) {
         const swiper = new Swiper(".swiper-container", {
           slidesPerView: 4.5,
-          spaceBetween: 25,
+          spaceBetween: 20,
           speed: 2000,
           simulateTouch: false,
           autoplay: {
-            delay: 1000,
+            delay: 2000,
           },
           navigation: true,
-          pagination: {
-            clickable: true,
-          },
           loop: true,
           on: {
             init: swiperInit,
             realIndexChange: slideChange,
+          },
+          breakpoints: {
+            767: {
+              slidesPerView: 3.5,
+            },
+            480: {
+              slidesPerView: 2.5,
+              spaceBetween: 10,
+            },
           },
         });
 

@@ -1,11 +1,10 @@
 .hero {
   --border-radius: 12px;
-  --transition-duration: 400ms;
+  --transition-duration: 800ms;
   position: relative;
   width: 100%;
   height: calc(100vh - 76px);
 }
-
 .hero__fullsize {
   position: absolute;
   top: 0;
@@ -15,7 +14,6 @@
   overflow: hidden;
   z-index: 0;
 }
-
 .hero__content {
   position: absolute;
   top: 0;
@@ -29,7 +27,6 @@
     border-radius var(--transition-duration),
     transform var(--transition-duration), opacity var(--transition-duration);
 }
-
 .hero__content--hidden {
   visibility: hidden;
   transition: none;
@@ -37,13 +34,11 @@
   opacity: 1;
   z-index: 0;
 }
-
 .hero__content--bottom {
   opacity: 0;
   transform: scale(1.5);
   z-index: 1;
 }
-
 .hero__content--top {
   left: 0;
   top: 0;
@@ -52,94 +47,74 @@
   border-radius: 0;
   z-index: 2;
 }
-
-/* curtain */
-
 .hero__content--show-text::before {
   transform: translateX(0);
   transition: transform 300ms;
 }
-
 .hero__content--grow::before {
   transform: translateX(-100%);
   transition: none;
 }
-
-/* title */
 .hero__content--show-text .content__title {
   transform: translateY(0);
-  transition: transform 300ms;
+  transition: transform 100ms;
 }
-
 .hero__content--show-text .content__title .word {
   clip-path: inset(0);
-  transition: clip-path 300ms;
+  transition: clip-path 100ms;
 }
-
 .hero__content--grow .content__title {
   visibility: hidden;
   transform: translateY(48px);
   transition: none;
 }
-
 .hero__content--grow .content__title .word {
   clip-path: inset(0 0 48px);
   transition: none;
 }
-
-/* desc */
-
 .hero__content--show-text .content__desc {
   transform: translateY(0px);
-  transition: transform 300ms;
+  transition: transform 100ms;
 }
-
 .hero__content--show-text .content__desc .word {
   clip-path: inset(0);
-  transition: clip-path 300ms;
+  transition: clip-path 100ms;
 }
-
 .hero__content--grow .content__desc {
   visibility: hidden;
   transform: translateY(18px);
   transition: none;
 }
-
 .hero__content--grow .content__desc .word {
   clip-path: inset(0 0 18px);
   transition: none;
 }
-
 .hero__swiper {
   position: absolute;
   width: 70%;
-  aspect-ratio: 2.5 / 1;
+  /* aspect-ratio: 2.5 / 1; */
   right: 0px;
   bottom: 50px;
   padding: 15px 0;
   z-index: 1;
   user-select: none;
 }
-
 .swiper_main .swiper {
   --swiper-navigation-size: 20px;
   visibility: hidden;
 }
-
 .swiper_main .swiper.swiper-initialized {
   visibility: visible;
 }
-
 .swiper_main .swiper-slide-prev,
 .swiper_main .swiper-slide-active {
   opacity: 0;
 }
-
 .swiper_main .swiper-slide {
   display: flex;
   max-height: 300px;
+  height: 300px;
 }
-
 .swiper_main .content {
   display: flex;
   position: relative;
@@ -148,42 +123,42 @@
   overflow: hidden;
   z-index: 0;
 }
-
 .swiper_main .content--slide {
   position: relative;
   border-radius: var(--border-radius, 0);
 }
-
 .swiper_main .content__text {
   display: flex;
   flex-direction: column;
   width: 100%;
   color: #fff;
+  justify-content: flex-end;
+  padding-bottom: 100px;
 }
-
 .swiper_main .content__desc {
   margin: 0;
 }
-
 .swiper_main .content--slide .content__title {
   font-size: 12px;
   margin: auto 0 0;
   padding: 0.35em 0.75em;
-  background-color: #0007;
 }
-
+.content__title {
+  font-family: "proxima_novablack";
+}
+.content__desc {
+  font-family: "proxima_novaregular";
+}
 .swiper_main .content--slide .content__desc {
   position: absolute;
   left: 0;
   visibility: hidden;
 }
-
 .swiper_main .content--hero {
   padding: 100px 50px 0;
   position: absolute;
   border-radius: 0;
 }
-
 .swiper_main .content--hero::before {
   content: "";
   position: absolute;
@@ -195,16 +170,13 @@
   pointer-events: none;
   z-index: -1;
 }
-
 .swiper_main .content--hero .content__title {
   font-size: 42px;
   margin: 0 0 0.2em;
 }
-
 .swiper_main .content--hero .content__text {
   width: 45%;
 }
-
 .swiper_main .content__image {
   position: absolute;
   top: 0;
@@ -214,7 +186,6 @@
   object-fit: cover;
   z-index: -2;
 }
-
 .swiper_main .swiper-button-next {
   right: auto !important;
   left: calc((100% - 25px * 2) / 3.5);
