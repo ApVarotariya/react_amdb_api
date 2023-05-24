@@ -121,26 +121,26 @@
   user-select: none;
 }
 
-.swiper {
+.swiper_main .swiper {
   --swiper-navigation-size: 20px;
   visibility: hidden;
 }
 
-.swiper.swiper-initialized {
+.swiper_main .swiper.swiper-initialized {
   visibility: visible;
 }
 
-.swiper-slide-prev,
-.swiper-slide-active {
+.swiper_main .swiper-slide-prev,
+.swiper_main .swiper-slide-active {
   opacity: 0;
 }
 
-.swiper-slide {
+.swiper_main .swiper-slide {
   display: flex;
   max-height: 300px;
 }
 
-.content {
+.swiper_main .content {
   display: flex;
   position: relative;
   width: 100%;
@@ -149,42 +149,42 @@
   z-index: 0;
 }
 
-.content--slide {
+.swiper_main .content--slide {
   position: relative;
   border-radius: var(--border-radius, 0);
 }
 
-.content__text {
+.swiper_main .content__text {
   display: flex;
   flex-direction: column;
   width: 100%;
   color: #fff;
 }
 
-.content__desc {
+.swiper_main .content__desc {
   margin: 0;
 }
 
-.content--slide .content__title {
+.swiper_main .content--slide .content__title {
   font-size: 12px;
   margin: auto 0 0;
   padding: 0.35em 0.75em;
   background-color: #0007;
 }
 
-.content--slide .content__desc {
+.swiper_main .content--slide .content__desc {
   position: absolute;
   left: 0;
   visibility: hidden;
 }
 
-.content--hero {
+.swiper_main .content--hero {
   padding: 100px 50px 0;
   position: absolute;
   border-radius: 0;
 }
 
-.content--hero::before {
+.swiper_main .content--hero::before {
   content: "";
   position: absolute;
   top: 0;
@@ -196,16 +196,16 @@
   z-index: -1;
 }
 
-.content--hero .content__title {
+.swiper_main .content--hero .content__title {
   font-size: 42px;
   margin: 0 0 0.2em;
 }
 
-.content--hero .content__text {
+.swiper_main .content--hero .content__text {
   width: 45%;
 }
 
-.content__image {
+.swiper_main .content__image {
   position: absolute;
   top: 0;
   left: 0;
@@ -215,7 +215,7 @@
   z-index: -2;
 }
 
-.swiper-button-next {
+.swiper_main .swiper-button-next {
   right: auto !important;
   left: calc((100% - 25px * 2) / 3.5);
   top: calc(50% - 20px) !important;

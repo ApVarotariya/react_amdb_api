@@ -49,6 +49,11 @@ const CardCarousel = () => {
         fullSizeWrapEl.appendChild(clone);
       });
 
+      const state = {
+        bottomContent: null,
+        topContent: null,
+      };
+
       const slideChange = (swiper) => {
         const activeIndex = swiper.realIndex;
         const content = contentFullsizeEls[activeIndex];
@@ -57,6 +62,19 @@ const CardCarousel = () => {
         if (!content) return;
 
         setTopContent(content);
+
+        if (state.bottomContent) {
+          state.bottomContent.classList.remove("hero__content--bottom");
+          state.bottomContent.classList.add("hero__content--hidden");
+        }
+
+        if (state.topContent) {
+          state.topContent.classList.remove("hero__content--top");
+          state.topContent.classList.add("hero__content--bottom");
+        }
+
+        state.bottomContent = state.topContent;
+        state.topContent = content;
 
         const slideRect =
           swiper.slides[swiper.activeIndex].getBoundingClientRect();
@@ -67,7 +85,7 @@ const CardCarousel = () => {
         content.style.top = slideRect.top - parentRect.top + "px";
         content.style.width = slideRect.width + "px";
         content.style.height = slideRect.height + "px";
-        content.style.borderRadius = "var(--border-radius, 0)";
+        content.style.borderRadius = "12px";
 
         content.getBoundingClientRect();
 
@@ -95,6 +113,7 @@ const CardCarousel = () => {
           const onGrowEnd = (event) => {
             event.currentTarget.classList.remove("hero__content--grow");
             event.currentTarget.classList.add("hero__content--show-text");
+            console.log("sdfsdf");
             event.currentTarget.addEventListener(
               "transitionend",
               onShowTextEnd,
@@ -107,23 +126,61 @@ const CardCarousel = () => {
           content.addEventListener("transitionend", onGrowEnd, { once: true });
         }, 0);
       };
+      const swiperInit = (swiper) => {
+        const activeIndex = swiper.realIndex;
+
+        const content = contentFullsizeEls[activeIndex];
+        if (!content) return;
+
+        setTopContent(content);
+
+        const slideRect =
+          swiper.slides[swiper.activeIndex].getBoundingClientRect();
+        const parentRect = heroEl.getBoundingClientRect();
+
+        content.style.transition = "none";
+        content.style.left = slideRect.left - parentRect.left + "px";
+        content.style.top = slideRect.top - parentRect.top + "px";
+        content.style.width = slideRect.width + "px";
+        content.style.height = slideRect.height + "px";
+        content.style.borderRadius = "12px";
+
+        content.getBoundingClientRect();
+
+        content.classList.remove("hero__content--hidden");
+        content.classList.add("hero__content--top");
+        state.topContent = content;
+
+        const onShowTextEnd = (event) => {
+          if (event.target !== event.currentTarget) {
+            event.currentTarget.removeEventListener(
+              "transitionend",
+              onShowTextEnd
+            );
+          }
+        };
+
+        content.addEventListener("transitionend", onShowTextEnd, {
+          once: true,
+        });
+      };
 
       if (!swiperRef.current) {
         const swiper = new Swiper(".swiper-container", {
           slidesPerView: 4.5,
           spaceBetween: 25,
-          speed: 500,
+          speed: 2000,
           simulateTouch: false,
           autoplay: {
-            delay: 500,
+            delay: 1000,
           },
           navigation: true,
           pagination: {
             clickable: true,
           },
           loop: true,
-          // loopAdditionalSlides: 5,
           on: {
+            init: swiperInit,
             realIndexChange: slideChange,
           },
         });
@@ -172,9 +229,9 @@ const CardCarousel = () => {
 
                     <div className="content__text">
                       <h2 className="content__title">
-                        {/* {t?.original_name || t?.original_title} */}
+                        {t?.original_name || t?.original_title}
                       </h2>
-                      <p className="content__desc">{/* {t?.overview} */}</p>
+                      <p className="content__desc">{t?.overview}</p>
                     </div>
                   </div>
                 </div>
