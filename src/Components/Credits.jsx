@@ -64,8 +64,8 @@ const Credits = ({ id, media_type }) => {
             },
           }}
           pagination={{ clickable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
+          // onSwiper={(swiper) => console.log(swiper)}
+          // onSlideChange={() => console.log("slide change")}
         >
           {credits?.map((c) => {
             return (

@@ -3,7 +3,6 @@ import "./CardCarousel.css";
 import { Swiper } from "swiper";
 import SwiperCore, { Autoplay, Navigation } from "swiper";
 import axios from "axios";
-import { Triangle } from "react-bootstrap-icons";
 
 SwiperCore.use([Autoplay, Navigation]);
 
@@ -109,7 +108,6 @@ const CardCarousel = () => {
           const onGrowEnd = (event) => {
             event.currentTarget.classList.remove("hero__content--grow");
             event.currentTarget.classList.add("hero__content--show-text");
-            console.log("sdfsdf");
             event.currentTarget.addEventListener(
               "transitionend",
               onShowTextEnd,
@@ -166,10 +164,10 @@ const CardCarousel = () => {
             realIndexChange: slideChange,
           },
           breakpoints: {
-            767: {
-              slidesPerView: 3.5,
-            },
             480: {
+              slidesPerView: 2.5,
+            },
+            320: {
               slidesPerView: 2.5,
               spaceBetween: 10,
             },
@@ -179,27 +177,11 @@ const CardCarousel = () => {
         swiperRef.current = swiper;
       }
     }
+    // eslint-disable-next-line
   }, [isDataLoaded]);
 
   if (!isDataLoaded) {
-    return (
-      <Triangle
-        height="80"
-        width="80"
-        color="#eac56b"
-        ariaLabel="triangle-loading"
-        wrapperStyle={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: "translate(-50%, -50%)",
-        }}
-        visible={true}
-      />
-    );
+    return <div className="text-black">Loading data...</div>;
   }
 
   return (

@@ -12,7 +12,7 @@ import SingleDetails from "./Components/SingleDetails";
 import PopularMovies from "./Components/PopularMovies";
 import UpComing from "./Components/Upcoming";
 import NowPlaying from "./Components/NowPlaying";
-import CardCarousel from "./Components/CardCarousel";
+import Collection from "./Components/Collection";
 
 function App() {
   const pages = [
@@ -26,7 +26,7 @@ function App() {
     { path: "/search", component: Search },
     { path: "/upComing", component: UpComing },
     { path: "/in-theaters-now", component: NowPlaying },
-    { path: "/slide", component: CardCarousel },
+    { path: "/collection", component: Collection },
   ];
   return (
     <>
