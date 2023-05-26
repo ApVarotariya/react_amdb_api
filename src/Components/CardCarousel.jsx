@@ -147,8 +147,7 @@ const CardCarousel = () => {
           once: true,
         });
       };
-
-      const onAutoplayTimeLeft = (s, time, progress) => {
+      const onAutoplayTime = (s, time, progress) => {
         var reversedProgress = 1 - progress;
         progressBar.current.style.width = `${reversedProgress * 100}%`;
       };
@@ -168,7 +167,7 @@ const CardCarousel = () => {
             prevEl: ".swiper-button-prev",
           },
           on: {
-            autoplayTimeLeft: onAutoplayTimeLeft,
+            autoplayTimeLeft: onAutoplayTime,
             init: swiperInit,
             realIndexChange: slideChange,
           },
@@ -189,7 +188,7 @@ const CardCarousel = () => {
   }, [isDataLoaded]);
 
   if (!isDataLoaded) {
-    return <div className="text-black">Loading data...</div>;
+    return <div class="loading"></div>;
   }
 
   return (
