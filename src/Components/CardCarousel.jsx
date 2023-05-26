@@ -149,8 +149,8 @@ const CardCarousel = () => {
       };
 
       const onAutoplayTimeLeft = (s, time, progress) => {
-        progressBar.current.style.width = `${progress * 100}%`;
-        // console.log(s.autoplay.timeLeft);
+        var reversedProgress = 1 - progress;
+        progressBar.current.style.width = `${reversedProgress * 100}%`;
       };
 
       if (!swiperRef.current) {
