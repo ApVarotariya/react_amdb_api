@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./CardCarousel.css";
 import { Swiper } from "swiper";
-import SwiperCore, { Autoplay, Navigation } from "swiper";
 import axios from "axios";
-
+import SwiperCore, { Autoplay, Navigation } from "swiper";
 SwiperCore.use([Autoplay, Navigation]);
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
@@ -14,6 +13,7 @@ const CardCarousel = () => {
   const heroElRef = useRef(null);
   const fullSizeWrapElRef = useRef(null);
   const swiperRef = useRef(null);
+  const progressBar = useRef(null);
   const contentFullsizeEls = [];
 
   const fetchData = async () => {
@@ -148,6 +148,11 @@ const CardCarousel = () => {
         });
       };
 
+      const onAutoplayTimeLeft = (s, time, progress) => {
+        progressBar.current.style.width = `${progress * 100}%`;
+        // console.log(s.autoplay.timeLeft);
+      };
+
       if (!swiperRef.current) {
         const swiper = new Swiper(".swiper-container", {
           slidesPerView: 4.5,
@@ -157,9 +162,13 @@ const CardCarousel = () => {
           autoplay: {
             delay: 2000,
           },
-          navigation: true,
           loop: true,
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
           on: {
+            autoplayTimeLeft: onAutoplayTimeLeft,
             init: swiperInit,
             realIndexChange: slideChange,
           },
@@ -173,7 +182,6 @@ const CardCarousel = () => {
             },
           },
         });
-
         swiperRef.current = swiper;
       }
     }
@@ -211,6 +219,11 @@ const CardCarousel = () => {
               );
             })}
           </div>
+          <div className="swiper-button-prev"></div>
+          <div className="swiper-button-next"></div>
+        </div>
+        <div className="autoplay-progress" slot="container-end">
+          <div className="progress-bar" ref={progressBar}></div>
         </div>
       </div>
     </div>

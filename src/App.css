@@ -655,12 +655,6 @@ input:-webkit-autofill:focus {
   border-radius: 10px;
   border: 0px solid #ffffff;
 }
-.home_hero_slider + .moviecard_main h1.page_heading {
-  position: absolute;
-  top: 84px;
-  z-index: 9;
-  color: #fff !important;
-}
 /* Responsive Css */
 @media (min-width: 767px) {
   .details_page_fact_main {
