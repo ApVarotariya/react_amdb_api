@@ -172,12 +172,11 @@ const CardCarousel = () => {
             realIndexChange: slideChange,
           },
           breakpoints: {
-            480: {
-              slidesPerView: 2.5,
+            768: {
+              slidesPerView: 3.5,
             },
             320: {
               slidesPerView: 2.5,
-              spaceBetween: 10,
             },
           },
         });
