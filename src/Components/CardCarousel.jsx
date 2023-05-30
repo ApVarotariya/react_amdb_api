@@ -187,7 +187,7 @@ const CardCarousel = () => {
   }, [isDataLoaded]);
 
   if (!isDataLoaded) {
-    return <div class="loading"></div>;
+    return <div className="loading"></div>;
   }
 
   return (

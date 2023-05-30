@@ -19,6 +19,7 @@ const Main = (props) => {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [time, setTime] = useState("Day");
   const {
     cardLimit = 20,
     showPagination = true,
@@ -26,18 +27,20 @@ const Main = (props) => {
     showSlider = true,
   } = props;
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    const movies = await axios.get(
-      `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
-    );
-    setMovies(movies.data.results);
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    fetchData();
-  }, [page]);
+    const fetchData = async (time) => {
+      const dayUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`;
+      const weekUrl = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`;
+      try {
+        const response =
+          time === "Day" ? await axios.get(dayUrl) : await axios.get(weekUrl);
+        setMovies(response.data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData(time);
+  }, [time, page]);
 
   useEffect(() => {
     document.body.classList.add("home");
@@ -67,6 +70,10 @@ const Main = (props) => {
     if (currentSlide?.backdrop_path) {
       GetGradientData(currentSlide?.backdrop_path);
     }
+  };
+
+  const handleChange = (event) => {
+    setTime(event.target.value);
   };
 
   return (
@@ -151,6 +158,14 @@ const Main = (props) => {
           <div className="row">
             <h1 className="text-center fw-lighter page_heading my-3 text-black">
               Trending
+              <select
+                value={time}
+                onChange={handleChange}
+                style={{ fontSize: "20px" }}
+              >
+                <option value="Day">Day</option>
+                <option value="Week">Week</option>
+              </select>
             </h1>
             {showButton === true && (
               <div className="show_more_btn_main">
