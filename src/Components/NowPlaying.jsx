@@ -3,20 +3,23 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import { Link } from "react-router-dom";
 import CustomPagination from "./CustomPagination";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import { Button } from "react-bootstrap";
 
 const NowPlaying = (props) => {
   const [page, setPage] = useState(1);
   const [nowPlaying, setNowPlaying] = useState([]);
-  const [language, setLanguage] = useState("en-US");
+  const [language, setLanguage] = useState("Global");
   const { cardLimit = 20, showPagination = true, showButton = false } = props;
 
   useEffect(() => {
     const fetchNowPlaying = async (language) => {
-      const globalUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=${language}&page=${page}`;
+      const globalUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US&page=${page}`;
       const hindiUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&with_original_language=hi&page=${page}`;
       try {
         const response =
-          language === "en-US"
+          language === "Global"
             ? await axios.get(globalUrl)
             : await axios.get(hindiUrl);
         setNowPlaying(response.data.results);
@@ -27,8 +30,8 @@ const NowPlaying = (props) => {
     fetchNowPlaying(language);
   }, [language]);
 
-  const handleChange = (event) => {
-    setLanguage(event.target.value);
+  const handleChange = (value) => {
+    setLanguage(value);
   };
   return (
     <>
@@ -36,10 +39,30 @@ const NowPlaying = (props) => {
         <div className="row justify-content-around">
           <h1 className="text-center fw-lighter page_heading my-3 text-black now_playing_title">
             Now in Theaters
-            <select value={language} onChange={handleChange}>
-              <option value="en-US">Global</option>
-              <option value="hi">India</option>
-            </select>
+            <div className="search_dropdown d-inline-block">
+              <Dropdown as={ButtonGroup} onSelect={handleChange}>
+                <Button variant="primary">{language}</Button>
+                <Dropdown.Toggle
+                  split
+                  variant="primary"
+                  id="dropdown-split-basic"
+                />
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    eventKey="Global"
+                    className={language === "Global" ? "selected" : ""}
+                  >
+                    Global
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="India"
+                    className={language === "India" ? "selected" : ""}
+                  >
+                    India
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
           </h1>
           {showButton === true && (
             <div className="show_more_btn_main">

@@ -8,6 +8,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper";
 import { unavailableLandscape } from "./README";
 import dateFormat from "dateformat";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Dropdown from "react-bootstrap/Dropdown";
+import { Button } from "react-bootstrap";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -72,8 +75,8 @@ const Main = (props) => {
     }
   };
 
-  const handleChange = (event) => {
-    setTime(event.target.value);
+  const handleChange = (value) => {
+    setTime(value);
   };
 
   return (
@@ -158,14 +161,30 @@ const Main = (props) => {
           <div className="row">
             <h1 className="text-center fw-lighter page_heading my-3 text-black">
               Trending
-              <select
-                value={time}
-                onChange={handleChange}
-                style={{ fontSize: "20px" }}
-              >
-                <option value="Day">Day</option>
-                <option value="Week">Week</option>
-              </select>
+              <div className="search_dropdown d-inline-block">
+                <Dropdown as={ButtonGroup} onSelect={handleChange}>
+                  <Button variant="primary">{time}</Button>
+                  <Dropdown.Toggle
+                    split
+                    variant="primary"
+                    id="dropdown-split-basic"
+                  />
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      eventKey="Day"
+                      className={time === "Day" ? "selected" : ""}
+                    >
+                      Day
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      eventKey="Week"
+                      className={time === "Week" ? "selected" : ""}
+                    >
+                      Week
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
             </h1>
             {showButton === true && (
               <div className="show_more_btn_main">
