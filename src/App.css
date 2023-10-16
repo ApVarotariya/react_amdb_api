@@ -694,6 +694,50 @@ input:-webkit-autofill:focus {
   bottom: 0.3em;
   left: 0.3em;
 }
+.theme_toggle_icon {
+  background: none;
+  padding: 0;
+  border: none;
+}
+.theme_toggle_icon svg {
+  color: #fff;
+  width: 30px;
+  height: 30px;
+}
+/* DarkTheme */
+.dark-mode body {
+  background-color: #10162f !important;
+  color: white !important;
+}
+.dark-mode .search_by_tabs .bg-nav-pills,
+.dark-mode .search-form-main input,
+.dark-mode .search-form-main button,
+.dark-mode .search_by_tabs .bg-nav-pills .nav-item a {
+  background: #fff0e5;
+  color: #10162f;
+}
+.dark-mode .text-black,
+.dark-mode .moviecard .card .card-title h3,
+.dark-mode .details_page_fact_main,
+.dark-mode .custompagination .MuiPagination-ul li button {
+  color: #fff0e5 !important;
+}
+.dark-mode .moviecard .card {
+  color: #fff0e5;
+  background: #000;
+  border: 2px solid #eac56b;
+}
+.dark-mode .moviecard .card:hover {
+  box-shadow: -8px 8px 0 #fff0e5;
+}
+.dark-mode .genrebtn {
+  color: #fff0e5;
+  border-color: #fff0e5;
+}
+.dark-mode :not(.home) .header-main {
+  border-bottom: 2px solid #fff0e5;
+}
+/*  */
 @keyframes clockwise {
   0% {
     transform: rotate(0deg);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
@@ -8,14 +8,27 @@ import { AiFillHome } from "react-icons/ai";
 import { CgTrending } from "react-icons/cg";
 import { RiMovie2Fill } from "react-icons/ri";
 import { BiSearchAlt2 } from "react-icons/bi";
+import { MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 
 const Header = () => {
+  const [isDarkMode, setIsDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true"
+  );
+  useEffect(() => {
+    localStorage.setItem("darkMode", isDarkMode);
+    document.documentElement.classList.toggle("dark-mode", isDarkMode);
+  }, [isDarkMode]);
+
+  const toggleMode = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
   return (
     <>
       <div className="header-main">
         <div className="container-fluid">
           <div className="row align-items-center">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex align-items-center justify-content-between">
               <Navbar expand="lg" className="px-0 navbar-main">
                 <Navbar.Brand href="/">
                   <img
@@ -50,6 +63,11 @@ const Header = () => {
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
+              <div className={isDarkMode ? "dark_mode" : "light_mode"}>
+                <button onClick={toggleMode} className="theme_toggle_icon">
+                  {isDarkMode ? <MdLightMode /> : <MdDarkMode />}
+                </button>
+              </div>
             </div>
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-md-none">
               <Navbar expand="lg" fixed="bottom" className="navbar-mobile">
