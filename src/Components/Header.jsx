@@ -28,7 +28,7 @@ const Header = () => {
       <div className="header-main">
         <div className="container-fluid">
           <div className="row align-items-center">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex align-items-center justify-content-between">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d-flex align-items-center  justify-content-between">
               <Navbar expand="lg" className="px-0 navbar-main">
                 <Navbar.Brand href="/">
                   <img
