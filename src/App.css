@@ -734,8 +734,11 @@ input:-webkit-autofill:focus {
   color: #fff0e5;
   border-color: #fff0e5;
 }
-.dark-mode :not(.home) .header-main {
+.dark-mode .header-main {
   border-bottom: 2px solid #fff0e5;
+}
+.dark-mode .home .header-main {
+  border-bottom: none !important;
 }
 /*  */
 @keyframes clockwise {

@@ -19,6 +19,8 @@ const SingleDetails = () => {
   const { id } = useParams();
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
+  const [season, setSeason] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(null);
   const perPage = 8;
   const [next, setNext] = useState(perPage);
   const [gradient, setGradient] = useState("");
@@ -32,6 +34,7 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
+    // console.log(res.data);
   };
 
   const fetchSimilar = async () => {
@@ -40,6 +43,19 @@ const SingleDetails = () => {
     );
     setSimilar(res.data.results);
   };
+
+  const fetchSeason = async (seasonNumber) => {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+    );
+    setSeason(res.data.episodes);
+    console.log(res.data.episodes);
+  };
+  const handleToggleClick = async (seasonNumber) => {
+    await fetchSeason(seasonNumber);
+    setSelectedSeason(seasonNumber);
+  };
+
   useEffect(() => {
     fetchData();
     fetchSimilar();
@@ -297,6 +313,69 @@ const SingleDetails = () => {
               </div>
             </>
           )}
+          {/*  */}
+
+          <div className="seasonal_data overflow-auto w-100 p-3 d-flex flex-column">
+            {movies?.seasons?.map((c) => (
+              <div
+                className="single_season d-inline-flex align-items-start mb-4 p-3"
+                style={{ border: "1px solid #fff", maxWidth: "50%" }}
+                key={c.season_number}
+              >
+                <LazyLoadImage
+                  src={API_IMG + `${c?.poster_path}`}
+                  alt={c?.name}
+                  width={50}
+                  className="me-4"
+                />
+                <div>
+                  <h3>
+                    {movies.name || movies.title}&nbsp;({c.name})&nbsp;
+                    <span>Total Episodes : {c.episode_count}</span>
+                    <span>Total Episodes : {c.season_number}</span>
+                  </h3>
+                  <p>{c.overview}</p>
+                </div>
+                <p
+                  className="toggleclick"
+                  onClick={() => handleToggleClick(c.season_number)}
+                >
+                  &gt;
+                </p>
+                <div className="single_season_episode_data">
+                  {movies?.seasons?.map((c) => (
+                    <div
+                      key={c.season_number}
+                      style={{
+                        display:
+                          selectedSeason === c.season_number ? "block" : "none",
+                      }}
+                    >
+                      {season?.map((s) => (
+                        <div key={s.id}>
+                          <LazyLoadImage
+                            src={API_IMG + `${s?.still_path}`}
+                            alt={s?.name}
+                            width={50}
+                            className="me-4"
+                          />
+                          <div>
+                            <h3>{s.name}</h3>
+                            <p>{s.overview}</p>
+                            <p>{s.runtime}min</p>
+                            <p>Season Number : {s.season_number}</p>
+                          </div>
+                          {console.log(s)}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/*  */}
           {(state === "movie" || state === "tv") && (
             <div className="yt_trailer_videos">
               <h2

@@ -14,8 +14,6 @@ import UpComing from "./Components/Upcoming";
 import NowPlaying from "./Components/NowPlaying";
 
 function App() {
-  const theme = localStorage.getItem("darkMode");
-  console.log(theme);
   const pages = [
     { path: "/", component: Home },
     { path: "/trending", component: Main },
