@@ -43,10 +43,10 @@ const Credits = ({ id, media_type }) => {
           className="credit_slider"
           modules={[Autoplay, Navigation, Pagination]}
           slidesPerView={6}
-          speed={1000}
+          speed={2000}
           autoplay={{
             delay: 0,
-            disableOnInteraction: false,
+            disableOnInteraction: true,
             pauseOnMouseEnter: true,
           }}
           breakpoints={{

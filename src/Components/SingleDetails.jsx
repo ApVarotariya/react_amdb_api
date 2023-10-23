@@ -312,73 +312,91 @@ const SingleDetails = () => {
               </div>
             </>
           )}
-          <div className="seasonal_data overflow-auto w-100 p-3 d-flex flex-column">
-            {movies?.seasons?.map((c) => (
-              <div
-                className="single_season d-inline-flex align-items-start mb-4 p-3"
-                style={{ border: "1px solid #fff", maxWidth: "50%" }}
-                key={c.season_number}
-              >
-                <LazyLoadImage
-                  src={API_IMG + `${c?.poster_path}`}
-                  alt={c?.name}
-                  width={50}
-                  className="me-4"
-                />
-                <div>
-                  <h3>
-                    {movies.name || movies.title}&nbsp;({c.name})&nbsp;
-                    <span>Total Episodes : {c.episode_count}</span>
-                    <span>Total Episodes : {c.season_number}</span>
-                  </h3>
-                  <p>{c.overview}</p>
-                </div>
-                <p
-                  className="toggleclick"
-                  onClick={() => handleToggleClick(c.season_number)}
-                >
-                  &gt;
-                </p>
-                <div className="single_season_episode_data">
-                  {selectedSeason === c.season_number &&
-                    season?.map((s) => (
-                      <div key={s.id}>
+          {state === "tv" && (
+            <div className="seasonal_data overflow-auto w-100 p-3">
+              <Accordion>
+                {movies?.seasons
+                  ?.slice()
+                  .reverse()
+                  .map((c) => (
+                    <Accordion.Item
+                      key={c.season_number}
+                      eventKey={c.season_number.toString()}
+                    >
+                      <Accordion.Header
+                        onClick={() => handleToggleClick(c.season_number)}
+                      >
                         <LazyLoadImage
-                          src={API_IMG + `${s?.still_path}`}
-                          alt={s?.name}
+                          src={
+                            c?.poster_path
+                              ? API_IMG + c?.poster_path
+                              : unavailable
+                          }
+                          alt={c?.name}
                           width={50}
-                          className="me-4"
                         />
                         <div>
-                          <h3>{s.name}</h3>
-                          <p>{s.overview}</p>
-                          <p>{s.runtime}min</p>
-                          <p>Season Number : {s.season_number}</p>
+                          <h3>
+                            {movies.name || movies.title}&nbsp;({c.name})&nbsp;
+                            {c.air_date && (
+                              <i>({c.air_date.substring(0, 4)})</i>
+                            )}
+                            &nbsp;&nbsp;&nbsp;
+                            {c.episode_count && (
+                              <i>Total Episodes : {c.episode_count}</i>
+                            )}
+                          </h3>
+                          {c.overview !== "" ? (
+                            <p>{c.overview}</p>
+                          ) : (
+                            <p>Data not Available</p>
+                          )}
+                          {console.log("season", c)}
                         </div>
-                        {console.log(s)}
-                      </div>
-                    ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/*  */}
-          <Accordion defaultActiveKey="0">
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>Accordion Item #1</Accordion.Header>
-              <Accordion.Body>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
-          {/*  */}
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <div className="single_season_episode_data">
+                          {selectedSeason === c.season_number &&
+                            season?.map((s) => (
+                              <div
+                                key={s.id}
+                                className="d-flex align-items-start pb-1 border-bottom mb-3"
+                              >
+                                <LazyLoadImage
+                                  src={
+                                    s?.still_path
+                                      ? API_IMG + s?.still_path
+                                      : unavailableLandscape
+                                  }
+                                  alt={s?.name}
+                                  width={80}
+                                />
+                                <div>
+                                  <h3>
+                                    {s.name} &nbsp;
+                                    {s.runtime && (
+                                      <i>
+                                        Runtime :&nbsp;(&nbsp;{s.runtime}
+                                        min&nbsp;)
+                                      </i>
+                                    )}
+                                  </h3>
+                                  {s.overview !== "" ? (
+                                    <p>{s.overview}</p>
+                                  ) : (
+                                    <p>Data not Available</p>
+                                  )}
+                                  {console.log("single episode", s)}
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  ))}
+              </Accordion>
+            </div>
+          )}
           {(state === "movie" || state === "tv") && (
             <div className="yt_trailer_videos">
               <h2

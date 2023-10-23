@@ -740,6 +740,52 @@ input:-webkit-autofill:focus {
 .dark-mode .home .header-main {
   border-bottom: none !important;
 }
+.dark-mode .search-form-main input,
+.dark-mode .search-form-main input::placeholder {
+  color: #10162f !important;
+}
+.seasonal_data img {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.seasonal_data h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+.seasonal_data h3 i {
+  font-size: 18px;
+}
+.seasonal_data p {
+  margin-bottom: 0;
+  padding-right: 10px;
+  font-size: 16px;
+}
+.seasonal_data .accordion-header button:focus {
+  box-shadow: none;
+}
+.single_season_episode_data {
+  padding-left: 10px;
+}
+.seasonal_data .accordion-button:not(.collapsed) {
+  color: unset;
+}
+.seasonal_data .accordion-button {
+  background: linear-gradient(
+    116.05deg,
+    rgba(13, 11, 12, 0.0416) 21.5%,
+    rgba(255, 255, 255, 0.0416) 45.33%,
+    rgba(27, 21, 25, 0.112) 92.98%
+  );
+  border: 0;
+  align-items: flex-start;
+}
+.seasonal_data .accordion {
+  border: 2px solid #10162f;
+  border-radius: 9px;
+}
+.dark-mode .seasonal_data .accordion {
+  border: 2px solid #eac56b;
+}
 /*  */
 @keyframes clockwise {
   0% {
@@ -983,6 +1029,13 @@ input:-webkit-autofill:focus {
   }
   .single_content_details_main .details_hero_right_person {
     padding: 20px;
+  }
+  .seasonal_data p,
+  .seasonal_data h3 i {
+    font-size: 14px;
+  }
+  .seasonal_data h3 {
+    font-size: 16px;
   }
 }
 @media (max-width: 575px) {
