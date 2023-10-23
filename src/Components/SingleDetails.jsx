@@ -10,6 +10,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import GetGradientData from "./GetGradientData";
+import Accordion from "react-bootstrap/Accordion";
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -34,7 +35,6 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    // console.log(res.data);
   };
 
   const fetchSimilar = async () => {
@@ -49,7 +49,6 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSeason(res.data.episodes);
-    console.log(res.data.episodes);
   };
   const handleToggleClick = async (seasonNumber) => {
     await fetchSeason(seasonNumber);
@@ -313,8 +312,6 @@ const SingleDetails = () => {
               </div>
             </>
           )}
-          {/*  */}
-
           <div className="seasonal_data overflow-auto w-100 p-3 d-flex flex-column">
             {movies?.seasons?.map((c) => (
               <div
@@ -343,39 +340,28 @@ const SingleDetails = () => {
                   &gt;
                 </p>
                 <div className="single_season_episode_data">
-                  {movies?.seasons?.map((c) => (
-                    <div
-                      key={c.season_number}
-                      style={{
-                        display:
-                          selectedSeason === c.season_number ? "block" : "none",
-                      }}
-                    >
-                      {season?.map((s) => (
-                        <div key={s.id}>
-                          <LazyLoadImage
-                            src={API_IMG + `${s?.still_path}`}
-                            alt={s?.name}
-                            width={50}
-                            className="me-4"
-                          />
-                          <div>
-                            <h3>{s.name}</h3>
-                            <p>{s.overview}</p>
-                            <p>{s.runtime}min</p>
-                            <p>Season Number : {s.season_number}</p>
-                          </div>
-                          {console.log(s)}
+                  {selectedSeason === c.season_number &&
+                    season?.map((s) => (
+                      <div key={s.id}>
+                        <LazyLoadImage
+                          src={API_IMG + `${s?.still_path}`}
+                          alt={s?.name}
+                          width={50}
+                          className="me-4"
+                        />
+                        <div>
+                          <h3>{s.name}</h3>
+                          <p>{s.overview}</p>
+                          <p>{s.runtime}min</p>
+                          <p>Season Number : {s.season_number}</p>
                         </div>
-                      ))}
-                    </div>
-                  ))}
+                        {console.log(s)}
+                      </div>
+                    ))}
                 </div>
               </div>
             ))}
           </div>
-
-          {/*  */}
           {(state === "movie" || state === "tv") && (
             <div className="yt_trailer_videos">
               <h2
