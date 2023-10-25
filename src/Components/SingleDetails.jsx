@@ -125,7 +125,7 @@ const SingleDetails = () => {
             >
               <div
                 className="single_content_details"
-                id="single_content_details"
+                id="single_content_details "
                 style={{
                   backgroundImage: gradient,
                   backgroundSize: "cover",
