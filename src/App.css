@@ -737,6 +737,27 @@ input:-webkit-autofill:focus {
 .dark-mode :not(.home) .header-main {
   border-bottom: 2px solid #fff0e5;
 }
+.review_auther_poster {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #eac56b;
+}
+.review_single_item {
+  padding: 10px;
+  border: 1px solid #eac56b;
+  background: linear-gradient(
+    116.05deg,
+    rgba(13, 11, 12, 0.0416) 21.5%,
+    rgba(255, 255, 255, 0.0416) 45.33%,
+    rgba(27, 21, 25, 0.112) 92.98%
+  );
+  border-radius: 10px;
+}
+.review_single_item hr {
+  margin: 10px 0;
+}
 /*  */
 @keyframes clockwise {
   0% {

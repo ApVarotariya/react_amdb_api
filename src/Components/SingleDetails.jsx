@@ -20,6 +20,7 @@ const SingleDetails = () => {
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
   const [season, setSeason] = useState([]);
+  const [review, setReview] = useState([]);
   const perPage = 8;
   const [next, setNext] = useState(perPage);
   const [gradient, setGradient] = useState("");
@@ -47,12 +48,19 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSeason(res.data.episodes);
-    console.log(res.data.episodes);
+  };
+
+  const fetchReview = async () => {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/${state}/${id}/reviews?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+    );
+    setReview(res.data.results);
   };
 
   useEffect(() => {
     fetchData();
     fetchSimilar();
+    fetchReview();
   }, [id]);
 
   const handleClick = () => {
@@ -308,6 +316,51 @@ const SingleDetails = () => {
             </>
           )}
           {(state === "movie" || state === "tv") && (
+            <div className="review_sec overflow-auto w-100 p-3">
+              <h2 className="similar_title my-4 text-black">
+                {state === "movie" ? "Movie" : "TV Series"}&nbsp;Reviews&nbsp;:
+              </h2>
+              <div className="review_items">
+                {review.slice(0, 3).map((r) => {
+                  return (
+                    <div className="review_single_item mb-3">
+                      <div className="d-flex gap-3 mb-2">
+                        <LazyLoadImage
+                          variant="top"
+                          src={
+                            r.author_details.avatar_path
+                              ? API_IMG + r.author_details.avatar_path
+                              : unavailable
+                          }
+                          alt={r.author}
+                          className="review_auther_poster"
+                        />
+                        <div>
+                          <h5 className="mb-0">
+                            <b>{r.author}</b>
+                          </h5>
+                          <p className="mb-0">@{r.author_details.username}</p>
+                        </div>
+                      </div>
+                      <p className="mb-0">{r.content}</p>
+                      <hr />
+                      <p className="mb-0">
+                        Posted on&nbsp;:&nbsp;
+                        <b>
+                          {dateFormat(
+                            r.updated_at ? r.updated_at : r.created_at,
+                            "mmmm dS, yyyy"
+                          )}
+                        </b>
+                      </p>
+                      {console.log(r)}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {TrailerVideo(state, id) && (
             <div className="yt_trailer_videos">
               <h2
                 className="similar_title my-4 text-black w-100"
