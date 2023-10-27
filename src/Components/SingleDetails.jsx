@@ -57,6 +57,7 @@ const SingleDetails = () => {
     );
     setReview(res.data.results);
   };
+
   const handleToggleClick = async (seasonNumber) => {
     await fetchSeason(seasonNumber);
     setSelectedSeason(seasonNumber);
@@ -320,7 +321,7 @@ const SingleDetails = () => {
               </div>
             </>
           )}
-          {(state === "movie" || state === "tv") && review && (
+          {(state === "movie" || state === "tv") && review.length > 0 && (
             <div className="review_sec overflow-auto w-100 p-3">
               <h2 className="similar_title my-4 text-black">
                 {state === "movie" ? "Movie" : "TV Series"}&nbsp;Reviews&nbsp;:
@@ -358,7 +359,6 @@ const SingleDetails = () => {
                           )}
                         </b>
                       </p>
-                      {console.log(r)}
                     </div>
                   );
                 })}
@@ -368,7 +368,7 @@ const SingleDetails = () => {
           {TrailerVideo(state, id) && (
             <div className="yt_trailer_videos">
               <h2
-                className="similar_title my-4 text-black w-100"
+                className="similar_title my-4 text-black w-100 "
                 style={{ padding: "0 15px" }}
               >
                 Trailer Videos :
