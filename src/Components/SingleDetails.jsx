@@ -7,7 +7,7 @@ import TrailerVideo from "./TrailerVideo";
 import Credits from "./Credits";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Button, Card } from "react-bootstrap";
+import { Accordion, Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import GetGradientData from "./GetGradientData";
 
@@ -21,6 +21,7 @@ const SingleDetails = () => {
   const [similar, setSimilar] = useState([]);
   const [season, setSeason] = useState([]);
   const [review, setReview] = useState([]);
+  const [selectedSeason, setSelectedSeason] = useState(null);
   const perPage = 8;
   const [next, setNext] = useState(perPage);
   const [gradient, setGradient] = useState("");
@@ -55,6 +56,10 @@ const SingleDetails = () => {
       `https://api.themoviedb.org/3/${state}/${id}/reviews?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setReview(res.data.results);
+  };
+  const handleToggleClick = async (seasonNumber) => {
+    await fetchSeason(seasonNumber);
+    setSelectedSeason(seasonNumber);
   };
 
   useEffect(() => {
@@ -315,7 +320,7 @@ const SingleDetails = () => {
               </div>
             </>
           )}
-          {(state === "movie" || state === "tv") && (
+          {(state === "movie" || state === "tv") && review && (
             <div className="review_sec overflow-auto w-100 p-3">
               <h2 className="similar_title my-4 text-black">
                 {state === "movie" ? "Movie" : "TV Series"}&nbsp;Reviews&nbsp;:
@@ -371,63 +376,89 @@ const SingleDetails = () => {
               <TrailerVideo media_type={state} id={id} />
             </div>
           )}
-          <div className="seasonal_data overflow-auto w-100 p-3 d-flex flex-column">
-            {movies?.seasons?.map((c) => {
-              const handleToggleClick = async () => {
-                await fetchSeason(c.season_number);
-              };
-              return (
-                <>
-                  <div
-                    className="single_season d-inline-flex align-items-start mb-4 p-3"
-                    style={{ border: "1px solid #fff", maxWidth: "50%" }}
-                    key={c.season_number}
-                  >
-                    <LazyLoadImage
-                      src={API_IMG + `${c?.poster_path}`}
-                      alt={c?.name}
-                      width={50}
-                      className="me-4"
-                    />
-                    <div>
-                      <h3>
-                        {movies.name || movies.title}&nbsp;({c.name})&nbsp;
-                        <span>Total Episodes : {c.episode_count}</span>
-                        <span>Total Episodes : {c.season_number}</span>
-                      </h3>
-                      <p>{c.overview}</p>
-                    </div>
-                    <p
-                      className="toggleclick"
-                      onClick={() => handleToggleClick(c.season_number)}
+          {state === "tv" && (
+            <div className="seasonal_data overflow-auto w-100 p-3">
+              <Accordion>
+                {movies?.seasons
+                  ?.slice()
+                  .reverse()
+                  .map((c) => (
+                    <Accordion.Item
+                      key={c.season_number}
+                      eventKey={c.season_number.toString()}
                     >
-                      &gt;
-                    </p>
-                  </div>
-                  <div className="single_season_episode_data">
-                    {season?.map((s) => {
-                      return (
-                        <>
-                          <LazyLoadImage
-                            src={API_IMG + `${s?.still_path}`}
-                            alt={s?.name}
-                            width={50}
-                            className="me-4"
-                          />
-                          <div>
-                            <h3>{s.name}</h3>
-                            <p>{s.overview}</p>
-                            <p>{s.runtime}min</p>
-                            <p>Season Number : {s.season_number}</p>
-                          </div>
-                        </>
-                      );
-                    })}
-                  </div>
-                </>
-              );
-            })}
-          </div>
+                      <Accordion.Header
+                        onClick={() => handleToggleClick(c.season_number)}
+                      >
+                        <LazyLoadImage
+                          src={
+                            c?.poster_path
+                              ? API_IMG + c?.poster_path
+                              : unavailable
+                          }
+                          alt={c?.name}
+                          width={50}
+                        />
+                        <div>
+                          <h3>
+                            {movies.name || movies.title}&nbsp;({c.name})&nbsp;
+                            {c.air_date && (
+                              <i>({c.air_date.substring(0, 4)})</i>
+                            )}
+                            &nbsp;&nbsp;&nbsp;
+                            {c.episode_count && (
+                              <i>Total Episodes : {c.episode_count}</i>
+                            )}
+                          </h3>
+                          {c.overview !== "" ? (
+                            <p>{c.overview}</p>
+                          ) : (
+                            <p>Data not Available</p>
+                          )}
+                        </div>
+                      </Accordion.Header>
+                      <Accordion.Body>
+                        <div className="single_season_episode_data">
+                          {selectedSeason === c.season_number &&
+                            season?.map((s) => (
+                              <div
+                                key={s.id}
+                                className="d-flex align-items-start pb-1 border-bottom mb-3"
+                              >
+                                <LazyLoadImage
+                                  src={
+                                    s?.still_path
+                                      ? API_IMG + s?.still_path
+                                      : unavailableLandscape
+                                  }
+                                  alt={s?.name}
+                                  width={80}
+                                />
+                                <div>
+                                  <h3>
+                                    {s.name} &nbsp;
+                                    {s.runtime && (
+                                      <i>
+                                        Runtime :&nbsp;(&nbsp;{s.runtime}
+                                        min&nbsp;)
+                                      </i>
+                                    )}
+                                  </h3>
+                                  {s.overview !== "" ? (
+                                    <p>{s.overview}</p>
+                                  ) : (
+                                    <p>Data not Available</p>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  ))}
+              </Accordion>
+            </div>
+          )}
           <div className="row" style={{ margin: "0", justifyContent: "start" }}>
             <h2 className="similar_title my-4 text-black">
               Similar&nbsp;

@@ -1,4 +1,4 @@
-/* Custom Font Faces */
+/* / Custom Font Faces / */
 @font-face {
   font-family: "proxima_novablack";
   src: url("./fonts/proxima_nova_black-webfont.woff2") format("woff2"),
@@ -639,7 +639,7 @@ input:-webkit-autofill:focus {
   background: #2c2d30;
   color: #fff;
 }
-/* ===== Scrollbar CSS ===== */
+/* / ===== Scrollbar CSS ===== / */
 * {
   scrollbar-width: auto;
   scrollbar-color: #eac56b #666666;
@@ -655,7 +655,7 @@ input:-webkit-autofill:focus {
   border-radius: 10px;
   border: 0px solid #ffffff;
 }
-/* Loading Spinner  */
+/* / Loading Spinner  / */
 .loading {
   animation: clockwise 1.5s linear infinite;
   display: block;
@@ -704,7 +704,7 @@ input:-webkit-autofill:focus {
   width: 30px;
   height: 30px;
 }
-/* DarkTheme */
+/* / DarkTheme / */
 .dark-mode body {
   background-color: #10162f !important;
   color: white !important;
@@ -734,8 +734,57 @@ input:-webkit-autofill:focus {
   color: #fff0e5;
   border-color: #fff0e5;
 }
-.dark-mode :not(.home) .header-main {
+.dark-mode .header-main {
   border-bottom: 2px solid #fff0e5;
+}
+.dark-mode .home .header-main {
+  border-bottom: none !important;
+}
+.dark-mode .search-form-main input,
+.dark-mode .search-form-main input::placeholder {
+  color: #10162f !important;
+}
+.seasonal_data img {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+.seasonal_data h3 {
+  font-size: 22px;
+  font-weight: 600;
+}
+.seasonal_data h3 i {
+  font-size: 18px;
+}
+.seasonal_data p {
+  margin-bottom: 0;
+  padding-right: 10px;
+  font-size: 16px;
+}
+.seasonal_data .accordion-header button:focus {
+  box-shadow: none;
+}
+.single_season_episode_data {
+  padding-left: 10px;
+}
+.seasonal_data .accordion-button:not(.collapsed) {
+  color: unset;
+}
+.seasonal_data .accordion-button {
+  background: linear-gradient(
+    116.05deg,
+    rgba(13, 11, 12, 0.0416) 21.5%,
+    rgba(255, 255, 255, 0.0416) 45.33%,
+    rgba(27, 21, 25, 0.112) 92.98%
+  );
+  border: 0;
+  align-items: flex-start;
+}
+.seasonal_data .accordion {
+  border: 2px solid #10162f;
+  border-radius: 9px;
+}
+.dark-mode .seasonal_data .accordion {
+  border: 2px solid #eac56b;
 }
 .review_auther_poster {
   object-fit: cover;
@@ -775,7 +824,7 @@ input:-webkit-autofill:focus {
     transform: rotate(0deg);
   }
 }
-/* Responsive Css */
+/* Responsive Css  */
 @media (min-width: 767px) {
   .details_page_fact_main {
     flex-direction: column;
@@ -1001,6 +1050,13 @@ input:-webkit-autofill:focus {
   }
   .single_content_details_main .details_hero_right_person {
     padding: 20px;
+  }
+  .seasonal_data p,
+  .seasonal_data h3 i {
+    font-size: 14px;
+  }
+  .seasonal_data h3 {
+    font-size: 16px;
   }
 }
 @media (max-width: 575px) {
