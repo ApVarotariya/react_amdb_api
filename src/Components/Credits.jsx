@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { Button, Card } from "react-bootstrap";
 import dateFormat from "dateformat";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation, Pagination } from "swiper";
+import { Autoplay, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -41,9 +41,9 @@ const Credits = ({ id, media_type }) => {
       {(state === "movie" || state === "tv") && (
         <Swiper
           className="credit_slider"
-          modules={[Autoplay, Navigation, Pagination]}
+          modules={[Autoplay, Navigation]}
           slidesPerView={6}
-          speed={1000}
+          speed={2000}
           autoplay={{
             delay: 0,
             disableOnInteraction: false,
@@ -64,8 +64,6 @@ const Credits = ({ id, media_type }) => {
             },
           }}
           pagination={{ clickable: true }}
-          // onSwiper={(swiper) => console.log(swiper)}
-          // onSlideChange={() => console.log("slide change")}
         >
           {credits?.map((c) => {
             return (
