@@ -22,6 +22,7 @@ const SingleDetails = () => {
   const [season, setSeason] = useState([]);
   const [review, setReview] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(null);
+  const [stream, setStream] = useState();
   const perPage = 8;
   const [next, setNext] = useState(perPage);
   const [gradient, setGradient] = useState("");
@@ -30,11 +31,28 @@ const SingleDetails = () => {
   const canvasRef = useRef(null);
   const isMobile = window.innerWidth > 767;
 
+  // const fetchData = async () => {
+  //   const res = await axios.get(
+  //     `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+  //   );
+  //   setMovies(res.data);
+  //   console.log(res.data.imdb_id);
+  // };
   const fetchData = async () => {
     const res = await axios.get(
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
+    if (state === "movie") {
+      await fetchStream(res.data.imdb_id);
+    }
+  };
+
+  const fetchStream = async (imdbId) => {
+    const { data } = await axios.get(
+      `https://yts.mx/api/v2/movie_details.json?imdb_id=${imdbId}`
+    );
+    setStream(data.data.movie.torrents);
   };
 
   const fetchSimilar = async () => {
@@ -321,15 +339,52 @@ const SingleDetails = () => {
               </div>
             </>
           )}
+          {state === "movie" && stream && (
+            <div className="download_sec w-100 overflow-auto p-3 d-flex flex-wrap">
+              <h2 className="similar_title my-4 text-black w-100">
+                Select Download Quality
+              </h2>
+              {stream?.map((s, index) => {
+                return (
+                  <div
+                    className="single_download"
+                    style={{ width: "33.33%", textAlign: "center" }}
+                    key={index}
+                  >
+                    <div>
+                      <p
+                        style={{ textTransform: "uppercase" }}
+                        className="mb-1"
+                      >
+                        {s.type}
+                      </p>
+                      <p className="mb-1">
+                        Audio Channel&nbsp;:&nbsp;{s.audio_channels}
+                      </p>
+                      <h6 className="mb-1">File Size&nbsp;:&nbsp;{s.size}</h6>
+                      <p className="mb-1">
+                        Peers : <b>{s.peers}</b> & Seeds : <b>{s.seeds}</b>
+                      </p>
+                      <a href={s.url} className="d-inline-block">
+                        <Button variant="success" className="moviebox_btn">
+                          Download ({s.quality})
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
           {(state === "movie" || state === "tv") && review.length > 0 && (
             <div className="review_sec overflow-auto w-100 p-3">
               <h2 className="similar_title my-4 text-black">
                 {state === "movie" ? "Movie" : "TV Series"}&nbsp;Reviews&nbsp;:
               </h2>
               <div className="review_items">
-                {review.slice(0, 3).map((r) => {
+                {review.slice(0, 3).map((r, index) => {
                   return (
-                    <div className="review_single_item mb-3">
+                    <div className="review_single_item mb-3" key={index}>
                       <div className="d-flex gap-3 mb-2">
                         <LazyLoadImage
                           variant="top"
@@ -367,12 +422,6 @@ const SingleDetails = () => {
           )}
           {TrailerVideo(state, id) && (
             <div className="yt_trailer_videos">
-              <h2
-                className="similar_title my-4 text-black w-100 "
-                style={{ padding: "0 15px" }}
-              >
-                Trailer Videos :
-              </h2>
               <TrailerVideo media_type={state} id={id} />
             </div>
           )}

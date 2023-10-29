@@ -101,7 +101,8 @@ a:hover {
   flex-direction: column;
   justify-content: space-between;
 }
-.moviecard button {
+.moviecard button,
+.moviebox_btn {
   display: block;
   margin: 10px auto;
   background: #2c2d30;
@@ -264,7 +265,9 @@ a:hover {
 .custompagination .MuiPagination-ul {
   justify-content: center;
 }
-.custompagination .MuiPagination-ul li button {
+.custompagination .MuiPagination-ul li button,
+.custompagination .MuiPagination-ul li .MuiButtonBase-root,
+.custompagination .MuiPagination-ul li .MuiPaginationItem-root {
   color: #000;
 }
 .custompagination .MuiPagination-ul li .Mui-selected {
@@ -719,7 +722,8 @@ input:-webkit-autofill:focus {
 .dark-mode .text-black,
 .dark-mode .moviecard .card .card-title h3,
 .dark-mode .details_page_fact_main,
-.dark-mode .custompagination .MuiPagination-ul li button {
+.dark-mode .custompagination .MuiPagination-ul li .MuiButtonBase-root,
+.dark-mode .custompagination .MuiPagination-ul li .MuiPaginationItem-root {
   color: #fff0e5 !important;
 }
 .dark-mode .moviecard .card {
@@ -815,11 +819,12 @@ input:-webkit-autofill:focus {
 .review_single_item hr {
   margin: 10px 0;
 }
-.dark-mode .review_items {
-  color: #fff;
+.review_items,
+.dark-mode .search_suggestion .text-black {
+  color: #000 !important;
 }
-.review_items {
-  color: #000;
+.dark-mode .review_items {
+  color: #fff !important;
 }
 /*  */
 @keyframes clockwise {
@@ -923,6 +928,9 @@ input:-webkit-autofill:focus {
   .navbar-main .navbar-nav {
     flex-basis: unset !important;
     flex-direction: row;
+  }
+  .single_trailer {
+    max-width: 50% !important;
   }
 }
 @media (max-width: 767px) {
@@ -1072,6 +1080,12 @@ input:-webkit-autofill:focus {
   .seasonal_data h3 {
     font-size: 16px;
   }
+  .single_download {
+    width: 50% !important;
+  }
+  .single_trailer {
+    max-width: 100% !important;
+  }
 }
 @media (max-width: 575px) {
   .moviecard {
@@ -1163,6 +1177,9 @@ input:-webkit-autofill:focus {
   .suggestion_release_date,
   .suggestion_type {
     font-size: 14px;
+  }
+  .single_download {
+    width: 100% !important;
   }
 }
 @media (max-width: 400px) {
