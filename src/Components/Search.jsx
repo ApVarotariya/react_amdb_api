@@ -96,7 +96,7 @@ const Search = () => {
   return (
     <>
       <div className="moviecard_main search_page_main">
-        <div className="container-fluid">
+        <div className="container">
           <div className="row align-items-center mb-5">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               {isLoading ? (

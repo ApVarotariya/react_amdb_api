@@ -21,7 +21,7 @@ const PopularPeople = (props) => {
   }, [page]);
   return (
     <>
-      <div className="container-fluid">
+      <div className="container">
         <div className="row justify-content-around">
           <h1 className="text-center fw-lighter page_heading my-3 text-black">
             Popular People

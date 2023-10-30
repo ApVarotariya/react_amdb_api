@@ -44,11 +44,11 @@ const SingleDetails = () => {
     );
     setMovies(res.data);
     if (state === "movie") {
-      await fetchStream(res.data.imdb_id);
+      await fetchDownloadLink(res.data.imdb_id);
     }
   };
 
-  const fetchStream = async (imdbId) => {
+  const fetchDownloadLink = async (imdbId) => {
     const { data } = await axios.get(
       `https://yts.mx/api/v2/movie_details.json?imdb_id=${imdbId}`
     );
