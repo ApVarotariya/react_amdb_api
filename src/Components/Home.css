@@ -87,9 +87,12 @@
 .home .tv_series_wrapper,
 .home .discover_wrapper {
   display: flex;
-  flex-wrap: nowrap !important;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  /* flex-wrap: nowrap !important; */
+  /* overflow-x: auto; */
+  /* -webkit-overflow-scrolling: touch; */
+}
+.home.trendingPage .trending_card_wrapper {
+  flex-wrap: wrap !important;
 }
 .moviecard {
   flex: 0 0 auto;

@@ -28,6 +28,7 @@ const Main = (props) => {
     showPagination = true,
     showButton = false,
     showSlider = true,
+    homePage = false,
   } = props;
 
   useEffect(() => {
@@ -47,10 +48,15 @@ const Main = (props) => {
 
   useEffect(() => {
     document.body.classList.add("home");
+
+    if (!homePage) {
+      document.body.classList.add("trendingPage");
+    }
+
     return () => {
-      document.body.classList.remove("home");
+      document.body.classList.remove("home", "trendingPage");
     };
-  }, []);
+  }, [homePage]);
 
   useEffect(() => {
     let imagePath = API_IMG200 + currentSlide?.backdrop_path;
@@ -207,7 +213,7 @@ const Main = (props) => {
             {isLoading ? (
               <div className="text-black">Loading Data...</div>
             ) : (
-              <div className="card_wrapper d-flex flex-wrap">
+              <div className="card_wrapper d-flex flex-wrap trending_card_wrapper">
                 {movies.slice(0, cardLimit).map((c) => {
                   return (
                     <MovieBox

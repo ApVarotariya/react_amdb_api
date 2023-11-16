@@ -11,7 +11,7 @@ import { Accordion, Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import GetGradientData from "./GetGradientData";
 
-const API_IMG = "https://image.tmdb.org/t/p/original";
+const API_IMG = "https://image.tmdb.org/t/p/w300";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
 
 const SingleDetails = () => {

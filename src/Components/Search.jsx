@@ -22,7 +22,7 @@ const Search = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [height, setHeight] = useState(0);
 
-  const API_IMG = "https://image.tmdb.org/t/p/original";
+  const API_IMG = "https://image.tmdb.org/t/p/w300";
 
   const fetchSearchResults = async () => {
     setIsLoading(true);

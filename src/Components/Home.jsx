@@ -23,26 +23,27 @@ const Home = () => {
     <>
       <CardCarousel />
       <Main
-        cardLimit={6}
+        cardLimit={8}
         showPagination={false}
         showButton={true}
         showSlider={false}
+        homePage={true}
       />
       <TvSeries
-        cardLimit={6}
+        cardLimit={8}
         showPagination={false}
         showHindi={false}
         showButton={true}
       />
       <Movies
-        cardLimit={6}
+        cardLimit={8}
         showPagination={false}
         showGenre={false}
         showButton={true}
       />
-      <PopularPeople cardLimit={10} showPagination={false} showButton={false} />
-      <UpComing cardLimit={10} showPagination={false} showButton={true} />
-      <NowPlaying cardLimit={10} showPagination={false} showButton={true} />
+      <PopularPeople cardLimit={8} showPagination={false} showButton={false} />
+      <UpComing cardLimit={8} showPagination={false} showButton={true} />
+      <NowPlaying cardLimit={8} showPagination={false} showButton={true} />
     </>
   );
 };
