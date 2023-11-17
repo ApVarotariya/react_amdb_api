@@ -5,8 +5,6 @@ import dateFormat from "dateformat";
 import { unavailable } from "./README";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300";
 
@@ -40,64 +38,45 @@ const MovieBox = ({
               });
             }}
           >
-            {isLoading ? (
-              <Skeleton
-                height="450px"
-                width="100%"
-                className="moviebox_poster_skeleton"
-              />
-            ) : (
-              <LazyLoadImage
-                src={poster ? API_IMG + poster : unavailable}
-                className="movie-backdrop-poster moviebox_poster"
-                alt={title}
-                height={450}
-              />
-            )}
+            <LazyLoadImage
+              src={poster ? API_IMG + poster : unavailable}
+              className="movie-backdrop-poster moviebox_poster"
+              alt={title}
+              height={450}
+            />
+
             <Card.Body>
               <Card.Title>
-                {isLoading ? (
-                  <Skeleton height="10px" width="70%" />
-                ) : (
-                  <h3>
-                    <strong>
-                      <span>{title}</span>
-                    </strong>
-                    <span
-                      className={
-                        vote_average < 5 || popularity < 5 ? "red" : ""
-                      }
-                    >
-                      {vote_average?.toFixed(0) || popularity?.toFixed(0)}
-                    </span>
-                  </h3>
-                )}
+                <h3>
+                  <strong>
+                    <span>{title}</span>
+                  </strong>
+                  <span
+                    className={vote_average < 5 || popularity < 5 ? "red" : ""}
+                  >
+                    {vote_average?.toFixed(0) || popularity?.toFixed(0)}
+                  </span>
+                </h3>
+
                 <div className="d-flex justify-content-between align-items-start">
-                  {isLoading ? (
-                    <Skeleton height="10px" width="70%" />
-                  ) : (
-                    <p style={{ fontSize: "12px" }}>
-                      <span>{dateFormat(date, "mmmm dS, yyyy")}</span>
-                    </p>
-                  )}
-                  {isLoading ? (
-                    <Skeleton height="10px" width="100%" />
-                  ) : (
-                    <p style={{ fontSize: "10px" }}>
-                      {media_type === "movie"
-                        ? "Movie"
-                        : media_type === "tv"
-                        ? "TV Series"
-                        : media_type === "person" &&
-                          (gender === 0
-                            ? "Not Specified"
-                            : gender === 1
-                            ? "Actress"
-                            : gender === 2
-                            ? "Actor"
-                            : "")}
-                    </p>
-                  )}
+                  <p style={{ fontSize: "12px" }}>
+                    <span>{dateFormat(date, "mmmm dS, yyyy")}</span>
+                  </p>
+
+                  <p style={{ fontSize: "10px" }}>
+                    {media_type === "movie"
+                      ? "Movie"
+                      : media_type === "tv"
+                      ? "TV Series"
+                      : media_type === "person" &&
+                        (gender === 0
+                          ? "Not Specified"
+                          : gender === 1
+                          ? "Actress"
+                          : gender === 2
+                          ? "Actor"
+                          : "")}
+                  </p>
                 </div>
               </Card.Title>
               <Link
@@ -111,11 +90,7 @@ const MovieBox = ({
                   });
                 }}
               >
-                {isLoading ? (
-                  <Skeleton height="10px" width="70%" />
-                ) : (
-                  <Button variant="success">More Details</Button>
-                )}
+                <Button variant="success">More Details</Button>
               </Link>
             </Card.Body>
           </Link>
