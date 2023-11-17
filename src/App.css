@@ -854,9 +854,6 @@ input:-webkit-autofill:focus {
   .moviebox_poster_skeleton {
     height: 380px;
   }
-  .home .moviecard .card {
-    /* max-height: 570px; */
-  }
 }
 @media (max-width: 1200px) {
   .details_title {
@@ -868,9 +865,6 @@ input:-webkit-autofill:focus {
   .moviebox_poster,
   .moviebox_poster_skeleton {
     height: 315px;
-  }
-  .home .moviecard .card {
-    /* max-height: 500px; */
   }
 }
 @media (max-width: 1100px) {
@@ -992,9 +986,6 @@ input:-webkit-autofill:focus {
     height: 40px;
     width: auto !important;
   }
-  .moviecard {
-    /* width: 33.33% !important; */
-  }
   body {
     padding-top: 65px;
   }
@@ -1105,9 +1096,6 @@ input:-webkit-autofill:focus {
   .moviebox_poster,
   .moviebox_poster_skeleton {
     height: 350px;
-  }
-  .home .moviecard .card {
-    /* max-height: 540px; */
   }
 }
 @media (max-width: 575px) {

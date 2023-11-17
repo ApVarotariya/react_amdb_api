@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { unavailable } from "./README";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link, useParams } from "react-router-dom";
@@ -9,6 +9,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
+import useApi from "./useApi";
+import { BASE_API_URL, API_URL_CREDITS } from "./README";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300/";
 
@@ -16,7 +18,6 @@ const handleDragStart = (e) => e.preventDefault();
 
 const Credits = ({ id, media_type }) => {
   const { state } = useParams();
-  const [credits, setCredits] = useState([]);
   const perPage = 8;
   const [next, setNext] = useState(perPage);
   const [disableCarousel, setDisableCarousel] = useState(true);
@@ -24,18 +25,15 @@ const Credits = ({ id, media_type }) => {
   const handleClick = () => {
     setNext(next + perPage);
   };
-
-  const fetchCredits = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
-    );
-    setCredits(data.cast);
-  };
-
-  useEffect(() => {
-    fetchCredits();
-  }, [id, state]);
-
+  const { data, loading, error } = useApi(
+    BASE_API_URL + API_URL_CREDITS(media_type, id)
+  );
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
   return (
     <>
       {(state === "movie" || state === "tv") && (
@@ -65,11 +63,11 @@ const Credits = ({ id, media_type }) => {
           }}
           pagination={{ clickable: true }}
         >
-          {credits?.map((c) => {
+          {data?.cast?.map((c) => {
             return (
               <SwiperSlide className="carouselItem" key={c.id}>
                 <Link
-                  to={`/person/${credits && c.id}`}
+                  to={`/person/${data && c.id}`}
                   onClick={() => {
                     window.scrollTo({
                       top: 0,
@@ -102,7 +100,7 @@ const Credits = ({ id, media_type }) => {
       )}
       {state === "person" && disableCarousel && (
         <div className="d-flex flex-wrap">
-          {credits.slice(0, next).map((cp) => (
+          {data?.cast?.slice(0, next).map((cp) => (
             <div className="col-lg-2 col-md-3 col-sm-4 col-xs-6 moviecard">
               <Card>
                 <Link
@@ -163,7 +161,7 @@ const Credits = ({ id, media_type }) => {
             </div>
           ))}
           <div className="text-center w-100">
-            {next < credits.length && (
+            {next < data?.cast?.length && (
               <Button
                 className="btn btn-lg mb-4 load_more_btn"
                 onClick={handleClick}

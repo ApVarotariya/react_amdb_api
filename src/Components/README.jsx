@@ -1,10 +1,10 @@
 export const BASE_API_URL = "https://api.themoviedb.org/3/";
 
 // Other API ENDPOINTS :
-export const API_URL_BOLLYWOOD =
-  "discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=hi-IN&region=IN&sort_by=popularity.desc&page=${page}&primary_release_year=2018&with_original_language=hi";
-export const API_URL_CREDITS =
-  "${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US";
+export const API_URL_BOLLYWOOD_MOVIES = (page) =>
+  `discover/movie?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=hi-IN&region=IN&sort_by=popularity.desc&page=${page}&primary_release_year=2018&with_original_language=hi`;
+export const API_URL_CREDITS = (media_type, id) =>
+  `${media_type}/${id}/credits?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`;
 export const API_URL_TRENDING_WEEK =
   "trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page}";
 export const API_URL_TRENDING_DAY =
