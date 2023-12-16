@@ -1215,6 +1215,7 @@ body {
   overflow: hidden;
   width: 100vw;
   align-items: center;
+  padding: 0;
 }
 .carousel-card {
   width: calc(calc(100% - 44px - 16px));
@@ -1258,13 +1259,13 @@ body {
     width: calc(calc(100% - 48px - 16px));
     min-width: calc(calc(100% - 48px - 16px));
     /* height: calc(calc(100vw - 48px - 16px) * 1.42); */
-    height: 350px;
+    height: 410px;
     border: 1px solid hsla(0, 0%, 100%, 0.2);
     border-radius: 8px;
     aspect-ratio: 4/3;
     transition-duration: 0.3s;
     align-items: flex-end;
-    color: #000;
+    color: #fff;
   }
   .nextCard,
   .prevCard {
@@ -1304,4 +1305,32 @@ body {
 }
 .carousel-card {
   background-attachment: fixed;
+  background-size: contain;
+}
+.carousel-card .card_wrapper {
+  display: none;
+}
+.centerCard .card_wrapper {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  z-index: 2;
+  flex-direction: column;
+}
+.centerCard .card_wrapper h2 {
+  font-size: 18px;
+}
+.carousel-card {
+  position: relative;
+}
+.carousel-card::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%; /* Adjust the height of the overlay as needed */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  pointer-events: none; /* Ensure the overlay doesn't block interactions with the content */
+  z-index: 1;
 }
