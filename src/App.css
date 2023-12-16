@@ -1202,3 +1202,106 @@ input:-webkit-autofill:focus {
     font-size: 15px;
   }
 }
+/*  */
+body {
+  margin: 50px 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #000;
+  color: #fff;
+}
+.slider_main {
+  display: flex;
+  overflow: hidden;
+  width: 100vw;
+  align-items: center;
+}
+.carousel-card {
+  width: calc(calc(100% - 44px - 16px));
+  min-width: calc(calc(100% - 44px - 16px));
+  height: 514px;
+  display: flex;
+  justify-content: center;
+  aspect-ratio: 16/9;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-clip: content-box;
+  border-radius: 16px;
+  transition: all 0.6s, margin 0ms;
+  transition-timing-function: ease;
+  position: relative;
+  overflow: hidden;
+}
+.nextCard {
+  opacity: 0.6;
+  width: calc(calc(100% - 914px) / 2);
+  min-width: calc(calc(100% - 914px) / 2);
+  background-position: 50%;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.prevCard {
+  opacity: 0.6;
+  width: calc(calc(100% - 914px) / 2);
+  min-width: calc(calc(100% - 914px) / 2);
+  background-position: 50%;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.bg-position-center,
+.bg-position-left,
+.bg-position-right {
+  background-position: 50%;
+}
+@media (max-width: 575px) {
+  .carousel-card {
+    width: calc(calc(100% - 48px - 16px));
+    min-width: calc(calc(100% - 48px - 16px));
+    /* height: calc(calc(100vw - 48px - 16px) * 1.42); */
+    height: 350px;
+    border: 1px solid hsla(0, 0%, 100%, 0.2);
+    border-radius: 8px;
+    aspect-ratio: 4/3;
+    transition-duration: 0.3s;
+    align-items: flex-end;
+    color: #000;
+  }
+  .nextCard,
+  .prevCard {
+    width: 22px;
+    min-width: 22px;
+  }
+  .next-next-off-focus,
+  .shrink-to-prev-or-next {
+    width: 22px;
+    min-width: 22px;
+  }
+  .grow-card-full {
+    width: calc(calc(100% - 48px - 16px));
+    min-width: calc(calc(100% - 48px - 16px));
+  }
+  .outsideViewPort {
+    width: 0;
+    min-width: 0;
+    border: none;
+  }
+  .centerCard {
+    width: calc(calc(100% - 48px - 16px));
+    min-width: calc(calc(100% - 48px - 16px));
+    margin-left: 8px;
+    margin-right: 8px;
+    border: 1px solid hsla(0, 0%, 100%, 0.2);
+  }
+}
+.centeredCard {
+  background-color: yellow;
+}
+.prevCard {
+  background-color: lightblue;
+}
+.nextCard {
+  background-color: lightgreen;
+}
+.carousel-card {
+  background-attachment: fixed;
+}
