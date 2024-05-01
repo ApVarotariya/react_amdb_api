@@ -10,7 +10,7 @@ import Movies from "./Components/Movies";
 import BollyWoodMovies from "./Components/BollyWoodMovies";
 import SingleDetails from "./Components/SingleDetails";
 import PopularMovies from "./Components/PopularMovies";
-import UpComing from "./Components/Upcoming";
+// import UpComing from "./Components/Upcoming";
 import NowPlaying from "./Components/NowPlaying";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
     { path: "/movies", component: Movies },
     { path: "/tv-series", component: TvSeries },
     { path: "/search", component: Search },
-    { path: "/upComing", component: UpComing },
+    // { path: "/upComing", component: UpComing },
     { path: "/in-theaters-now", component: NowPlaying },
   ];
   return (
@@ -31,13 +31,7 @@ function App() {
       <Header />
       <Routes>
         {pages.map((page) => {
-          return (
-            <Route
-              key={page.path}
-              path={page.path}
-              element={<page.component />}
-            />
-          );
+          return <Route key={page.path} path={page.path} element={<page.component />} />;
         })}
       </Routes>
     </>

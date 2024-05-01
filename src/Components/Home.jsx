@@ -7,7 +7,7 @@ import Main from "./Main";
 import TvSeries from "./TvSeries";
 import Movies from "./Movies";
 import PopularPeople from "./PopularPeople";
-import UpComing from "./Upcoming";
+// import UpComing from "./Upcoming";
 import NowPlaying from "./NowPlaying";
 import CardCarousel from "./CardCarousel";
 
@@ -22,27 +22,11 @@ const Home = () => {
   return (
     <>
       <CardCarousel />
-      <Main
-        cardLimit={8}
-        showPagination={false}
-        showButton={true}
-        showSlider={false}
-        homePage={true}
-      />
-      <TvSeries
-        cardLimit={8}
-        showPagination={false}
-        showHindi={false}
-        showButton={true}
-      />
-      <Movies
-        cardLimit={8}
-        showPagination={false}
-        showGenre={false}
-        showButton={true}
-      />
+      <Main cardLimit={8} showPagination={false} showButton={true} showSlider={false} homePage={true} />
+      <TvSeries cardLimit={8} showPagination={false} showHindi={false} showButton={true} />
+      <Movies cardLimit={8} showPagination={false} showGenre={false} showButton={true} />
       <PopularPeople cardLimit={8} showPagination={false} showButton={false} />
-      <UpComing cardLimit={8} showPagination={false} showButton={true} />
+      {/* <UpComing cardLimit={8} showPagination={false} showButton={true} /> */}
       <NowPlaying cardLimit={8} showPagination={false} showButton={true} />
     </>
   );
