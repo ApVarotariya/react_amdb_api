@@ -11,7 +11,6 @@ const Main = () => {
   const sliderRef = useRef(null);
   const [trending, setTrending] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [page, setPage] = useState(1);
 
   const fetchData = async () => {
     const response = await axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page}`);
