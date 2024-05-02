@@ -8,7 +8,7 @@ const useApi = (url, initialData = null) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("API URL:", url);
+    // console.log("API URL:", url);
 
     const fetchData = async () => {
       try {
@@ -16,7 +16,7 @@ const useApi = (url, initialData = null) => {
         const result = await response.json();
 
         setData(result);
-        console.log(result);
+        // console.log(result);
         setLoading(false);
       } catch (error) {
         setError(error);

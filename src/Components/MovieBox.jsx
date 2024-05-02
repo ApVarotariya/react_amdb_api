@@ -8,16 +8,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300";
 
-const MovieBox = ({
-  id,
-  title,
-  date,
-  media_type,
-  vote_average,
-  poster,
-  popularity,
-  gender,
-}) => {
+const MovieBox = ({ id, title, date, media_type, vote_average, poster, popularity, gender }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -38,12 +29,7 @@ const MovieBox = ({
               });
             }}
           >
-            <LazyLoadImage
-              src={poster ? API_IMG + poster : unavailable}
-              className="movie-backdrop-poster moviebox_poster"
-              alt={title}
-              height={450}
-            />
+            <LazyLoadImage src={poster ? API_IMG + poster : unavailable} className="movie-backdrop-poster moviebox_poster" alt={title} height={450} />
 
             <Card.Body>
               <Card.Title>
@@ -51,11 +37,7 @@ const MovieBox = ({
                   <strong>
                     <span>{title}</span>
                   </strong>
-                  <span
-                    className={vote_average < 5 || popularity < 5 ? "red" : ""}
-                  >
-                    {vote_average?.toFixed(0) || popularity?.toFixed(0)}
-                  </span>
+                  <span className={vote_average < 5 || popularity < 5 ? "red" : ""}>{vote_average?.toFixed(0) || popularity?.toFixed(0)}</span>
                 </h3>
 
                 <div className="d-flex justify-content-between align-items-start">
@@ -63,20 +45,7 @@ const MovieBox = ({
                     <span>{dateFormat(date, "mmmm dS, yyyy")}</span>
                   </p>
 
-                  <p style={{ fontSize: "10px" }}>
-                    {media_type === "movie"
-                      ? "Movie"
-                      : media_type === "tv"
-                      ? "TV Series"
-                      : media_type === "person" &&
-                        (gender === 0
-                          ? "Not Specified"
-                          : gender === 1
-                          ? "Actress"
-                          : gender === 2
-                          ? "Actor"
-                          : "")}
-                  </p>
+                  <p style={{ fontSize: "10px" }}>{media_type === "movie" ? "Movie" : media_type === "tv" ? "TV Series" : media_type === "person" && (gender === 0 ? "Not Specified" : gender === 1 ? "Actress" : gender === 2 ? "Actor" : "")}</p>
                 </div>
               </Card.Title>
               <Link
