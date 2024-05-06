@@ -40,7 +40,10 @@ const Main = () => {
         <ul ref={sliderRef}>
           {trending.map((t) => {
             return (
-              <li className="item" style={{ backgroundImage: t.backdrop_path ? `url(${API_IMG}${t.backdrop_path})` : `url(${unavailable})` }}>
+              <li
+                className="item"
+                // style={{ backgroundImage: t.backdrop_path ? `url(${API_IMG}${t.backdrop_path})` : `url(${unavailable})` }}
+              >
                 <div className="content">
                   {console.log(t)}
                   <h2 className="title">{t.original_name || t.original_title}</h2>
