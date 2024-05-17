@@ -61,9 +61,9 @@ const SingleDetails = () => {
   };
 
   const fetchWatchProvider = async () => {
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${process.env.REACT_APP_ACCESS_KEY}`);
+    const res = await axios.get(`https://api.themoviedb.org/3/${state}/${id}/watch/providers?api_key=${process.env.REACT_APP_ACCESS_KEY}`);
     setWatchProvider(res.data.results.IN);
-    // console.log(res.data.results.IN);
+    // console.log(res.data.results);
   };
 
   const handleToggleClick = async (seasonNumber) => {
@@ -235,43 +235,63 @@ const SingleDetails = () => {
               </div>
             </div>
           </div>
-          {state === "movie" && (
-            <section className="watch_provider_sec d-flex justify-content-between" style={{ maxWidth: "700px", margin: "0 auto" }}>
-              <div className="watch_provider_buy">
-                <h5>Buy</h5>
-                {watchProvider.buy &&
-                  watchProvider.buy.map((buyOption) => (
-                    <div className="d-flex align-items-center gap-2 flex-column mb-3">
-                      <span style={{ fontSize: "15px" }}>{buyOption.provider_name}</span>
-                      {console.log(buyOption)}
-                      <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${buyOption?.logo_path}`} alt="" />
-                    </div>
-                  ))}
-              </div>
-              <div className="watch_provider_buy">
-                <h5>FlatRate</h5>
-                {watchProvider.flatrate &&
-                  watchProvider.flatrate.map((flatrateOption) => (
-                    <div className="d-flex align-items-center gap-2 flex-column mb-3">
-                      <span style={{ fontSize: "15px" }}>{flatrateOption.provider_name}</span>
-                      {console.log(flatrateOption)}
-                      <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${flatrateOption?.logo_path}`} alt="" />
-                    </div>
-                  ))}
-              </div>
-              <div className="watch_provider_buy">
-                <h5>Rent</h5>
-                {watchProvider.rent &&
-                  watchProvider.rent.map((rentOption) => (
-                    <div className="d-flex align-items-center gap-2 flex-column mb-3">
-                      <span style={{ fontSize: "15px" }}>{rentOption.provider_name}</span>
-                      {console.log(rentOption)}
-                      <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${rentOption?.logo_path}`} alt="" />
-                    </div>
-                  ))}
-              </div>
-            </section>
-          )}
+          <section className="watch_provider_sec d-flex flex-wrap justify-content-between" style={{ maxWidth: "700px", margin: "0 auto", color: "#000" }}>
+            {/* <h2 className="w-100">Where to Watch :</h2> */}
+            {(state === "movie" || state === "tv") && watchProvider ? (
+              <>
+                {watchProvider.buy && watchProvider.buy.length > 0 ? (
+                  <div className="watch_provider_buy ">
+                    <h5>Buy</h5>
+                    {watchProvider.buy.map((buyOption) => (
+                      <div className="d-flex align-items-center gap-2 flex-column mb-3" key={buyOption.provider_name}>
+                        <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${buyOption?.logo_path}`} alt={buyOption.provider_name} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watch_provider_buy">
+                    <h5>Buy</h5>
+                    <p>Not available</p>
+                  </div>
+                )}
+
+                {watchProvider.flatrate && watchProvider.flatrate.length > 0 ? (
+                  <div className="watch_provider_buy">
+                    <h5>FlatRate</h5>
+                    {watchProvider.flatrate.map((flatrateOption) => (
+                      <div className="d-flex align-items-center gap-2 flex-column mb-3" key={flatrateOption.provider_name}>
+                        <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${flatrateOption?.logo_path}`} alt={flatrateOption.provider_name} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watch_provider_buy">
+                    <h5>FlatRate</h5>
+                    <p>Not available</p>
+                  </div>
+                )}
+
+                {watchProvider.rent && watchProvider.rent.length > 0 ? (
+                  <div className="watch_provider_buy">
+                    <h5>Rent</h5>
+                    {watchProvider.rent.map((rentOption) => (
+                      <div className="d-flex align-items-center gap-2 flex-column mb-3" key={rentOption.provider_name}>
+                        <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${rentOption?.logo_path}`} alt={rentOption.provider_name} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watch_provider_buy">
+                    <h5>Rent</h5>
+                    <p>Not available</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <p>No data available</p>
+            )}
+          </section>
+
           {(state === "movie" || state === "tv") && (
             <>
               <div className="single_content_slider">
@@ -304,7 +324,7 @@ const SingleDetails = () => {
             </>
           )}
           {state === "movie" && stream && (
-            <div className="download_sec w-100 overflow-auto p-3 d-flex flex-wrap">
+            <div className="download_sec w-100 overflow-auto p-3 d-flex flex-wrap" style={{ color: "#000" }}>
               <h2 className="similar_title my-4 text-black w-100">Select Download Quality</h2>
               {stream?.map((s, index) => {
                 return (
