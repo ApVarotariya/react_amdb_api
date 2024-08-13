@@ -235,8 +235,7 @@ const SingleDetails = () => {
               </div>
             </div>
           </div>
-          <section className="watch_provider_sec d-flex flex-wrap justify-content-between" style={{ maxWidth: "700px", margin: "0 auto", color: "#000" }}>
-            {/* <h2 className="w-100">Where to Watch :</h2> */}
+          {/* <section className="watch_provider_sec d-flex flex-wrap justify-content-between" style={{ maxWidth: "700px", margin: "0 auto", color: "#000" }}>
             {(state === "movie" || state === "tv") && watchProvider ? (
               <>
                 {watchProvider.buy && watchProvider.buy.length > 0 ? (
@@ -290,7 +289,7 @@ const SingleDetails = () => {
             ) : (
               <p>No data available</p>
             )}
-          </section>
+          </section> */}
 
           {(state === "movie" || state === "tv") && (
             <>
