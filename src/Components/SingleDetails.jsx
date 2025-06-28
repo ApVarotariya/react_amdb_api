@@ -10,6 +10,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { Accordion, Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import GetGradientData from "./GetGradientData";
+import MediaPlayer from "./MediaPlayer";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -20,8 +21,6 @@ const SingleDetails = () => {
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
   const [season, setSeason] = useState([]);
-  const [tvSeasons, setTvSeasons] = useState([]);
-  const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [watchProvider, setWatchProvider] = useState([]);
   const [review, setReview] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(null);
@@ -31,23 +30,26 @@ const SingleDetails = () => {
   const [gradient, setGradient] = useState("");
   const [gradientPoster, setGradientPoster] = useState("");
 
+  // 
+  const [imdbId, setImdbId] = useState("");
+
   const canvasRef = useRef(null);
   const isMobile = window.innerWidth > 767;
 
-  const fetchData = async () => {
+const fetchData = async () => {
+  try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    if (state === "tv" && res.data?.seasons?.length > 0) {
-      setTvSeasons(res.data.seasons);
-    }
-  };
+    console.log(res.data);
+    
+    setImdbId(res.data.imdb_id); 
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-  const fetchDownloadLink = async () => {
-    const data = await axios.get(`https://vidsrc.pm/embed/${state}/${id}`);
-    setStream(data.data);
-  };
 
   const fetchSimilar = async () => {
     const res = await axios.get(
@@ -85,7 +87,6 @@ const SingleDetails = () => {
 
   useEffect(() => {
     fetchData();
-    fetchDownloadLink();
     fetchSimilar();
     fetchReview();
     fetchWatchProvider();
@@ -93,13 +94,6 @@ const SingleDetails = () => {
 
   const handleClick = () => {
     setNext(next + perPage);
-  };
-
-  const handleEpisodeChange = async (seasonNumber, episodeNumber) => {
-    const episodeStreamRes = await axios.get(
-      `https://vidsrc.pm/embed/tv/${id}/${seasonNumber}-${episodeNumber}`
-    );
-    setStream(episodeStreamRes.data);
   };
 
   function timeConvert(n) {
@@ -406,97 +400,8 @@ const SingleDetails = () => {
               </div>
             </>
           )}
-          {state === "tv" ? (
-            <div
-              className="streaming_dropdown_area p-3 w-100"
-              style={{ color: "#000", float: "left" }}
-            >
-              <h2 className="my-4 text-black">Watch TV Episodes</h2>
-              <div className="mb-3">
-                <label>Select Season:</label>
-                <select
-                  className="form-control"
-                  onChange={(e) => {
-                    const seasonNumber = e.target.value;
-                    setSelectedSeason(Number(seasonNumber));
-                    fetchSeason(seasonNumber); // get episodes for selected season
-                    setSelectedEpisode(null); // reset episode
-                    setStream(null); // reset stream
-                  }}
-                  value={selectedSeason || ""}
-                >
-                  <option value="">--Select Season--</option>
-                  {tvSeasons.map((s) => (
-                    <option key={s.season_number} value={s.season_number}>
-                      {s.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {selectedSeason && season.length > 0 && (
-                <div className="mb-3">
-                  <label>Select Episode:</label>
-                  <select
-                    className="form-control"
-                    onChange={(e) => {
-                      const episodeNumber = e.target.value;
-                      setSelectedEpisode(Number(episodeNumber));
-                      handleEpisodeChange(selectedSeason, episodeNumber);
-                    }}
-                    value={selectedEpisode || ""}
-                  >
-                    <option value="">--Select Episode--</option>
-                    {season.map((ep) => (
-                      <option key={ep.episode_number} value={ep.episode_number}>
-                        {ep.name} (Ep {ep.episode_number})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-
-              {stream && selectedEpisode && (
-                <div
-                  className="single_download mt-4"
-                  style={{ width: "100%", textAlign: "center" }}
-                  dangerouslySetInnerHTML={{ __html: stream }}
-                />
-              )}
-            </div>
-          ) : (
-            stream && (
-              <div
-                className="download_sec w-100 overflow-auto p-3 d-flex flex-wrap"
-                style={{ color: "#000" }}
-              >
-                <h2 className="similar_title my-4 text-black w-100">
-                  Stream Here
-                </h2>
-                {Array.isArray(stream) ? (
-                  stream.map((s, index) => (
-                    <div
-                      className="single_download"
-                      style={{ width: "100%", textAlign: "center" }}
-                      key={index}
-                    >
-                      {s}
-                    </div>
-                  ))
-                ) : (
-                  <div
-                    className="single_download"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      textAlign: "center",
-                    }}
-                    dangerouslySetInnerHTML={{ __html: stream }}
-                  />
-                )}
-              </div>
-            )
-          )}
+          
+          <MediaPlayer imdbId={imdbId} />
 
           {(state === "movie" || state === "tv") && review.length > 0 && (
             <div className="review_sec overflow-auto w-100 p-3">

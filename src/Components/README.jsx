@@ -1,4 +1,6 @@
 export const BASE_API_URL = "https://api.themoviedb.org/3/";
+export const STREAM_URL_RENDER = "https://amdb-8stream-api.onrender.com";
+export const STREAM_URL_VERCEL = "https://amdb-8stream-api.vercel.app";
 
 // Other API ENDPOINTS :
 export const API_URL_BOLLYWOOD_MOVIES = (page) =>
