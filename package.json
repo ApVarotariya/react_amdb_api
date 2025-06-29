@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": "/",
   "private": false,
+  "proxy": "https://amdb-8stream-api.onrender.com",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -10,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "artplayer": "^5.2.3",
     "axios": "^0.27.2",
     "axios-jsonp": "^1.0.4",
     "bootstrap": "^5.2.0",
@@ -17,6 +19,7 @@
     "dateformat": "^5.0.3",
     "gh-pages": "^4.0.0",
     "hammerjs": "^2.0.8",
+    "hls.js": "^1.6.5",
     "node-vibrant": "^3.2.1-alpha.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",

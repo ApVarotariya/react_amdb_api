@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import dateFormat from "dateformat";
-import { unavailable, unavailableLandscape } from "./README";
+import { STREAM_URL_RENDER, unavailable, unavailableLandscape } from "./README";
 import TrailerVideo from "./TrailerVideo";
 import Credits from "./Credits";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -10,8 +10,6 @@ import "react-circular-progressbar/dist/styles.css";
 import { Accordion, Button, Card } from "react-bootstrap";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import GetGradientData from "./GetGradientData";
-import MovieStreamPlayer from "./MovieStreamPlayer";
-import SeriesStreamPlayer from "./SeriesStreamPlayer";
 
 const API_IMG = "https://image.tmdb.org/t/p/w300";
 const API_IMG200 = "https://image.tmdb.org/t/p/w200";
@@ -22,6 +20,8 @@ const SingleDetails = () => {
   const [movies, setMovies] = useState([]);
   const [similar, setSimilar] = useState([]);
   const [season, setSeason] = useState([]);
+  const [tvSeasons, setTvSeasons] = useState([]);
+  const [selectedEpisode, setSelectedEpisode] = useState(null);
   const [watchProvider, setWatchProvider] = useState([]);
   const [review, setReview] = useState([]);
   const [selectedSeason, setSelectedSeason] = useState(null);
@@ -31,36 +31,24 @@ const SingleDetails = () => {
   const [gradient, setGradient] = useState("");
   const [gradientPoster, setGradientPoster] = useState("");
 
-  // 
-  const [imdbId, setImdbId] = useState("");
-
   const canvasRef = useRef(null);
   const isMobile = window.innerWidth > 767;
 
-const fetchData = async () => {
-  try {
+  const fetchData = async () => {
     const res = await axios.get(
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    console.log(res.data); 
-  } catch (err) {
-    console.error(err);
-  }
-};
+    if (state === "tv" && res.data?.seasons?.length > 0) {
+      setTvSeasons(res.data.seasons);
+    }
+  };
 
-const fetchExternalIds = async () => {
-  try {
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/${state}/${id}/external_ids?api_key=${process.env.REACT_APP_ACCESS_KEY}`
-    );
-    setImdbId(res.data.imdb_id); 
-    console.log(res.data.imdb_id);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
+  const fetchDownloadLink = async () => {
+    const data = await axios.get(`https://vidsrc.pm/embed/${state}/${id}`);
+    setStream(data.data);
+  };
+   
 
   const fetchSimilar = async () => {
     const res = await axios.get(
@@ -98,14 +86,21 @@ const fetchExternalIds = async () => {
 
   useEffect(() => {
     fetchData();
+    fetchDownloadLink();
     fetchSimilar();
     fetchReview();
     fetchWatchProvider();
-    fetchExternalIds();
   }, [id]);
 
   const handleClick = () => {
     setNext(next + perPage);
+  };
+
+  const handleEpisodeChange = async (seasonNumber, episodeNumber) => {
+    const episodeStreamRes = await axios.get(
+      `https://vidsrc.pm/embed/tv/${id}/${seasonNumber}-${episodeNumber}`
+    );
+    setStream(episodeStreamRes.data);
   };
 
   function timeConvert(n) {
@@ -321,6 +316,62 @@ const fetchExternalIds = async () => {
               </div>
             </div>
           </div>
+          {/* <section className="watch_provider_sec d-flex flex-wrap justify-content-between" style={{ maxWidth: "700px", margin: "0 auto", color: "#000" }}>
+            {(state === "movie" || state === "tv") && watchProvider ? (
+              <>
+                {watchProvider.buy && watchProvider.buy.length > 0 ? (
+                  <div className="watch_provider_buy ">
+                    <h5>Buy</h5>
+                    {watchProvider.buy.map((buyOption) => (
+                      <div className="d-flex align-items-center gap-2 flex-column mb-3" key={buyOption.provider_name}>
+                        <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${buyOption?.logo_path}`} alt={buyOption.provider_name} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watch_provider_buy">
+                    <h5>Buy</h5>
+                    <p>Not available</p>
+                  </div>
+                )}
+
+                {watchProvider.flatrate && watchProvider.flatrate.length > 0 ? (
+                  <div className="watch_provider_buy">
+                    <h5>FlatRate</h5>
+                    {watchProvider.flatrate.map((flatrateOption) => (
+                      <div className="d-flex align-items-center gap-2 flex-column mb-3" key={flatrateOption.provider_name}>
+                        <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${flatrateOption?.logo_path}`} alt={flatrateOption.provider_name} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watch_provider_buy">
+                    <h5>FlatRate</h5>
+                    <p>Not available</p>
+                  </div>
+                )}
+
+                {watchProvider.rent && watchProvider.rent.length > 0 ? (
+                  <div className="watch_provider_buy">
+                    <h5>Rent</h5>
+                    {watchProvider.rent.map((rentOption) => (
+                      <div className="d-flex align-items-center gap-2 flex-column mb-3" key={rentOption.provider_name}>
+                        <LazyLoadImage style={{ width: "25px", margin: "0" }} src={API_IMG + `${rentOption?.logo_path}`} alt={rentOption.provider_name} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="watch_provider_buy">
+                    <h5>Rent</h5>
+                    <p>Not available</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <p>No data available</p>
+            )}
+          </section> */}
+
           {(state === "movie" || state === "tv") && (
             <>
               <div className="single_content_slider">
@@ -356,14 +407,147 @@ const fetchExternalIds = async () => {
               </div>
             </>
           )}
-          
-          {state === "movie" && (
-            <MovieStreamPlayer imdbId={imdbId} />
-    
-          {state === "tv" && (
-            <SeriesStreamPlayer imdbId={imdbId} />
+          {state === "tv" ? (
+            <div
+              className="streaming_dropdown_area p-3 w-100"
+              style={{ color: "#000", float: "left" }}
+            >
+              <h2 className="my-4 text-black">Watch TV Episodes</h2>
+              <div className="mb-3">
+                <label>Select Season:</label>
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    const seasonNumber = e.target.value;
+                    setSelectedSeason(Number(seasonNumber));
+                    fetchSeason(seasonNumber); // get episodes for selected season
+                    setSelectedEpisode(null); // reset episode
+                    setStream(null); // reset stream
+                  }}
+                  value={selectedSeason || ""}
+                >
+                  <option value="">--Select Season--</option>
+                  {tvSeasons.map((s) => (
+                    <option key={s.season_number} value={s.season_number}>
+                      {s.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {selectedSeason && season.length > 0 && (
+                <div className="mb-3">
+                  <label>Select Episode:</label>
+                  <select
+                    className="form-control"
+                    onChange={(e) => {
+                      const episodeNumber = e.target.value;
+                      setSelectedEpisode(Number(episodeNumber));
+                      handleEpisodeChange(selectedSeason, episodeNumber);
+                    }}
+                    value={selectedEpisode || ""}
+                  >
+                    <option value="">--Select Episode--</option>
+                    {season.map((ep) => (
+                      <option key={ep.episode_number} value={ep.episode_number}>
+                        {ep.name} (Ep {ep.episode_number})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {stream && selectedEpisode && (
+                <div
+                  className="single_download mt-4"
+                  style={{ width: "100%", textAlign: "center" }}
+                  dangerouslySetInnerHTML={{ __html: stream }}
+                />
+              )}
+            </div>
+          ) : (
+            stream && (
+              <div
+                className="download_sec w-100 overflow-auto p-3 d-flex flex-wrap"
+                style={{ color: "#000" }}
+              >
+                <h2 className="similar_title my-4 text-black w-100">
+                  Stream Here
+                </h2>
+                {Array.isArray(stream) ? (
+                  stream.map((s, index) => (
+                    <div
+                      className="single_download"
+                      style={{ width: "100%", textAlign: "center" }}
+                      key={index}
+                    >
+                      {s}
+                    </div>
+                  ))
+                ) : (
+                  <div
+                    className="single_download"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      textAlign: "center",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: stream }}
+                  />
+                )}
+              </div>
+            )
           )}
 
+          {(state === "movie" || state === "tv") && review.length > 0 && (
+            <div className="review_sec overflow-auto w-100 p-3">
+              <h2 className="similar_title my-4 text-black">
+                {state === "movie" ? "Movie" : "TV Series"}&nbsp;Reviews&nbsp;:
+              </h2>
+              <div className="review_items">
+                {review.slice(0, 3).map((r, index) => {
+                  return (
+                    <div className="review_single_item mb-3" key={index}>
+                      <div className="d-flex gap-3 mb-2">
+                        <LazyLoadImage
+                          variant="top"
+                          src={
+                            r.author_details.avatar_path
+                              ? API_IMG + r.author_details.avatar_path
+                              : unavailable
+                          }
+                          alt={r.author}
+                          className="review_auther_poster"
+                        />
+                        <div>
+                          <h5 className="mb-0">
+                            <b>{r.author}</b>
+                          </h5>
+                          <p className="mb-0">@{r.author_details.username}</p>
+                        </div>
+                      </div>
+                      <p className="mb-0">{r.content}</p>
+                      <hr />
+                      <p className="mb-0">
+                        Posted on&nbsp;:&nbsp;
+                        <b>
+                          {dateFormat(
+                            r.updated_at ? r.updated_at : r.created_at,
+                            "mmmm dS, yyyy"
+                          )}
+                        </b>
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {TrailerVideo(state, id) && (
+            <div className="yt_trailer_videos">
+              <TrailerVideo media_type={state} id={id} />
+            </div>
+          )}
           {state === "tv" && (
             <div className="seasonal_data overflow-auto w-100 p-3">
               <Accordion>
@@ -425,7 +609,6 @@ const fetchExternalIds = async () => {
                                 <div>
                                   <h3>
                                     {s.name} &nbsp;
-                                    {console.log(s)}
                                     {s.runtime && (
                                       <i>
                                         Runtime :&nbsp;(&nbsp;{s.runtime}
@@ -446,56 +629,6 @@ const fetchExternalIds = async () => {
                     </Accordion.Item>
                   ))}
               </Accordion>
-            </div>
-          )}
-
-          {(state === "movie" || state === "tv") && review.length > 0 && (
-            <div className="review_sec overflow-auto w-100 p-3">
-              <h2 className="similar_title my-4 text-black">
-                {state === "movie" ? "Movie" : "TV Series"}&nbsp;Reviews&nbsp;:
-              </h2>
-              <div className="review_items">
-                {review.slice(0, 3).map((r, index) => {
-                  return (
-                    <div className="review_single_item mb-3" key={index}>
-                      <div className="d-flex gap-3 mb-2">
-                        <LazyLoadImage
-                          variant="top"
-                          src={
-                            r.author_details.avatar_path
-                              ? API_IMG + r.author_details.avatar_path
-                              : unavailable
-                          }
-                          alt={r.author}
-                          className="review_auther_poster"
-                        />
-                        <div>
-                          <h5 className="mb-0">
-                            <b>{r.author}</b>
-                          </h5>
-                          <p className="mb-0">@{r.author_details.username}</p>
-                        </div>
-                      </div>
-                      <p className="mb-0">{r.content}</p>
-                      <hr />
-                      <p className="mb-0">
-                        Posted on&nbsp;:&nbsp;
-                        <b>
-                          {dateFormat(
-                            r.updated_at ? r.updated_at : r.created_at,
-                            "mmmm dS, yyyy"
-                          )}
-                        </b>
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-          {TrailerVideo(state, id) && (
-            <div className="yt_trailer_videos">
-              <TrailerVideo media_type={state} id={id} />
             </div>
           )}
           <div className="row" style={{ margin: "0", justifyContent: "start" }}>

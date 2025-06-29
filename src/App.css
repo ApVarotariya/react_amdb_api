@@ -829,6 +829,10 @@ input:-webkit-autofill:focus {
 .single_download iframe {
   min-height: 500px;
 }
+.art-video-player{
+  --art-theme: #eac56b !important;
+  z-index: 1;
+}
 /*  */
 @keyframes clockwise {
   0% {
@@ -1178,6 +1182,19 @@ input:-webkit-autofill:focus {
   .moviebox_poster,
   .moviebox_poster_skeleton {
     height: auto;
+  }
+  .art-control.art-control-time{
+    display: none !important;
+  }
+  .art-controls-right .art-control{
+    font-size: 12px !important;
+    padding: 4px !important;
+    margin: 0 !important;
+    min-width: auto !important;
+  }
+  .art-controls-left .art-control{
+    margin: 0 !important;
+    min-width: auto !important;
   }
 }
 @media (max-width: 460px) {
