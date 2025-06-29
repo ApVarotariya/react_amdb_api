@@ -359,7 +359,7 @@ const fetchExternalIds = async () => {
           
           {state === "movie" && (
             <MovieStreamPlayer imdbId={imdbId} />
-    
+          )}
           {state === "tv" && (
             <SeriesStreamPlayer imdbId={imdbId} />
           )}
