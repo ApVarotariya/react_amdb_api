@@ -150,7 +150,41 @@ export default function SeriesStreamPlayer({ imdbId }) {
       url: qualityList[selectedQuality]?.url || masterUrl,
       type: 'm3u8',
       autoplay: false,
-      setting: false,
+      setting: true,
+      settings: [
+        {
+          html: 'Fit Mode',
+          tooltip: 'contain',
+          selector: [
+            { html: 'Fit (Contain)', value: 'contain', default: true },
+            { html: 'Crop (Cover)', value: 'cover' },
+            { html: 'Stretch (Fill)', value: 'fill' },
+          ],
+          onSelect: function (item) {
+            this.video.style.objectFit = item.value;
+            return item.html;
+          },
+        },
+        {
+          tooltip: 'Audio Language',
+          html: langOptions[selectedLang]?.title || 'Audio',
+          selector: langOptions.map((lang, idx) => ({
+            html: lang.title,
+            value: idx,
+            default: idx === selectedLang,
+          })),
+          style: {
+            fontSize: '14px',
+            fontWeight: 'bold',
+            color:"#fff0e5",
+            padding: '5px',
+            },
+          onSelect: (item) => {
+            setSelectedLang(item.value);
+            return item.html;
+          },
+        },
+      ],
       quality: qualityList,
       playbackRate: true,
       aspectRatio: true,
@@ -203,26 +237,6 @@ export default function SeriesStreamPlayer({ imdbId }) {
             return item.html;
           },
         },
-        {
-          name: 'Lang',
-          position: 'right',
-          html: langOptions[selectedLang]?.title || 'Lang',
-          selector: langOptions.map((lang, idx) => ({
-            html: lang.title,
-            value: idx,
-            default: idx === selectedLang,
-          })),
-          style: {
-            fontSize: '14px',
-            fontWeight: 'bold',
-            color:"#fff0e5",
-            padding: '5px',
-            },
-          onSelect: (item) => {
-            setSelectedLang(item.value);
-            return item.html;
-          },
-        },
       ],
     });
   }, [
@@ -241,7 +255,7 @@ export default function SeriesStreamPlayer({ imdbId }) {
   if (loadingInfo) return <div>Loading show info…</div>;
 
   return (
-    <div style={{ width: '100%', height: '500px', float: 'left',padding:"0 15px", }}>
+    <div className='stream_player_main' style={{ width: '100%', height: '500px', float: 'left',padding:"0 15px", }}>
       {loadingStream ? (
         <div style={{
           display: 'flex',

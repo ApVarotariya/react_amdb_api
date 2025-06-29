@@ -1196,6 +1196,14 @@ input:-webkit-autofill:focus {
     margin: 0 !important;
     min-width: auto !important;
   }
+  .art-controls-left .art-control i,
+  .art-controls-right .art-control i{
+    /* width: 20px !important; */
+    /* height: 20px !important; */
+  }
+  .stream_player_main{
+    height: 400px !important;
+  }
 }
 @media (max-width: 460px) {
   .trailer_btn {

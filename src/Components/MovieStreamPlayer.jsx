@@ -138,7 +138,7 @@ export default function MovieStreamPlayer({ imdbId }) {
   }, [containerRef, masterUrl, qualityList, selectedQuality, playlist, selectedLang]);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '500px',float:"left",padding:"0 15px" }}>
+    <div className='stream_player_main' style={{ position: 'relative', width: '100%', height: '500px',float:"left",padding:"0 15px" }}>
       {loading
         ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>Loading…</div>
         : <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
