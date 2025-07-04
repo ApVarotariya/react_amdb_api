@@ -33,6 +33,7 @@ const SingleDetails = () => {
 
   // 
   const [imdbId, setImdbId] = useState("");
+  const [title, setTitle] = useState("");
 
   const canvasRef = useRef(null);
   const isMobile = window.innerWidth > 767;
@@ -43,11 +44,17 @@ const fetchData = async () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    console.log(res.data); 
+    setTitle(res.data.title);
   } catch (err) {
     console.error(err);
   }
 };
+
+  // const fetchDownloadLink = async () => {
+  //   const data = await axios.get(`https://player4u.xyz/embed?key=${title}`);
+  //   setStream(data.data);
+  //   console.log("Download Link Fetched:", data.data);
+  // };
 
 const fetchExternalIds = async () => {
   try {
@@ -102,6 +109,7 @@ const fetchExternalIds = async () => {
     fetchReview();
     fetchWatchProvider();
     fetchExternalIds();
+    // fetchDownloadLink();
   }, [id]);
 
   const handleClick = () => {
@@ -355,6 +363,18 @@ const fetchExternalIds = async () => {
                 </div>
               </div>
             </>
+          )}
+
+        {(state === "movie" || state === "tv") && (
+          <div style={{padding:"15px"}}>
+            <iframe src={`https://player4u.xyz/embed?key=${title}`}
+                width="100%"
+                height="300px"
+                frameborder="1"
+                scrolling="no"
+                allowFullScreen>
+            </iframe>
+          </div>
           )}
           
           {state === "movie" && (

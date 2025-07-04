@@ -19,16 +19,17 @@ export default function MovieStreamPlayer({ imdbId }) {
     if (!imdbId) return;
     setLoading(true);
     axios.get(`${STREAM_URL_RENDER}/api/v1/mediaInfo?id=${imdbId}`)
-      .then((mediaRes) => {
-        if (mediaRes.data.success) {
-          setPlaylist(mediaRes.data.data.playlist);
-          setKeyToken(mediaRes.data.data.key);
-          setSelectedLang(0);
-        }
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
+    .then((mediaRes) => {
+      if (mediaRes.data.success) {
+        setPlaylist(mediaRes.data.data.playlist);
+        setKeyToken(mediaRes.data.data.key);
+        setSelectedLang(0);
+      }
+    })
+    .catch(console.error)
+    .finally(() => setLoading(false));
   }, [imdbId]);
+  console.log("playlist",playlist);
 
   useEffect(() => {
     if (!playlist.length || !keyToken) return;
