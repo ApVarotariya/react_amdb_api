@@ -44,7 +44,7 @@ const fetchData = async () => {
       `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
-    setTitle(res.data.title);
+    setTitle(res.data.title || res.data.name);
   } catch (err) {
     console.error(err);
   }
