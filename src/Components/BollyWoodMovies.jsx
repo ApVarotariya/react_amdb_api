@@ -3,12 +3,12 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 import useApi from "./useApi";
-import { BASE_API_URL, API_URL_BOLLYWOOD_MOVIES } from "./README";
+import { BASE_API_URL, API_URL_BOLLYWOOD_MOVIES, BASE_API_PROXY_URL } from "./README";
 
 const BollyWoodMovies = () => {
   const [page, setPage] = useState(1);
   const { data, loading, error } = useApi(
-    BASE_API_URL + API_URL_BOLLYWOOD_MOVIES(page)
+    BASE_API_PROXY_URL + API_URL_BOLLYWOOD_MOVIES(page)
   );
   if (loading) {
     return <div>Loading...</div>;

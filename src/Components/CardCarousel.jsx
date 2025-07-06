@@ -3,6 +3,7 @@ import "./CardCarousel.css";
 import { Swiper } from "swiper";
 import axios from "axios";
 import SwiperCore, { Autoplay, Navigation } from "swiper";
+import { BASE_API_PROXY_URL } from "./README";
 SwiperCore.use([Autoplay, Navigation]);
 
 const API_IMG = "https://image.tmdb.org/t/p/original";
@@ -18,7 +19,7 @@ const CardCarousel = () => {
 
   const fetchData = async () => {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page}`
+      `${BASE_API_PROXY_URL}trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page}`
     );
     setTrending(response.data.results);
     setIsDataLoaded(true);
