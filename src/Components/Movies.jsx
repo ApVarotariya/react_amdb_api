@@ -4,6 +4,7 @@ import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 import { FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { BASE_API_PROXY_URL } from "./README";
 
 const Movies = (props) => {
   const [page, setPage] = useState(1);
@@ -20,7 +21,7 @@ const Movies = (props) => {
 
   const fetchData = async () => {
     const movies = await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${
+      `${BASE_API_PROXY_URL}discover/movie?api_key=${
         process.env.REACT_APP_ACCESS_KEY
       }&page=${page}${
         selectedGenres.length > 0
@@ -36,7 +37,7 @@ const Movies = (props) => {
 
   const fetchGenres = async () => {
     const genres = await axios.get(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
+      `${BASE_API_PROXY_URL}genre/movie/list?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US`
     );
     setGenres(genres.data.genres);
   };

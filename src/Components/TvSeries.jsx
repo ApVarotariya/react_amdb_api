@@ -3,6 +3,7 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 import { Link } from "react-router-dom";
+import { BASE_API_PROXY_URL } from "./README";
 
 const TvSeries = (props) => {
   const [page, setPage] = useState(1);
@@ -17,14 +18,14 @@ const TvSeries = (props) => {
 
   const fetchData = async () => {
     const tvData = await axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
+      `${BASE_API_PROXY_URL}discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`
     );
     setTv(tvData.data.results);
   };
 
   const fetchHindiTv = async () => {
     const hindiTvData = await axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&with_original_language=hi`
+      `${BASE_API_PROXY_URL}discover/tv?api_key=${process.env.REACT_APP_ACCESS_KEY}&with_original_language=hi`
     );
     setHindiTv(hindiTvData.data.results);
   };

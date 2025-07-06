@@ -6,6 +6,7 @@ import CustomPagination from "./CustomPagination";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Button } from "react-bootstrap";
+import { BASE_API_PROXY_URL } from "./README";
 
 const NowPlaying = (props) => {
   const [page, setPage] = useState(1);
@@ -15,8 +16,8 @@ const NowPlaying = (props) => {
 
   useEffect(() => {
     const fetchNowPlaying = async (language) => {
-      const globalUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US&page=${page}`;
-      const hindiUrl = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&with_original_language=hi&page=${page}`;
+      const globalUrl = `${BASE_API_PROXY_URL}movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&language=en-US&page=${page}`;
+      const hindiUrl = `${BASE_API_PROXY_URL}movie/now_playing?api_key=${process.env.REACT_APP_ACCESS_KEY}&with_original_language=hi&page=${page}`;
       try {
         const response =
           language === "Global"

@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import { FaPlay } from "react-icons/fa";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { BASE_API_PROXY_URL } from "./README";
 
 const TrailerVideo = ({ media_type, id }) => {
   const [videos, setVideos] = useState();
@@ -12,7 +13,7 @@ const TrailerVideo = ({ media_type, id }) => {
 
   const fetchVideo = async () => {
     const { data } = await axios.get(
-      `https://api.themoviedb.org/3/${media_type}/${id}/videos?api_key=${process.env.REACT_APP_ACCESS_KEY}&append_to_response=videos`
+      `${BASE_API_PROXY_URL}${media_type}/${id}/videos?api_key=${process.env.REACT_APP_ACCESS_KEY}&append_to_response=videos`
     );
     setVideos(data.results);
   };

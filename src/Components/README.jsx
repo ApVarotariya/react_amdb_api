@@ -1,4 +1,5 @@
 export const BASE_API_URL = "https://api.themoviedb.org/3/";
+export const BASE_API_PROXY_URL = "https://tmdb-proxy-amdbuzz.vercel.app/3/";
 export const STREAM_URL_RENDER = "https://amdb-8stream-api.onrender.com";
 export const STREAM_URL_VERCEL = "https://amdb-8stream-api.vercel.app";
 

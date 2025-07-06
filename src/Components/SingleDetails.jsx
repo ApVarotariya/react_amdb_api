@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import dateFormat from "dateformat";
-import { unavailable, unavailableLandscape } from "./README";
+import { BASE_API_PROXY_URL, unavailable, unavailableLandscape } from "./README";
 import TrailerVideo from "./TrailerVideo";
 import Credits from "./Credits";
 import { CircularProgressbar } from "react-circular-progressbar";
@@ -41,7 +41,7 @@ const SingleDetails = () => {
 const fetchData = async () => {
   try {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}${state}/${id}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setMovies(res.data);
     setTitle(res.data.title || res.data.name);
@@ -59,7 +59,7 @@ const fetchData = async () => {
 const fetchExternalIds = async () => {
   try {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/${state}/${id}/external_ids?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}${state}/${id}/external_ids?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setImdbId(res.data.imdb_id); 
     console.log(res.data.imdb_id);
@@ -71,28 +71,28 @@ const fetchExternalIds = async () => {
 
   const fetchSimilar = async () => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/${state}/${id}/similar?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}${state}/${id}/similar?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSimilar(res.data.results);
   };
 
   const fetchSeason = async (seasonNumber) => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/tv/${id}/season/${seasonNumber}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}tv/${id}/season/${seasonNumber}?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setSeason(res.data.episodes);
   };
 
   const fetchReview = async () => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/${state}/${id}/reviews?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}${state}/${id}/reviews?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setReview(res.data.results);
   };
 
   const fetchWatchProvider = async () => {
     const res = await axios.get(
-      `https://api.themoviedb.org/3/${state}/${id}/watch/providers?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}${state}/${id}/watch/providers?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setWatchProvider(res.data.results.IN);
     // console.log(res.data.results);

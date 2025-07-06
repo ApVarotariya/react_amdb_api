@@ -3,6 +3,7 @@ import axios from "axios";
 import MovieBox from "./MovieBox";
 import CustomPagination from "./CustomPagination";
 import { Link } from "react-router-dom";
+import { BASE_API_PROXY_URL } from "./README";
 
 const PopularPeople = (props) => {
   const [page, setPage] = useState(1);
@@ -11,7 +12,7 @@ const PopularPeople = (props) => {
 
   const fetchData = async () => {
     const popularPeople = await axios.get(
-      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_ACCESS_KEY}`
+      `${BASE_API_PROXY_URL}person/popular?api_key=${process.env.REACT_APP_ACCESS_KEY}`
     );
     setPopularPeople(popularPeople.data.results);
     // console.log(popularPeople);

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import GetGradientData from "./GetGradientData";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination, EffectFade } from "swiper";
-import { unavailableLandscape } from "./README";
+import { BASE_API_PROXY_URL, unavailableLandscape } from "./README";
 import dateFormat from "dateformat";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -33,8 +33,8 @@ const Main = (props) => {
 
   useEffect(() => {
     const fetchData = async (time) => {
-      const dayUrl = `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`;
-      const weekUrl = `https://api.themoviedb.org/3/trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`;
+      const dayUrl = `${BASE_API_PROXY_URL}trending/all/day?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`;
+      const weekUrl = `${BASE_API_PROXY_URL}trending/all/week?api_key=${process.env.REACT_APP_ACCESS_KEY}&page=${page}`;
       try {
         const response =
           time === "Day" ? await axios.get(dayUrl) : await axios.get(weekUrl);

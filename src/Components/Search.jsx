@@ -4,7 +4,7 @@ import { Triangle } from "react-loader-spinner";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import axios from "axios";
-import { unavailable } from "./README";
+import { BASE_API_PROXY_URL, unavailable } from "./README";
 import dateFormat from "dateformat";
 import { Link } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -27,7 +27,7 @@ const Search = () => {
   const fetchSearchResults = async () => {
     setIsLoading(true);
     const data = await axios.get(
-      `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`
+      `${BASE_API_PROXY_URL}search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=${page}`
     );
     const searchresult = data.data.results;
     const moviesArray = searchresult.filter(
@@ -46,7 +46,7 @@ const Search = () => {
 
   const fetchSearchSuggestions = async () => {
     const data = await axios.get(
-      `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=1`
+      `${BASE_API_PROXY_URL}search/multi?api_key=${process.env.REACT_APP_ACCESS_KEY}&query=${query}&page=1`
     );
     const searchresult = data.data.results;
     setSearchSuggestion(searchresult);
