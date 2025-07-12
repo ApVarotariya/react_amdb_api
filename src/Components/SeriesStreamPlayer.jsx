@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
-import { STREAM_URL_RENDER } from './README';
+import { STREAM_URL_RENDER, STREAM_URL_VERCEL } from './README';
 
 export default function SeriesStreamPlayer({ imdbId }) {
   const containerRef = useRef(null);
@@ -26,7 +26,7 @@ export default function SeriesStreamPlayer({ imdbId }) {
     if (!imdbId) return;
     setLoadingInfo(true);
 
-    axios.get(`${STREAM_URL_RENDER}/api/v1/mediaInfo?id=${imdbId}`)
+    axios.get(`${STREAM_URL_VERCEL}/api/v1/mediaInfo?id=${imdbId}`)
       .then(({ data }) => {
         if (data.success) {
           setKeyToken(data.data.key);
@@ -78,7 +78,7 @@ export default function SeriesStreamPlayer({ imdbId }) {
     const payload = { file: fileEntry.file, key: keyToken };
     setLoadingStream(true);
 
-    axios.post(`${STREAM_URL_RENDER}/api/v1/getStream`, payload)
+    axios.post(`${STREAM_URL_VERCEL}/api/v1/getStream`, payload)
       .then(({ data }) => {
         if (data.success) {
           setMasterUrl(data.data.link);

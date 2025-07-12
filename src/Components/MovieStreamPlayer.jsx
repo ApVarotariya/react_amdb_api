@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import axios from 'axios';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
-import { STREAM_URL_RENDER } from './README';
+import { STREAM_URL_RENDER, STREAM_URL_VERCEL } from './README';
 
 export default function MovieStreamPlayer({ imdbId }) {
   const containerRef = useRef(null);
@@ -18,7 +18,7 @@ export default function MovieStreamPlayer({ imdbId }) {
   useEffect(() => {
     if (!imdbId) return;
     setLoading(true);
-    axios.get(`${STREAM_URL_RENDER}/api/v1/mediaInfo?id=${imdbId}`)
+    axios.get(`${STREAM_URL_VERCEL}/api/v1/mediaInfo?id=${imdbId}`)
     .then((mediaRes) => {
       if (mediaRes.data.success) {
         setPlaylist(mediaRes.data.data.playlist);
@@ -33,7 +33,7 @@ export default function MovieStreamPlayer({ imdbId }) {
 
   useEffect(() => {
     if (!playlist.length || !keyToken) return;
-    axios.post(`${STREAM_URL_RENDER}/api/v1/getStream`, { file: playlist[selectedLang].file, key: keyToken })
+    axios.post(`${STREAM_URL_VERCEL}/api/v1/getStream`, { file: playlist[selectedLang].file, key: keyToken })
       .then(({ data }) => data.success && setMasterUrl(data.data.link))
       .catch(console.error);
   }, [playlist, keyToken, selectedLang]);
